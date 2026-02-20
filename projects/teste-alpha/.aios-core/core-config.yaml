@@ -1,8 +1,0 @@
-project:
-  name: teste-alpha
-  type: greenfield
-  created: "2026-02-20T01:20:33.163Z"
-  hub: true
-aios:
-  version: "3.0"
-  mode: project
