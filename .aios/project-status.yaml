@@ -1,20 +1,19 @@
-version: '1.0'
-lastSync: '2026-02-20T01:20:33.245Z'
-hub:
-  branch: null
-  modifiedFiles: []
-  recentCommits: []
-  isGitRepo: false
-projects:
-  total: 1
-  active: 1
-  paused: 0
-  archived: 0
-projectList:
-  teste-alpha:
-    status: active
-    lastActivity: '2026-02-20T01:20:33.166Z'
-    branch: null
-    activeStory: null
-    activeEpic: null
-    modifiedFiles: 0
+status:
+  branch: master
+  modifiedFiles:
+    - .aios/project-status.yaml
+    - .claude/CLAUDE.md
+    - projects/teste-alpha/.aios-core/core-config.yaml
+    - projects/teste-alpha/.aios-core/data/.gitkeep
+    - projects/teste-alpha/.aios-core/development/.gitkeep
+  modifiedFilesTotalCount: 13
+  recentCommits:
+    - 'chore: add AIOS framework infrastructure to Hub'
+    - 'feat(hub): implement Epic 2 - Hub Commands for Hub Multi-Projeto AIOS'
+  currentEpic: null
+  currentStory: epic-1-foundation-registry
+  lastUpdate: '2026-02-20T14:40:49.093Z'
+  isGitRepo: true
+timestamp: 1771598449094
+ttl: 60
+gitFingerprint: 1771541863309.292:1771575545032.3591

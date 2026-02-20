@@ -8,6 +8,28 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 You are working with Synkra AIOS, an AI-Orchestrated System for Full Stack Development.
 
+<!-- AIOS-MANAGED-START: hub-structure -->
+## HUB Structure (IMPORTANT)
+
+Este repositório é o **HUB** do Synkra AIOS. A estrutura é:
+
+```
+D:/workspace/              # HUB (este repositório)
+├── .aios-core/            # Framework AIOS
+├── .claude/               # Configurações Claude
+├── docs/                  # Documentação do framework
+├── squads/                # Templates de agentes
+├── workflows/             # Workflows reutilizáveis
+└── projects/              # PROJETOS FICAM AQUI
+    └── {nome-projeto}/    # Cada projeto em sua pasta
+```
+
+### Regra de Projetos
+- **SEMPRE** criar novos projetos em `D:/workspace/projects/{nome-projeto}/`
+- **NUNCA** criar projetos na raiz do workspace
+- Projetos herdam o AIOS do HUB via symlink ou cópia
+<!-- AIOS-MANAGED-END: hub-structure -->
+
 <!-- AIOS-MANAGED-START: core-framework -->
 ## Core Framework Understanding
 
