@@ -1,0 +1,36 @@
+{
+  "name": "@clone-lab/orchestrator",
+  "version": "1.0.0",
+  "description": "Mind Orchestrator & Router for Clone Lab v2.0 - Executes Minds in dependency-ordered waves",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "scripts": {
+    "build": "tsc",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint src",
+    "clean": "rm -rf dist"
+  },
+  "dependencies": {
+    "@clone-lab/core": "^1.0.0",
+    "@clone-lab/minds": "^1.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.0",
+    "typescript": "^5.3.0"
+  },
+  "keywords": [
+    "clone-lab",
+    "ai",
+    "personality-analysis",
+    "orchestrator",
+    "minds"
+  ],
+  "author": "Clone Lab Team",
+  "license": "MIT"
+}
