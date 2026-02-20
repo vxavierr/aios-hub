@@ -1,0 +1,38 @@
+{
+  "name": "@clone-lab/minds",
+  "version": "1.0.0",
+  "description": "8 Analytical Minds for personality analysis in Clone Lab v2.0",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./base": {
+      "import": "./dist/base/index.js",
+      "types": "./dist/base/index.d.ts"
+    }
+  },
+  "scripts": {
+    "build": "tsc",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint src",
+    "clean": "rm -rf dist"
+  },
+  "dependencies": {
+    "zod": "^3.22.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.0",
+    "typescript": "^5.3.0"
+  },
+  "keywords": [
+    "clone-lab",
+    "ai",
+    "personality-analysis",
+    "minds"
+  ],
+  "author": "Clone Lab Team",
+  "license": "MIT"
+}
