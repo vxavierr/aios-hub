@@ -1,7 +1,7 @@
 # Epic 3: Story Scanner
 
 **Epic ID:** HUB-EPIC-3
-**Status:** Draft
+**Status:** Done
 **Created:** 2026-02-20
 **Owner:** João
 
@@ -40,8 +40,8 @@ O sync-projects.js atual só traz metadados básicos (`activeStory: "1.2"`), mas
 | Story ID | Title | Status | Executor |
 |----------|-------|--------|----------|
 | 3.1 | Script de Scan de Stories | Done | @dev |
-| 3.2 | Comando *list-stories | Draft | @dev |
-| 3.3 | Integração no Greeting | Draft | @dev |
+| 3.2 | Comando *list-stories | Done | @dev |
+| 3.3 | Integração no Greeting | Done | @dev |
 
 ---
 
@@ -122,12 +122,12 @@ O sync-projects.js atual só traz metadados básicos (`activeStory: "1.2"`), mas
 
 ## Definition of Done
 
-- [ ] All 3 stories completed with acceptance criteria met
-- [ ] scan-stories.js working and tested
-- [ ] *list-stories command functional
-- [ ] Greeting integration working
-- [ ] No regression in existing functionality
-- [ ] Documentation updated
+- [x] All 3 stories completed with acceptance criteria met
+- [x] scan-stories.js working and tested
+- [x] *list-stories command functional
+- [x] Greeting integration working
+- [x] No regression in existing functionality
+- [x] Documentation updated
 
 ---
 

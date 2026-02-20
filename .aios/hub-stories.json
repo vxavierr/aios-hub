@@ -1,16 +1,16 @@
 {
   "version": "1.0",
-  "lastSync": "2026-02-20T14:57:34.780Z",
+  "lastSync": "2026-02-20T15:13:04.575Z",
   "summary": {
     "totalStories": 11,
     "byStatus": {
-      "Done": 8,
-      "Draft": 3
+      "Done": 9,
+      "Draft": 2
     }
   },
   "projects": {
     "_hub": {
-      "lastActivity": "2026-02-20T14:53:50.150Z",
+      "lastActivity": "2026-02-20T15:03:57.642Z",
       "stories": [
         {
           "id": null,
@@ -49,7 +49,7 @@
             "percentage": 0
           },
           "file": "docs/stories/epics/epic-3-story-scanner.md",
-          "lastModified": "2026-02-20T14:53:01.791Z"
+          "lastModified": "2026-02-20T15:03:57.642Z"
         },
         {
           "id": "1.1",
@@ -145,15 +145,15 @@
         {
           "id": "3.1",
           "title": "Script de Scan de Stories",
-          "status": "Draft",
+          "status": "Done",
           "epic": "3",
           "progress": {
-            "completed": 1,
+            "completed": 28,
             "total": 29,
-            "percentage": 3
+            "percentage": 97
           },
           "file": "docs/stories/3.1.scan-stories-script.md",
-          "lastModified": "2026-02-20T14:53:50.150Z"
+          "lastModified": "2026-02-20T15:03:46.672Z"
         }
       ]
     }

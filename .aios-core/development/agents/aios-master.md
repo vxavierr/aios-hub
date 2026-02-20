@@ -227,6 +227,10 @@ commands:
     args: '[--status active|paused|archived]'
     description: 'List all Hub projects with status, activity, and active story/epic'
     visibility: [full, quick, key]
+  - name: list-stories
+    args: '[--project name] [--status status] [--epic number] [--refresh]'
+    description: 'List all stories from all projects with filtering options'
+    visibility: [full, quick, key]
   - name: create-project
     args: '{nome} [--template greenfield|brownfield|custom]'
     description: 'Create new AIOS project in projects/{nome}/'
@@ -314,6 +318,8 @@ dependencies:
     - hub-create-project.md
     - hub-switch-project.md
     - hub-project-status.md
+    # Story Scanner (Epic 3)
+    - list-stories.md
   # Delegated tasks (Story 6.1.2.3):
   #   brownfield-create-epic.md → @pm
   #   brownfield-create-story.md → @pm

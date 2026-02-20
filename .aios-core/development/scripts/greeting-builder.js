@@ -226,6 +226,17 @@ class GreetingBuilder {
       sections.push(this.buildProjectStatus(projectStatus, sessionType, sectionContext));
     }
 
+    // 3.5. Stories summary (aios-master only, Story 3.3)
+    if (agent.id === 'aios-master') {
+      const hubStories = this.loadHubStories(process.cwd());
+      if (hubStories) {
+        const storiesSection = this.buildStoriesSummary(hubStories, sessionType);
+        if (storiesSection) {
+          sections.push(storiesSection);
+        }
+      }
+    }
+
     // Story 10.3 - AC1, AC4: Bob mode redirect for non-PM agents
     if (userProfile === 'bob' && agent.id !== 'pm') {
       // Show redirect message instead of normal content
@@ -562,6 +573,75 @@ class GreetingBuilder {
     }
 
     return `📊 **Project Status:**\n  - ${lines.join('\n  - ')}`;
+  }
+
+  /**
+   * Build stories summary section for Hub context
+   * Story 3.3: Show stories summary in greeting for aios-master
+   * @param {Object} hubStories - hub-stories.json content
+   * @param {string} sessionType - Session type
+   * @returns {string|null} Stories summary section
+   */
+  buildStoriesSummary(hubStories, sessionType = 'new') {
+    if (!hubStories || !hubStories.summary) {
+      return null;
+    }
+
+    const summary = hubStories.summary;
+    const byStatus = summary.byStatus || {};
+
+    // Count active stories (InProgress, InReview)
+    const inProgress = byStatus['InProgress'] || 0;
+    const inReview = byStatus['InReview'] || 0;
+    const total = summary.totalStories || 0;
+
+    if (total === 0) {
+      return null;
+    }
+
+    // Build status breakdown
+    const statusParts = [];
+    if (inProgress > 0) {
+      statusParts.push(`🔄 ${inProgress} in progress`);
+    }
+    if (inReview > 0) {
+      statusParts.push(`👀 ${inReview} in review`);
+    }
+    if (byStatus['Draft'] > 0) {
+      statusParts.push(`📝 ${byStatus['Draft']} draft`);
+    }
+    if (byStatus['Done'] > 0) {
+      statusParts.push(`✔️ ${byStatus['Done']} done`);
+    }
+
+    if (statusParts.length === 0) {
+      return null;
+    }
+
+    // Format output
+    if (sessionType === 'workflow') {
+      return `📚 ${total} stories: ${statusParts.slice(0, 3).join(' | ')}`;
+    }
+
+    return `📚 **Stories:** ${total} total — ${statusParts.join(' | ')}`;
+  }
+
+  /**
+   * Load hub-stories.json cache
+   * @param {string} projectRoot - Project root path
+   * @returns {Object|null} Hub stories data or null
+   */
+  loadHubStories(projectRoot) {
+    try {
+      const hubStoriesPath = path.join(projectRoot, '.aios', 'hub-stories.json');
+      if (!fs.existsSync(hubStoriesPath)) {
+        return null;
+      }
+      const content = fs.readFileSync(hubStoriesPath, 'utf8');
+      return JSON.parse(content);
+    } catch (error) {
+      return null;
+    }
   }
 
   /**
