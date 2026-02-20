@@ -1,0 +1,11 @@
+version: '1.0'
+project:
+  name: teste-alpha
+  status: active
+  created: '2026-02-20T01:20:33.166Z'
+status:
+  currentEpic: null
+  currentStory: null
+  lastUpdate: '2026-02-20T01:20:33.166Z'
+  modifiedFilesTotalCount: 0
+  modifiedFiles: []

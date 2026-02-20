@@ -1,0 +1,39 @@
+{
+  "version": "1.0",
+  "hubRoot": "D:\\workspace",
+  "currentContext": "hub",
+  "currentProject": null,
+  "switchedAt": "2026-02-20T08:03:25.911Z",
+  "history": [
+    {
+      "from": "hub",
+      "to": "teste-alpha",
+      "at": "2026-02-20T01:36:51.622Z"
+    },
+    {
+      "from": "teste-alpha",
+      "to": "hub",
+      "at": "2026-02-20T01:39:46.945Z"
+    },
+    {
+      "from": "hub",
+      "to": "teste-alpha",
+      "at": "2026-02-20T01:59:37.083Z"
+    },
+    {
+      "from": "teste-alpha",
+      "to": "hub",
+      "at": "2026-02-20T02:01:29.158Z"
+    },
+    {
+      "from": "hub",
+      "to": "teste-alpha",
+      "at": "2026-02-20T08:03:13.914Z"
+    },
+    {
+      "from": "teste-alpha",
+      "to": "hub",
+      "at": "2026-02-20T08:03:25.911Z"
+    }
+  ]
+}

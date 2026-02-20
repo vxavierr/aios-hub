@@ -1,13 +1,20 @@
 version: '1.0'
-lastSync: '2026-02-19T22:54:32.279Z'
+lastSync: '2026-02-20T01:20:33.245Z'
 hub:
   branch: null
   modifiedFiles: []
   recentCommits: []
   isGitRepo: false
 projects:
-  total: 0
-  active: 0
+  total: 1
+  active: 1
   paused: 0
   archived: 0
-projectList: {}
+projectList:
+  teste-alpha:
+    status: active
+    lastActivity: '2026-02-20T01:20:33.166Z'
+    branch: null
+    activeStory: null
+    activeEpic: null
+    modifiedFiles: 0

@@ -1,11 +1,18 @@
 {
   "version": "1.0",
-  "lastSync": "2026-02-19T22:54:32.277Z",
+  "lastSync": "2026-02-20T01:20:33.245Z",
   "hubRoot": "D:\\workspace",
-  "projects": {},
+  "projects": {
+    "teste-alpha": {
+      "status": "active",
+      "lastActivity": "2026-02-20T01:20:33.166Z",
+      "activeStory": null,
+      "activeEpic": null
+    }
+  },
   "summary": {
-    "total": 0,
-    "active": 0,
+    "total": 1,
+    "active": 1,
     "paused": 0,
     "archived": 0
   }
