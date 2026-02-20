@@ -1,0 +1,161 @@
+{
+  "version": "1.0",
+  "lastSync": "2026-02-20T14:57:34.780Z",
+  "summary": {
+    "totalStories": 11,
+    "byStatus": {
+      "Done": 8,
+      "Draft": 3
+    }
+  },
+  "projects": {
+    "_hub": {
+      "lastActivity": "2026-02-20T14:53:50.150Z",
+      "stories": [
+        {
+          "id": null,
+          "title": "Epic 1: Foundation & Registry",
+          "status": "Done",
+          "epic": null,
+          "progress": {
+            "completed": 5,
+            "total": 5,
+            "percentage": 100
+          },
+          "file": "docs/stories/epics/epic-1-foundation-registry.md",
+          "lastModified": "2026-02-20T14:51:07.853Z"
+        },
+        {
+          "id": null,
+          "title": "Epic 2: Hub Commands",
+          "status": "Draft",
+          "epic": null,
+          "progress": {
+            "completed": 0,
+            "total": 5,
+            "percentage": 0
+          },
+          "file": "docs/stories/epics/epic-2-hub-commands.md",
+          "lastModified": "2026-02-19T23:06:27.087Z"
+        },
+        {
+          "id": null,
+          "title": "Epic 3: Story Scanner",
+          "status": "Draft",
+          "epic": null,
+          "progress": {
+            "completed": 0,
+            "total": 6,
+            "percentage": 0
+          },
+          "file": "docs/stories/epics/epic-3-story-scanner.md",
+          "lastModified": "2026-02-20T14:53:01.791Z"
+        },
+        {
+          "id": "1.1",
+          "title": "Criar Estrutura de Pastas do Hub",
+          "status": "Done",
+          "epic": "1",
+          "progress": {
+            "completed": 15,
+            "total": 17,
+            "percentage": 88
+          },
+          "file": "docs/stories/1.1.hub-folder-structure.md",
+          "lastModified": "2026-02-19T22:55:33.297Z"
+        },
+        {
+          "id": "1.2",
+          "title": "Script de Sincronização de Projetos",
+          "status": "Done",
+          "epic": "1",
+          "progress": {
+            "completed": 26,
+            "total": 27,
+            "percentage": 96
+          },
+          "file": "docs/stories/1.2.sync-projects-script.md",
+          "lastModified": "2026-02-19T22:55:33.348Z"
+        },
+        {
+          "id": "1.3",
+          "title": "Schema de Project no Entity Registry",
+          "status": "Done",
+          "epic": "1",
+          "progress": {
+            "completed": 13,
+            "total": 15,
+            "percentage": 87
+          },
+          "file": "docs/stories/1.3.project-schema-registry.md",
+          "lastModified": "2026-02-19T22:55:33.367Z"
+        },
+        {
+          "id": "2.1",
+          "title": "Comando *list-projects",
+          "status": "Done",
+          "epic": "2",
+          "progress": {
+            "completed": 21,
+            "total": 22,
+            "percentage": 95
+          },
+          "file": "docs/stories/2.1.list-projects-command.md",
+          "lastModified": "2026-02-20T08:05:07.542Z"
+        },
+        {
+          "id": "2.2",
+          "title": "Comando *create-project",
+          "status": "Done",
+          "epic": "2",
+          "progress": {
+            "completed": 28,
+            "total": 29,
+            "percentage": 97
+          },
+          "file": "docs/stories/2.2.create-project-command.md",
+          "lastModified": "2026-02-20T08:05:07.555Z"
+        },
+        {
+          "id": "2.3",
+          "title": "Comando *switch-project",
+          "status": "Done",
+          "epic": "2",
+          "progress": {
+            "completed": 25,
+            "total": 26,
+            "percentage": 96
+          },
+          "file": "docs/stories/2.3.switch-project-command.md",
+          "lastModified": "2026-02-20T08:05:07.568Z"
+        },
+        {
+          "id": "2.4",
+          "title": "Comando *project-status",
+          "status": "Done",
+          "epic": "2",
+          "progress": {
+            "completed": 26,
+            "total": 27,
+            "percentage": 96
+          },
+          "file": "docs/stories/2.4.project-status-command.md",
+          "lastModified": "2026-02-20T08:05:07.583Z"
+        },
+        {
+          "id": "3.1",
+          "title": "Script de Scan de Stories",
+          "status": "Draft",
+          "epic": "3",
+          "progress": {
+            "completed": 1,
+            "total": 29,
+            "percentage": 3
+          },
+          "file": "docs/stories/3.1.scan-stories-script.md",
+          "lastModified": "2026-02-20T14:53:50.150Z"
+        }
+      ]
+    }
+  }
+}

@@ -39,7 +39,7 @@ O sync-projects.js atual só traz metadados básicos (`activeStory: "1.2"`), mas
 
 | Story ID | Title | Status | Executor |
 |----------|-------|--------|----------|
-| 3.1 | Script de Scan de Stories | Draft | @dev |
+| 3.1 | Script de Scan de Stories | Done | @dev |
 | 3.2 | Comando *list-stories | Draft | @dev |
 | 3.3 | Integração no Greeting | Draft | @dev |
 
