@@ -1,0 +1,60 @@
+[
+  {
+    "pageName": "Ocupacional",
+    "structure": []
+  },
+  {
+    "pageName": "AssisteMed",
+    "structure": []
+  },
+  {
+    "pageName": "C.A.S.A.",
+    "structure": [
+      {
+        "index": 5,
+        "className": "notion-selectable notion-collection_view-block",
+        "title": "",
+        "properties": [
+          "Nome",
+          "Descrição",
+          "Responsável",
+          "Cliente",
+          "Campanha",
+          "Prazo",
+          "Status"
+        ],
+        "type": "table"
+      },
+      {
+        "index": 7,
+        "className": "notion-scroller horizontal notion-collection-view-body",
+        "title": "",
+        "properties": [
+          "Nome",
+          "Descrição",
+          "Responsável",
+          "Cliente",
+          "Campanha",
+          "Prazo",
+          "Status"
+        ],
+        "type": "table"
+      },
+      {
+        "index": 8,
+        "className": "notion-selectable notion-collection_view-block",
+        "title": "",
+        "properties": [
+          "Nome",
+          "Descrição",
+          "Responsável",
+          "Cliente",
+          "Campanha",
+          "Prazo",
+          "Status"
+        ],
+        "type": "table"
+      }
+    ]
+  }
+]

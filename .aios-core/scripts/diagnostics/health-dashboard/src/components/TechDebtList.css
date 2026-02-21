@@ -8,14 +8,14 @@
   display: flex;
   align-items: center;
   gap: var(--spacing-sm);
-  font-size: 1.125rem;
-  font-weight: 600;
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-semibold);
   color: var(--color-text-primary);
   margin-bottom: var(--spacing-md);
 }
 
 .tech-debt-count {
-  font-size: 0.75rem;
+  font-size: var(--font-size-xs);
   padding: 2px var(--spacing-sm);
   background-color: var(--color-bg-card);
   border-radius: var(--radius-full);
@@ -31,7 +31,7 @@
 }
 
 .tech-debt-empty .empty-icon {
-  font-size: 2rem;
+  font-size: var(--font-size-3xl);
   margin-bottom: var(--spacing-sm);
 }
 
@@ -61,14 +61,14 @@
 }
 
 .tech-debt-id {
-  font-family: monospace;
-  font-size: 0.75rem;
+  font-family: var(--font-family-mono);
+  font-size: var(--font-size-xs);
   color: var(--color-text-muted);
 }
 
 .tech-debt-name {
-  font-size: 0.9375rem;
-  font-weight: 500;
+  font-size: 0.9375rem; /* 15px - específico */
+  font-weight: var(--font-weight-medium);
   color: var(--color-text-primary);
   margin: 0 0 var(--spacing-sm) 0;
 }
@@ -77,7 +77,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: var(--spacing-md);
-  font-size: 0.75rem;
+  font-size: var(--font-size-xs);
   color: var(--color-text-muted);
 }
 
@@ -92,16 +92,16 @@
 }
 
 .effort-icon {
-  font-size: 0.875rem;
+  font-size: var(--font-size-sm);
 }
 
 .tech-debt-check {
-  font-family: monospace;
+  font-family: var(--font-family-mono);
 }
 
 .tech-debt-description {
   margin-top: var(--spacing-sm);
-  font-size: 0.875rem;
+  font-size: var(--font-size-sm);
   color: var(--color-text-secondary);
   line-height: 1.5;
 }
@@ -110,5 +110,5 @@
   text-align: center;
   padding-top: var(--spacing-md);
   color: var(--color-text-muted);
-  font-size: 0.875rem;
+  font-size: var(--font-size-sm);
 }

@@ -1,0 +1,502 @@
+{
+  "favorites": [
+    {
+      "text": "Pular para o conteúdo",
+      "href": "https://www.notion.so/uhuru-comunicacao/3d8168c8215947bd98eb2147c3710b2e#main"
+    },
+    {
+      "text": "Página inicial",
+      "href": "https://www.notion.so/3d8168c8215947bd98eb2147c3710b2e?pvs=16"
+    },
+    {
+      "text": "Reuniões",
+      "href": "https://www.notion.so/meet"
+    },
+    {
+      "text": "IA do Notion",
+      "href": "https://www.notion.so/ai"
+    },
+    {
+      "text": "Ocupacional",
+      "href": "https://www.notion.so/uhuru-comunicacao/Ocupacional-a9adbad0564948369cbbaf0ec544f066?pvs=10"
+    },
+    {
+      "text": "AssisteMed",
+      "href": "https://www.notion.so/uhuru-comunicacao/AssisteMed-7f240474e6d048109947206900b0312b?pvs=10"
+    },
+    {
+      "text": "OCP_Controle de Orçamento",
+      "href": "https://www.notion.so/uhuru-comunicacao/OCP_Controle-de-Or-amento-1f6dc0a840ac42ecae54e19cc3d6da7b?pvs=10"
+    },
+    {
+      "text": "Nova página",
+      "href": "https://www.notion.so/uhuru-comunicacao/278dbafb030280dcb75fd6a376952ce2?pvs=10"
+    },
+    {
+      "text": "ASM_Controle de Orçamento",
+      "href": "https://www.notion.so/uhuru-comunicacao/ASM_Controle-de-Or-amento-bac0e90c7b4c4bf9a86779767403ed07?pvs=10"
+    },
+    {
+      "text": "Ocupacional",
+      "href": "https://www.notion.so/uhuru-comunicacao/Ocupacional-a9adbad0564948369cbbaf0ec544f066?pvs=9"
+    },
+    {
+      "text": "AssisteMed",
+      "href": "https://www.notion.so/uhuru-comunicacao/AssisteMed-7f240474e6d048109947206900b0312b?pvs=9"
+    },
+    {
+      "text": "C.A.S.A.",
+      "href": "https://www.notion.so/uhuru-comunicacao/C-A-S-A-1d6dbafb030280c682a2ff8c758db28b?pvs=9"
+    },
+    {
+      "text": "OCP | Estratégia NR1 (start) @3 de fevereiro de 2026 16:30",
+      "href": "https://www.notion.so/uhuru-comunicacao/OCP-Estrat-gia-NR1-start-2fcdbafb030280a88e1fceb156174419?pvs=11"
+    },
+    {
+      "text": "Página da Uhuru",
+      "href": "https://www.notion.so/uhuru-comunicacao/2f47c4525b1946d0beb940d793526bf7?v=93d6823d9a74484e9ba52c2b39046c8b&pvs=13"
+    },
+    {
+      "text": "Home da Mídia",
+      "href": "https://www.notion.so/uhuru-comunicacao/Home-da-M-dia-4c1316fb406744538bb159ea13851cd2?pvs=13"
+    },
+    {
+      "text": "Nova página",
+      "href": "https://www.notion.so/uhuru-comunicacao/278dbafb030280dcb75fd6a376952ce2?pvs=12"
+    },
+    {
+      "text": "Nova página",
+      "href": "https://www.notion.so/uhuru-comunicacao/2fddbafb03028066bf2fc6abfd1f7de9?pvs=12"
+    },
+    {
+      "text": "@20 de janeiro de 2026 19:36",
+      "href": "https://www.notion.so/uhuru-comunicacao/2eedbafb0302800789ebccfc326157b6?pvs=12"
+    },
+    {
+      "text": "@20 de janeiro de 2026 19:34",
+      "href": "https://www.notion.so/uhuru-comunicacao/2eedbafb0302804e98eee24b72d136a9?pvs=12"
+    },
+    {
+      "text": "@20 de janeiro de 2026 19:31",
+      "href": "https://www.notion.so/uhuru-comunicacao/2eedbafb030280428255ef1114a8c39a?pvs=12"
+    }
+  ],
+  "databases": [
+    {
+      "className": "notion-selectable-container",
+      "text": "RecentesOcupacionalAssisteMedOCP_Controle de OrçamentoNova páginaASM_Controle de OrçamentoFavoritosOcupacionalAssisteMedC.A.S.A.AgentesBetaNovo agenteMaisCompartilhadoOCP | Estratégia NR1 (start) @3 d"
+    },
+    {
+      "className": "notion-selectable notion-page-block",
+      "text": "Ocupacional"
+    },
+    {
+      "className": "notion-selectable notion-page-block",
+      "text": "AssisteMed"
+    },
+    {
+      "className": "notion-selectable notion-page-block",
+      "text": "OCP_Controle de Orçamento"
+    },
+    {
+      "className": "notion-selectable notion-page-block",
+      "text": "Nova página"
+    },
+    {
+      "className": "notion-selectable notion-page-block",
+      "text": "ASM_Controle de Orçamento"
+    },
+    {
+      "className": "notion-selectable notion-page-block",
+      "text": "Ocupacional"
+    },
+    {
+      "className": "notion-selectable notion-page-block",
+      "text": "AssisteMed"
+    },
+    {
+      "className": "notion-selectable notion-page-block",
+      "text": "C.A.S.A."
+    },
+    {
+      "className": "notion-selectable notion-page-block",
+      "text": "OCP | Estratégia NR1 (start) @3 de fevereiro de 2026 16:30"
+    },
+    {
+      "className": "notion-selectable notion-collection_view_page-block",
+      "text": "Página da Uhuru"
+    },
+    {
+      "className": "notion-selectable notion-page-block",
+      "text": "Home da Mídia"
+    },
+    {
+      "className": "notion-selectable notion-page-block",
+      "text": "Nova página"
+    },
+    {
+      "className": "notion-selectable notion-page-block",
+      "text": "Nova página"
+    },
+    {
+      "className": "notion-selectable notion-page-block",
+      "text": "@20 de janeiro de 2026 19:36"
+    },
+    {
+      "className": "notion-selectable notion-page-block",
+      "text": "@20 de janeiro de 2026 19:34"
+    },
+    {
+      "className": "notion-selectable notion-page-block",
+      "text": "@20 de janeiro de 2026 19:31"
+    },
+    {
+      "className": {},
+      "text": ""
+    },
+    {
+      "className": "notion-selectable notion-personal_home_page-block",
+      "text": "Lixeira"
+    },
+    {
+      "className": "notion-selectable-container",
+      "text": ""
+    },
+    {
+      "className": "notion-selectable-container",
+      "text": "Boa tardeOlá! Esta é a sua página inicial.Acessos recentesOcupacional17 de jul. de 2025AssisteMed20 de ago. de 2025OCP_Controle de Orçamento17 de nov. de 2025Nova página2sem atrásASM_Controle de Orçam"
+    },
+    {
+      "className": "notion-selectable-container",
+      "text": "Minhas tarefasVeja todas as suas tarefas do espaço de trabalho Uhuru Comunicação no mesmo lugar.Adicionar fontes de tarefasReunião de alinhamento com Ana20 de fev. de 2026TrabalhoRevisar documentos de"
+    },
+    {
+      "className": "notion-selectable notion-collection_view_page-block",
+      "text": ""
+    },
+    {
+      "className": "notion-selectable-container",
+      "text": "Visualizações da página inicialFixe uma visualização da base de dados para que você possa acessá-la rapidamente na página inicial.Selecionar base de dadosAtividadeStatusAcordar e fazer higieneConcluíd"
+    },
+    {
+      "className": "notion-selectable notion-collection_view-block",
+      "text": ""
+    },
+    {
+      "className": "notion-scroller horizontal notion-collection-view-body",
+      "text": "Home da MídiaPágina da UhuruOrizontiORI - Acompanhamento performance Home - Dados & BIOCP - Acompanhamento performanceOcupacionalDASH COMERCIAL OCPOcupacionalCIN - Acompanhamento performance Engajamen"
+    },
+    {
+      "className": "notion-selectable notion-collection_view-block",
+      "text": "Home da MídiaPágina da UhuruOrizontiORI - Acompanhamento performance Home - Dados & BIOCP - Acompanhamento performanceOcupacionalDASH COMERCIAL OCPOcupacionalCIN - Acompanhamento performance Engajamen"
+    },
+    {
+      "className": "notion-selectable notion-collection_view-block",
+      "text": ""
+    },
+    {
+      "className": "notion-selectable notion-page-block notion-collection-item",
+      "text": "Home da Mídia"
+    },
+    {
+      "className": "content-editable-leaf-rtl",
+      "text": "Home da Mídia"
+    },
+    {
+      "className": "notion-selectable notion-collection_view_page-block notion-collection-item",
+      "text": "Página da Uhuru"
+    },
+    {
+      "className": "content-editable-leaf-rtl",
+      "text": "Página da Uhuru"
+    },
+    {
+      "className": "notion-selectable notion-page-block notion-collection-item",
+      "text": "Orizonti"
+    },
+    {
+      "className": "content-editable-leaf-rtl",
+      "text": "Orizonti"
+    },
+    {
+      "className": "notion-selectable notion-page-block notion-collection-item",
+      "text": "ORI - Acompanhamento performance "
+    },
+    {
+      "className": "content-editable-leaf-rtl",
+      "text": "ORI - Acompanhamento performance "
+    },
+    {
+      "className": "notion-selectable notion-page-block notion-collection-item",
+      "text": "Home - Dados & BI"
+    },
+    {
+      "className": "content-editable-leaf-rtl",
+      "text": "Home - Dados & BI"
+    },
+    {
+      "className": "notion-selectable notion-page-block notion-collection-item",
+      "text": "OCP - Acompanhamento performance"
+    },
+    {
+      "className": "content-editable-leaf-rtl",
+      "text": "OCP - Acompanhamento performance"
+    },
+    {
+      "className": "notion-selectable notion-page-block notion-collection-item",
+      "text": "Ocupacional"
+    },
+    {
+      "className": "content-editable-leaf-rtl",
+      "text": "Ocupacional"
+    },
+    {
+      "className": "notion-selectable notion-page-block notion-collection-item",
+      "text": "DASH COMERCIAL OCP"
+    },
+    {
+      "className": "content-editable-leaf-rtl",
+      "text": "DASH COMERCIAL OCP"
+    },
+    {
+      "className": "notion-selectable notion-page-block notion-collection-item",
+      "text": "Ocupacional"
+    },
+    {
+      "className": "content-editable-leaf-rtl",
+      "text": "Ocupacional"
+    },
+    {
+      "className": "notion-selectable notion-page-block notion-collection-item",
+      "text": "CIN - Acompanhamento performance "
+    },
+    {
+      "className": "content-editable-leaf-rtl",
+      "text": "CIN - Acompanhamento performance "
+    },
+    {
+      "className": "notion-selectable notion-page-block notion-collection-item",
+      "text": "Engajamento"
+    },
+    {
+      "className": "content-editable-leaf-rtl",
+      "text": "Engajamento"
+    },
+    {
+      "className": "notion-selectable notion-page-block notion-collection-item",
+      "text": "Visitas ao perfil"
+    },
+    {
+      "className": "content-editable-leaf-rtl",
+      "text": "Visitas ao perfil"
+    },
+    {
+      "className": "notion-selectable notion-page-block notion-collection-item",
+      "text": "Comercial Pmax"
+    },
+    {
+      "className": "content-editable-leaf-rtl",
+      "text": "Comercial Pmax"
+    },
+    {
+      "className": "notion-selectable notion-page-block notion-collection-item",
+      "text": "Comercial Search"
+    },
+    {
+      "className": "content-editable-leaf-rtl",
+      "text": "Comercial Search"
+    },
+    {
+      "className": "notion-selectable notion-collection_view-block",
+      "text": ""
+    },
+    {
+      "className": "notion-scroller horizontal notion-collection-view-body",
+      "text": "OrizontiCIN - Acompanhamento performance Home da MídiaAlways On 20261Campanha Frente Comercial 20261CineartReports SemanaisSER - Acompanhamento performance SerconCampanhasSemana do Cinema 20261Impulsi"
+    },
+    {
+      "className": "notion-selectable notion-collection_view-block",
+      "text": "OrizontiCIN - Acompanhamento performance Home da MídiaAlways On 20261Campanha Frente Comercial 20261CineartReports SemanaisSER - Acompanhamento performance SerconCampanhasSemana do Cinema 20261Impulsi"
+    },
+    {
+      "className": "notion-selectable notion-collection_view-block",
+      "text": ""
+    },
+    {
+      "className": "notion-selectable notion-page-block notion-collection-item",
+      "text": "Orizonti"
+    },
+    {
+      "className": "content-editable-leaf-rtl",
+      "text": "Orizonti"
+    },
+    {
+      "className": "notion-selectable notion-page-block notion-collection-item",
+      "text": "CIN - Acompanhamento performance "
+    },
+    {
+      "className": "content-editable-leaf-rtl",
+      "text": "CIN - Acompanhamento performance "
+    },
+    {
+      "className": "notion-selectable notion-page-block notion-collection-item",
+      "text": "Home da Mídia"
+    },
+    {
+      "className": "content-editable-leaf-rtl",
+      "text": "Home da Mídia"
+    },
+    {
+      "className": "notion-selectable notion-page-block notion-collection-item",
+      "text": "Always On 20261"
+    },
+    {
+      "className": "content-editable-leaf-rtl",
+      "text": "Always On 2026"
+    },
+    {
+      "className": "notion-selectable notion-page-block notion-collection-item",
+      "text": "Campanha Frente Comercial 20261"
+    },
+    {
+      "className": "content-editable-leaf-rtl",
+      "text": "Campanha Frente Comercial 2026"
+    },
+    {
+      "className": "notion-selectable notion-page-block notion-collection-item",
+      "text": "Cineart"
+    },
+    {
+      "className": "content-editable-leaf-rtl",
+      "text": "Cineart"
+    },
+    {
+      "className": "notion-selectable notion-page-block notion-collection-item",
+      "text": "Reports Semanais"
+    },
+    {
+      "className": "content-editable-leaf-rtl",
+      "text": "Reports Semanais"
+    },
+    {
+      "className": "notion-selectable notion-page-block notion-collection-item",
+      "text": "SER - Acompanhamento performance "
+    },
+    {
+      "className": "content-editable-leaf-rtl",
+      "text": "SER - Acompanhamento performance "
+    },
+    {
+      "className": "notion-selectable notion-page-block notion-collection-item",
+      "text": "Sercon"
+    },
+    {
+      "className": "content-editable-leaf-rtl",
+      "text": "Sercon"
+    },
+    {
+      "className": "notion-selectable notion-page-block notion-collection-item",
+      "text": "Campanhas"
+    },
+    {
+      "className": "content-editable-leaf-rtl",
+      "text": "Campanhas"
+    },
+    {
+      "className": "notion-selectable notion-page-block notion-collection-item",
+      "text": "Semana do Cinema 20261"
+    },
+    {
+      "className": "content-editable-leaf-rtl",
+      "text": "Semana do Cinema 2026"
+    },
+    {
+      "className": "notion-selectable notion-page-block notion-collection-item",
+      "text": "Impulsionamentos 2026"
+    },
+    {
+      "className": "content-editable-leaf-rtl",
+      "text": "Impulsionamentos 2026"
+    },
+    {
+      "className": "notion-selectable notion-page-block notion-collection-item",
+      "text": "ORI - Acompanhamento performance "
+    },
+    {
+      "className": "content-editable-leaf-rtl",
+      "text": "ORI - Acompanhamento performance "
+    },
+    {
+      "className": "notion-selectable notion-page-block notion-collection-item",
+      "text": "Alerta Apocalipse1"
+    },
+    {
+      "className": "content-editable-leaf-rtl",
+      "text": "Alerta Apocalipse"
+    },
+    {
+      "className": "notion-selectable notion-page-block notion-collection-item",
+      "text": "BDG :: Fluxo"
+    },
+    {
+      "className": "content-editable-leaf-rtl",
+      "text": "BDG :: Fluxo"
+    },
+    {
+      "className": "notion-selectable notion-page-block notion-collection-item",
+      "text": "Cine Eventos 20261"
+    },
+    {
+      "className": "content-editable-leaf-rtl",
+      "text": "Cine Eventos 2026"
+    },
+    {
+      "className": "notion-selectable notion-page-block notion-collection-item",
+      "text": "CIN_Campanhas"
+    },
+    {
+      "className": "content-editable-leaf-rtl",
+      "text": "CIN_Campanhas"
+    },
+    {
+      "className": "notion-selectable notion-page-block notion-collection-item",
+      "text": "SER_Campanhas"
+    },
+    {
+      "className": "content-editable-leaf-rtl",
+      "text": "SER_Campanhas"
+    },
+    {
+      "className": "notion-selectable notion-page-block notion-collection-item",
+      "text": "The Golden Ticket2"
+    },
+    {
+      "className": "content-editable-leaf-rtl",
+      "text": "The Golden Ticket"
+    },
+    {
+      "className": "notion-selectable-container",
+      "text": ""
+    }
+  ],
+  "sidebar": [
+    {
+      "selector": "[class*=\"sidebar\"]",
+      "count": 5,
+      "texts": [
+        "Uhuru ComunicaçãoBuscarPágina inicialReuniõesIA do NotionCaixa de entradaBibliotecaRecentesOcupacion",
+        "Uhuru ComunicaçãoBuscarPágina inicialReuniõesIA do NotionCaixa de entradaBibliotecaRecentesOcupacion",
+        "Uhuru Comunicação",
+        "",
+        ""
+      ]
+    },
+    {
+      "selector": "nav",
+      "count": 1,
+      "texts": [
+        "Uhuru ComunicaçãoBuscarPágina inicialReuniõesIA do NotionCaixa de entradaBibliotecaRecentesOcupacion"
+      ]
+    }
+  ]
+}

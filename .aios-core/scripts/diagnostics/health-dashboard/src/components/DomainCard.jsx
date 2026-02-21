@@ -33,6 +33,13 @@ function DomainCard({ domain, data }) {
     navigate(`/domain/${domain}`);
   };
 
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      navigate(`/domain/${domain}`);
+    }
+  };
+
   // Count issues by severity
   const issueCounts = {
     critical: 0,
@@ -57,9 +64,16 @@ function DomainCard({ domain, data }) {
   const totalChecks = data?.checks?.length || 0;
 
   return (
-    <Card className="domain-card" onClick={handleClick}>
+    <Card
+      className="domain-card"
+      onClick={handleClick}
+      onKeyDown={handleKeyDown}
+      role="button"
+      tabIndex={0}
+      aria-label={`${label} health score: ${data?.score || 0}%. ${totalIssues} issues. Click to view details.`}
+    >
       <div className="domain-card-header">
-        <span className="domain-icon">{icon}</span>
+        <span className="domain-icon" aria-hidden="true">{icon}</span>
         <div className="domain-info">
           <h3 className="domain-name">{label}</h3>
           <span className="domain-stats">

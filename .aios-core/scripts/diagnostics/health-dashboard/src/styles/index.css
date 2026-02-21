@@ -1,11 +1,21 @@
-:root {
-  /* Colors */
+/* ===========================================
+ * AIOS DESIGN TOKENS v1.1
+ * Health Dashboard Theme - Dark/Light Support
+ * =========================================== */
+
+/* --- Dark Theme (Default) --- */
+:root,
+[data-theme="dark"] {
+  /* --- Colors --- */
   --color-bg-primary: #0f172a;
   --color-bg-secondary: #1e293b;
   --color-bg-card: #334155;
+  --color-bg-elevated: #475569;
   --color-text-primary: #f8fafc;
   --color-text-secondary: #94a3b8;
   --color-text-muted: #64748b;
+  --color-text-inverse: #0f172a;
+  --color-border: #334155;
 
   /* Status colors */
   --color-healthy: #22c55e;
@@ -20,23 +30,149 @@
   --color-severity-medium: #eab308;
   --color-severity-low: #22c55e;
 
-  /* Spacing */
-  --spacing-xs: 0.25rem;
-  --spacing-sm: 0.5rem;
-  --spacing-md: 1rem;
-  --spacing-lg: 1.5rem;
-  --spacing-xl: 2rem;
-
-  /* Border radius */
-  --radius-sm: 4px;
-  --radius-md: 8px;
-  --radius-lg: 12px;
-  --radius-full: 9999px;
-
   /* Shadows */
   --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
   --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.3);
   --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.3);
+  --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.3);
+
+  /* Theme indicator */
+  --theme-icon: '\u263D'; /* Moon */
+}
+
+/* --- Light Theme --- */
+[data-theme="light"] {
+  --color-bg-primary: #f8fafc;
+  --color-bg-secondary: #ffffff;
+  --color-bg-card: #f1f5f9;
+  --color-bg-elevated: #e2e8f0;
+  --color-text-primary: #0f172a;
+  --color-text-secondary: #475569;
+  --color-text-muted: #64748b;
+  --color-text-inverse: #f8fafc;
+  --color-border: #e2e8f0;
+
+  /* Status colors - slightly adjusted for light theme */
+  --color-healthy: #16a34a;
+  --color-degraded: #ca8a04;
+  --color-warning: #ea580c;
+  --color-critical: #dc2626;
+  --color-info: #2563eb;
+
+  /* Severity colors */
+  --color-severity-critical: #dc2626;
+  --color-severity-high: #ea580c;
+  --color-severity-medium: #ca8a04;
+  --color-severity-low: #16a34a;
+
+  /* Shadows - lighter for light theme */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07);
+  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+  --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.15);
+
+  /* Theme indicator */
+  --theme-icon: '\u2600'; /* Sun */
+}
+
+/* System preference - respects user's OS setting */
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme]) {
+    --color-bg-primary: #f8fafc;
+    --color-bg-secondary: #ffffff;
+    --color-bg-card: #f1f5f9;
+    --color-bg-elevated: #e2e8f0;
+    --color-text-primary: #0f172a;
+    --color-text-secondary: #475569;
+    --color-text-muted: #64748b;
+    --color-text-inverse: #f8fafc;
+    --color-border: #e2e8f0;
+    --color-healthy: #16a34a;
+    --color-degraded: #ca8a04;
+    --color-warning: #ea580c;
+    --color-critical: #dc2626;
+    --color-info: #2563eb;
+    --color-severity-critical: #dc2626;
+    --color-severity-high: #ea580c;
+    --color-severity-medium: #ca8a04;
+    --color-severity-low: #16a34a;
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07);
+    --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+    --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.15);
+  }
+}
+
+/* --- Typography --- */
+:root {
+  --font-family-base: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+  --font-family-mono: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, monospace;
+
+  /* Font sizes */
+  --font-size-xs: 0.75rem;    /* 12px */
+  --font-size-sm: 0.875rem;   /* 14px */
+  --font-size-base: 1rem;     /* 16px */
+  --font-size-md: 1.125rem;   /* 18px */
+  --font-size-lg: 1.25rem;    /* 20px */
+  --font-size-xl: 1.5rem;     /* 24px */
+  --font-size-2xl: 1.75rem;   /* 28px */
+  --font-size-3xl: 2rem;      /* 32px */
+
+  /* Font weights */
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+
+  /* Line heights */
+  --line-height-tight: 1.2;
+  --line-height-normal: 1.6;
+  --line-height-relaxed: 1.8;
+
+  /* Letter spacing */
+  --letter-spacing-tight: -0.025em;
+  --letter-spacing-normal: 0;
+  --letter-spacing-wide: 0.05em;
+
+  /* --- Spacing --- */
+  --spacing-xs: 0.25rem;   /* 4px */
+  --spacing-sm: 0.5rem;    /* 8px */
+  --spacing-md: 1rem;      /* 16px */
+  --spacing-lg: 1.5rem;    /* 24px */
+  --spacing-xl: 2rem;      /* 32px */
+  --spacing-2xl: 3rem;     /* 48px */
+
+  /* --- Border --- */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-full: 9999px;
+
+  --border-width-thin: 1px;
+  --border-width-medium: 2px;
+  --border-width-thick: 4px;
+
+  /* --- Transitions --- */
+  --transition-fast: 150ms ease;
+  --transition-normal: 200ms ease;
+  --transition-slow: 300ms ease;
+  --transition-slower: 500ms ease;
+
+  /* --- Z-index --- */
+  --z-index-base: 0;
+  --z-index-dropdown: 100;
+  --z-index-sticky: 200;
+  --z-index-fixed: 300;
+  --z-index-modal: 400;
+  --z-index-popover: 500;
+  --z-index-tooltip: 600;
+
+  /* --- Component Sizes --- */
+  --size-icon-sm: 16px;
+  --size-icon-md: 24px;
+  --size-icon-lg: 32px;
+  --size-spinner: 48px;
 }
 
 * {
@@ -45,11 +181,32 @@
   box-sizing: border-box;
 }
 
+/* Smooth theme transitions */
+html {
+  transition: background-color var(--transition-slow),
+              color var(--transition-slow);
+}
+
 body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
   background-color: var(--color-bg-primary);
   color: var(--color-text-primary);
   line-height: 1.6;
+  transition: background-color var(--transition-slow),
+              color var(--transition-slow);
+}
+
+/* Theme transition for all elements using theme colors */
+.card,
+.domain-card,
+.issues-list,
+.autofix-log,
+.tech-debt-list,
+.checks-section,
+.header {
+  transition: background-color var(--transition-slow),
+              border-color var(--transition-slow),
+              box-shadow var(--transition-slow);
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -64,4 +221,289 @@ a {
 
 a:hover {
   text-decoration: underline;
+}
+
+/* ===========================================
+ * Accessibility Styles
+ * =========================================== */
+
+/* Focus visible for keyboard navigation */
+:focus-visible {
+  outline: 2px solid var(--color-info);
+  outline-offset: 2px;
+}
+
+/* Remove focus outline for mouse users */
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* Skip link for keyboard users */
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 0;
+  background: var(--color-info);
+  color: white;
+  padding: var(--spacing-sm) var(--spacing-md);
+  z-index: var(--z-index-tooltip);
+  transition: top var(--transition-fast);
+}
+
+.skip-link:focus {
+  top: 0;
+}
+
+/* Reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Screen reader only */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Visually hidden but focusable */
+.sr-only-focusable:focus,
+.sr-only-focusable:active {
+  position: static;
+  width: auto;
+  height: auto;
+  padding: inherit;
+  margin: inherit;
+  overflow: visible;
+  clip: auto;
+  white-space: normal;
+}
+
+/* ===========================================
+ * Responsive Utilities
+ * =========================================== */
+
+/* Breakpoints reference:
+ * sm: 640px
+ * md: 768px
+ * lg: 1024px
+ * xl: 1280px
+ */
+
+/* Container */
+.container {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding-left: var(--spacing-md);
+  padding-right: var(--spacing-md);
+}
+
+@media (min-width: 768px) {
+  .container {
+    padding-left: var(--spacing-lg);
+    padding-right: var(--spacing-lg);
+  }
+}
+
+/* Responsive visibility */
+.hide-mobile {
+  display: none;
+}
+
+.hide-desktop {
+  display: block;
+}
+
+@media (min-width: 768px) {
+  .hide-mobile {
+    display: block;
+  }
+  .hide-desktop {
+    display: none;
+  }
+}
+
+/* Responsive text */
+.text-center-mobile {
+  text-align: center;
+}
+
+@media (min-width: 768px) {
+  .text-center-mobile {
+    text-align: left;
+  }
+}
+
+/* Responsive spacing */
+.p-mobile-sm {
+  padding: var(--spacing-sm);
+}
+
+@media (min-width: 768px) {
+  .p-mobile-sm {
+    padding: var(--spacing-lg);
+  }
+}
+
+/* Responsive flex */
+.flex-column-mobile {
+  flex-direction: column;
+}
+
+@media (min-width: 768px) {
+  .flex-column-mobile {
+    flex-direction: row;
+  }
+}
+
+/* Responsive gap */
+.gap-mobile-sm {
+  gap: var(--spacing-sm);
+}
+
+@media (min-width: 768px) {
+  .gap-mobile-sm {
+    gap: var(--spacing-lg);
+  }
+}
+
+/* Responsive grid */
+.grid-mobile-1 {
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 640px) {
+  .grid-mobile-1 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .grid-mobile-1 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* Responsive font sizes */
+h1 {
+  font-size: var(--font-size-xl);
+}
+
+h2 {
+  font-size: var(--font-size-lg);
+}
+
+h3 {
+  font-size: var(--font-size-md);
+}
+
+@media (min-width: 768px) {
+  h1 {
+    font-size: var(--font-size-2xl);
+  }
+  h2 {
+    font-size: var(--font-size-xl);
+  }
+  h3 {
+    font-size: var(--font-size-lg);
+  }
+}
+
+/* Touch-friendly targets */
+@media (max-width: 767px) {
+  button,
+  .btn,
+  .nav-link,
+  a {
+    min-height: 44px;
+    min-width: 44px;
+  }
+
+  .filter-btn {
+    padding: var(--spacing-sm) var(--spacing-md);
+  }
+
+  .refresh-btn {
+    padding: var(--spacing-sm) var(--spacing-lg);
+  }
+}
+
+/* Mobile-first adjustments for components */
+@media (max-width: 767px) {
+  /* Header */
+  .header-content {
+    flex-wrap: wrap;
+    gap: var(--spacing-sm);
+  }
+
+  .header-nav {
+    order: 3;
+    width: 100%;
+    justify-content: center;
+  }
+
+  /* Dashboard */
+  .dashboard-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .dashboard-title h1 {
+    font-size: var(--font-size-xl);
+  }
+
+  .dashboard-overview {
+    grid-template-columns: 1fr;
+  }
+
+  .score-content {
+    flex-direction: column;
+  }
+
+  .score-stats {
+    flex-direction: column;
+    gap: var(--spacing-md);
+  }
+
+  .issues-row {
+    grid-template-columns: 1fr;
+  }
+
+  /* Domain grid */
+  .domain-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* Cards */
+  .domain-card-body {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .issue-counts {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* Tables */
+  .checks-table-wrapper {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .checks-table {
+    min-width: 600px;
+  }
 }

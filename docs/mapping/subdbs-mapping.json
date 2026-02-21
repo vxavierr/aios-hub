@@ -1,0 +1,107 @@
+[
+  {
+    "name": "Home da Mídia",
+    "url": "https://www.notion.so/uhuru-comunicacao/Home-da-M-dia-4c1316fb406744538bb159ea13851cd2",
+    "title": "Home da Mídia | Notion",
+    "isDatabase": true,
+    "columns": [
+      {
+        "name": "Nome",
+        "type": "text"
+      },
+      {
+        "name": "Responsável",
+        "type": "text"
+      },
+      {
+        "name": "Cliente",
+        "type": "text"
+      },
+      {
+        "name": "Prazo",
+        "type": "text"
+      },
+      {
+        "name": "Status",
+        "type": "text"
+      }
+    ],
+    "views": [],
+    "sampleRows": [],
+    "linkedDbs": []
+  },
+  {
+    "name": "OCP_Controle de Orçamento",
+    "url": "https://www.notion.so/uhuru-comunicacao/OCP_Controle-de-Or-amento-1f6dc0a840ac42ecae54e19cc3d6da7b",
+    "title": "OCP_Controle de Orçamento | Notion",
+    "isDatabase": true,
+    "columns": [
+      {
+        "name": "Campanha mãe",
+        "type": "text"
+      },
+      {
+        "name": "Campanha por canal",
+        "type": "text"
+      },
+      {
+        "name": "Objetivo",
+        "type": "text"
+      },
+      {
+        "name": "Início",
+        "type": "text"
+      },
+      {
+        "name": "Término",
+        "type": "text"
+      },
+      {
+        "name": "Invest. Líquido",
+        "type": "text"
+      },
+      {
+        "name": "Valor Gasto",
+        "type": "text"
+      },
+      {
+        "name": "Saldo",
+        "type": "text"
+      },
+      {
+        "name": "Orçamento Diário",
+        "type": "text"
+      },
+      {
+        "name": "%",
+        "type": "text"
+      },
+      {
+        "name": "Proj. de Verba",
+        "type": "text"
+      },
+      {
+        "name": "PI Operand",
+        "type": "text"
+      }
+    ],
+    "views": [],
+    "sampleRows": [
+      [
+        "Campanha mãe",
+        "Campanha por canal",
+        "Objetivo",
+        "Início",
+        "Término",
+        "Invest. Líquido",
+        "Valor Gasto",
+        "Saldo",
+        "Orçamento Diário",
+        "",
+        "%",
+        "Proj. de Verba"
+      ]
+    ],
+    "linkedDbs": []
+  }
+]

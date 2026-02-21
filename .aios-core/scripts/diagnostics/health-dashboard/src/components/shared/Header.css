@@ -1,6 +1,6 @@
 .header {
   background-color: var(--color-bg-secondary);
-  border-bottom: 1px solid var(--color-bg-card);
+  border-bottom: var(--border-width-thin) solid var(--color-bg-card);
   padding: var(--spacing-md) var(--spacing-lg);
 }
 
@@ -16,8 +16,8 @@
   display: flex;
   align-items: center;
   gap: var(--spacing-sm);
-  font-size: 1.25rem;
-  font-weight: 600;
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
   color: var(--color-text-primary);
   text-decoration: none;
 }
@@ -26,11 +26,11 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 32px;
-  height: 32px;
+  width: var(--size-icon-lg);
+  height: var(--size-icon-lg);
   background: linear-gradient(135deg, var(--color-healthy), var(--color-info));
   border-radius: var(--radius-md);
-  font-weight: bold;
+  font-weight: var(--font-weight-bold);
 }
 
 .logo-text {
@@ -42,10 +42,16 @@
   gap: var(--spacing-lg);
 }
 
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-lg);
+}
+
 .nav-link {
   color: var(--color-text-secondary);
-  font-weight: 500;
-  transition: color 0.2s;
+  font-weight: var(--font-weight-medium);
+  transition: color var(--transition-normal);
 }
 
 .nav-link:hover {

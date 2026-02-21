@@ -4,21 +4,21 @@
   gap: var(--spacing-xs);
   padding: var(--spacing-xs) var(--spacing-sm);
   border-radius: var(--radius-full);
-  font-weight: 500;
+  font-weight: var(--font-weight-medium);
   text-transform: capitalize;
 }
 
 .badge--sm {
-  font-size: 0.75rem;
+  font-size: var(--font-size-xs);
   padding: 2px var(--spacing-xs);
 }
 
 .badge--md {
-  font-size: 0.875rem;
+  font-size: var(--font-size-sm);
 }
 
 .badge--lg {
-  font-size: 1rem;
+  font-size: var(--font-size-base);
   padding: var(--spacing-sm) var(--spacing-md);
 }
 

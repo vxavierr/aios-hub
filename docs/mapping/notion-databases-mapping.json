@@ -1,0 +1,177 @@
+[
+  {
+    "database": "Ocupacional",
+    "title": "Ocupacional",
+    "url": "https://www.notion.so/uhuru-comunicacao/Ocupacional-a9adbad0564948369cbbaf0ec544f066",
+    "properties": [
+      {
+        "name": "Ocupacional",
+        "type": "select"
+      },
+      {
+        "name": "Links Externos:",
+        "type": "text"
+      },
+      {
+        "name": "ads.google.com​",
+        "type": "text"
+      },
+      {
+        "name": "adsmanager.facebook.com​",
+        "type": "text"
+      },
+      {
+        "name": "LinkedIn Campaign Manager​",
+        "type": "text"
+      },
+      {
+        "name": "Relatórios:",
+        "type": "text"
+      },
+      {
+        "name": "Dia a Dia:",
+        "type": "text"
+      },
+      {
+        "name": "Sistema:",
+        "type": "text"
+      },
+      {
+        "name": "Resumo do Mês:",
+        "type": "text"
+      },
+      {
+        "name": "Aqui está o resumo do mês atual.",
+        "type": "text"
+      },
+      {
+        "name": "Resumo do Ano:",
+        "type": "text"
+      },
+      {
+        "name": "Aqui está o resumo do ano atual.",
+        "type": "text"
+      },
+      {
+        "name": "Controle de Orçamento:",
+        "type": "text"
+      },
+      {
+        "name": "Aqui está um farol das campanhas ativas.",
+        "type": "text"
+      },
+      {
+        "name": "Visitas ao perfil",
+        "type": "text"
+      },
+      {
+        "name": "Engajamento",
+        "type": "text"
+      },
+      {
+        "name": "Comercial Pmax",
+        "type": "text"
+      },
+      {
+        "name": "Comercial Search",
+        "type": "text"
+      },
+      {
+        "name": "Experimentos:",
+        "type": "text"
+      },
+      {
+        "name": "Campanhas:",
+        "type": "text"
+      }
+    ],
+    "views": [
+      "Resumo",
+      "Experimentos",
+      "Timeline"
+    ]
+  },
+  {
+    "database": "AssisteMed",
+    "title": "AssisteMed",
+    "url": "https://www.notion.so/uhuru-comunicacao/AssisteMed-7f240474e6d048109947206900b0312b",
+    "properties": [
+      {
+        "name": "AssisteMed",
+        "type": "select"
+      },
+      {
+        "name": "Links Externos:",
+        "type": "text"
+      },
+      {
+        "name": "ads.google.com​",
+        "type": "text"
+      },
+      {
+        "name": "adsmanager.facebook.com​",
+        "type": "text"
+      },
+      {
+        "name": "Relatórios:",
+        "type": "text"
+      },
+      {
+        "name": "Looker StudioOCP :: Campanha Comercial​",
+        "type": "text"
+      },
+      {
+        "name": "Dia a Dia:",
+        "type": "text"
+      },
+      {
+        "name": "Sistema:",
+        "type": "text"
+      },
+      {
+        "name": "Resumo do Mês:",
+        "type": "text"
+      },
+      {
+        "name": "Aqui está o resumo do mês atual.",
+        "type": "text"
+      },
+      {
+        "name": "Resumo do Ano:",
+        "type": "text"
+      },
+      {
+        "name": "Aqui está o resumo do ano atual.",
+        "type": "text"
+      },
+      {
+        "name": "Controle de Orçamento:",
+        "type": "text"
+      },
+      {
+        "name": "Aqui está um farol das campanhas ativas.",
+        "type": "text"
+      },
+      {
+        "name": "Experimentos:",
+        "type": "text"
+      },
+      {
+        "name": "Campanhas:",
+        "type": "text"
+      }
+    ],
+    "views": [
+      "Resumo",
+      "Experimentos",
+      "Timeline"
+    ]
+  },
+  {
+    "database": "C.A.S.A.",
+    "title": "Unknown",
+    "url": "https://www.notion.so/uhuru-comunicacao/C.A.S.A.-1d6dbafb030280c682a2ff8c758db28b",
+    "properties": [],
+    "views": []
+  }
+]

@@ -14,8 +14,8 @@
 }
 
 .issues-title {
-  font-size: 1.125rem;
-  font-weight: 600;
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-semibold);
   color: var(--color-text-primary);
 }
 
@@ -30,9 +30,9 @@
   border: none;
   border-radius: var(--radius-sm);
   color: var(--color-text-secondary);
-  font-size: 0.75rem;
+  font-size: var(--font-size-xs);
   cursor: pointer;
-  transition: all 0.2s;
+  transition: all var(--transition-normal);
 }
 
 .filter-btn:hover {
@@ -65,7 +65,7 @@
 }
 
 .empty-icon {
-  font-size: 2rem;
+  font-size: var(--font-size-3xl);
   margin-bottom: var(--spacing-sm);
 }
 
@@ -101,8 +101,8 @@
 }
 
 .issue-id {
-  font-family: monospace;
-  font-size: 0.75rem;
+  font-family: var(--font-family-mono);
+  font-size: var(--font-size-xs);
   padding: 2px var(--spacing-xs);
   background-color: var(--color-bg-primary);
   border-radius: var(--radius-sm);
@@ -110,7 +110,7 @@
 }
 
 .issue-name {
-  font-weight: 500;
+  font-weight: var(--font-weight-medium);
   color: var(--color-text-primary);
 }
 
@@ -121,14 +121,14 @@
 }
 
 .issue-domain {
-  font-size: 0.75rem;
+  font-size: var(--font-size-xs);
   color: var(--color-text-muted);
   text-transform: capitalize;
 }
 
 .issue-message {
   margin-top: var(--spacing-sm);
-  font-size: 0.875rem;
+  font-size: var(--font-size-sm);
   color: var(--color-text-secondary);
 }
 
@@ -138,11 +138,11 @@
   justify-content: space-between;
   margin-top: var(--spacing-md);
   padding-top: var(--spacing-sm);
-  border-top: 1px solid var(--color-bg-secondary);
+  border-top: var(--border-width-thin) solid var(--color-bg-secondary);
 }
 
 .fix-tier {
-  font-size: 0.75rem;
+  font-size: var(--font-size-xs);
   color: var(--color-text-muted);
 }
 
@@ -150,10 +150,10 @@
   padding: var(--spacing-xs) var(--spacing-md);
   border: none;
   border-radius: var(--radius-sm);
-  font-size: 0.75rem;
-  font-weight: 500;
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
   cursor: pointer;
-  transition: all 0.2s;
+  transition: all var(--transition-normal);
 }
 
 .action-btn--fix {
@@ -180,5 +180,5 @@
   text-align: center;
   padding-top: var(--spacing-md);
   color: var(--color-text-muted);
-  font-size: 0.875rem;
+  font-size: var(--font-size-sm);
 }

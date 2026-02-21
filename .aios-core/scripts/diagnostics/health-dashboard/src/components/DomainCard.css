@@ -10,11 +10,11 @@
   gap: var(--spacing-md);
   margin-bottom: var(--spacing-md);
   padding-bottom: var(--spacing-md);
-  border-bottom: 1px solid var(--color-bg-card);
+  border-bottom: var(--border-width-thin) solid var(--color-bg-card);
 }
 
 .domain-icon {
-  font-size: 1.5rem;
+  font-size: var(--font-size-xl);
   width: 40px;
   height: 40px;
   display: flex;
@@ -29,14 +29,14 @@
 }
 
 .domain-name {
-  font-size: 1rem;
-  font-weight: 600;
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-semibold);
   color: var(--color-text-primary);
   margin: 0;
 }
 
 .domain-stats {
-  font-size: 0.75rem;
+  font-size: var(--font-size-xs);
   color: var(--color-text-muted);
 }
 
@@ -54,7 +54,7 @@
 
 .no-issues {
   color: var(--color-healthy);
-  font-size: 0.875rem;
+  font-size: var(--font-size-sm);
   display: flex;
   align-items: center;
   gap: var(--spacing-xs);
@@ -80,14 +80,14 @@
 }
 
 .issue-count .count {
-  font-size: 1.25rem;
-  font-weight: 700;
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
 }
 
 .issue-count .label {
   font-size: 0.625rem;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: var(--letter-spacing-wide);
   color: var(--color-text-muted);
 }
 
@@ -110,12 +110,12 @@
 .domain-card-footer {
   margin-top: var(--spacing-md);
   padding-top: var(--spacing-md);
-  border-top: 1px solid var(--color-bg-card);
+  border-top: var(--border-width-thin) solid var(--color-bg-card);
   text-align: right;
 }
 
 .view-details {
-  font-size: 0.875rem;
+  font-size: var(--font-size-sm);
   color: var(--color-info);
-  font-weight: 500;
+  font-weight: var(--font-weight-medium);
 }

@@ -1,4 +1,7 @@
 
+# ===========================================
+# AIOS HUB .gitignore
+# ===========================================
 
 # Environment & Secrets (AIOS)
 .env
@@ -6,24 +9,51 @@
 .env.*.local
 *.key
 *.pem
+secrets/
 
-# Dependencies (AIOS)
+# Dependencies - Node.js (AIOS)
 node_modules/
-node_modules
+package-lock.json
+
+# Dependencies - Python (AIOS)
+.venv/
+.venv-*/
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+dist-packages/
 
 # Build & Logs (AIOS)
 dist/
 build/
 *.log
 logs/
+coverage/
 
 # IDE & OS (AIOS)
 .DS_Store
 Thumbs.db
 .idea/
 *.swp
+.vscode/
+*.sublime-*
 
 # AIOS Local (AIOS)
 .aios-core/local/
 .claude/settings.local.json
 .aios/install-log.txt
+
+# AIOS Tools (local installs)
+.aios-tools/**/.venv/
+.aios-tools/**/node_modules/
+.aios-tools/uv-cache/
+
+# Temporary & Cache
+*.tmp
+*.temp
+.cache/
+.pytest_cache/
+.mypy_cache/

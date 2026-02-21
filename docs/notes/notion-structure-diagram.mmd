@@ -1,0 +1,77 @@
+graph TD
+    subgraph Uhuru["Uhuru Comunicacao"]
+        subgraph ASM["AssisteMed"]
+            ASM_Home["ASM - Home"]
+            ASM_Campanhas["ASM_Campanhas<br/>19 propriedades"]
+            ASM_Otimizacoes["ASM_Otimizacoes<br/>9 propriedades"]
+            ASM_Params["ASM_Parametrizacao URLs"]
+            ASM_Orcamento["ASM_Controle Orcamento"]
+            ASM_Background["ASM_Background"]
+            ASM_Perf["ASM - Performance"]
+            ASM_Links["Links Externos<br/>Google Ads, Meta Ads"]
+        end
+
+        subgraph OCP["Ocupacional"]
+            OCP_Home["OCP - Home"]
+            OCP_Campanhas["OCP_Campanhas"]
+            OCP_Otimizacoes["OCP_Otimizacoes"]
+            OCP_Params["OCP_Parametrizacao URLs"]
+            OCP_Orcamento["OCP_Controle Orcamento"]
+            OCP_Background["OCP_Background"]
+            OCP_Links["Links Externos<br/>Google Ads, Meta Ads, LinkedIn"]
+        end
+
+        subgraph CASA["C.A.S.A."]
+            CASA_Home["CASA - Home"]
+            CASA_Campanhas["CASA_Campanhas"]
+            CASA_Otimizacoes["CASA_Otimizacoes"]
+            CASA_Params["CASA_Parametrizacao URLs"]
+            CASA_Orcamento["CASA_Controle Orcamento"]
+            CASA_Background["CASA_Background"]
+            CASA_Links["Links Externos<br/>Google Ads, Meta Ads"]
+        end
+
+        L2L_Experimentos["L2L_Experimentos<br/>(Kanban)"]
+    end
+
+    %% Estrutura ASM
+    ASM_Home --> ASM_Links
+    ASM_Home --> ASM_Perf
+    ASM_Home --> ASM_Campanhas
+    ASM_Home --> ASM_Otimizacoes
+    ASM_Home --> ASM_Params
+    ASM_Home --> ASM_Orcamento
+    ASM_Home --> ASM_Background
+
+    %% Relations ASM
+    ASM_Campanhas -.->|"Experimentos (REL)"| L2L_Experimentos
+    ASM_Campanhas -.->|"Otimizacoes (REL)"| OCP_Otimizacoes
+    ASM_Campanhas -.->|"Campanha Mae (REL)"| ASM_Campanhas
+    ASM_Otimizacoes -.->|"Campanha (REL)"| ASM_Campanhas
+
+    %% Estrutura OCP
+    OCP_Home --> OCP_Links
+    OCP_Home --> OCP_Campanhas
+    OCP_Home --> OCP_Otimizacoes
+    OCP_Home --> OCP_Params
+    OCP_Home --> OCP_Orcamento
+    OCP_Home --> OCP_Background
+
+    %% Estrutura CASA
+    CASA_Home --> CASA_Links
+    CASA_Home --> CASA_Campanhas
+    CASA_Home --> CASA_Otimizacoes
+    CASA_Home --> CASA_Params
+    CASA_Home --> CASA_Orcamento
+    CASA_Home --> CASA_Background
+
+    %% Styling
+    classDef home fill:#4A90D9,stroke:#2E5A8B,color:#fff
+    classDef db fill:#7B68EE,stroke:#4B3CA8,color:#fff
+    classDef rel fill:#50C878,stroke:#2E8B57,color:#fff
+    classDef ext fill:#FFB347,stroke:#CC8C00,color:#fff
+
+    class ASM_Home,OCP_Home,CASA_Home home
+    class ASM_Campanhas,ASM_Otimizacoes,OCP_Campanhas,OCP_Otimizacoes,CASA_Campanhas,CASA_Otimizacoes db
+    class L2L_Experimentos rel
+    class ASM_Links,OCP_Links,CASA_Links ext

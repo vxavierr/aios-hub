@@ -23,8 +23,8 @@ function Dashboard() {
 
   if (loading && !data) {
     return (
-      <div className="dashboard-loading">
-        <div className="loading-spinner"></div>
+      <div className="dashboard-loading" role="status" aria-live="polite">
+        <div className="loading-spinner" aria-hidden="true"></div>
         <p>Loading health data...</p>
       </div>
     );
@@ -32,10 +32,10 @@ function Dashboard() {
 
   if (error && !data) {
     return (
-      <div className="dashboard-error">
+      <div className="dashboard-error" role="alert" aria-live="assertive">
         <h2>Error loading data</h2>
         <p>{error.message}</p>
-        <button onClick={refresh}>Retry</button>
+        <button onClick={refresh} aria-label="Retry loading health data">Retry</button>
       </div>
     );
   }
@@ -50,7 +50,7 @@ function Dashboard() {
           <h1>System Health</h1>
           <div className="dashboard-meta">
             {lastUpdated && (
-              <span className="last-updated">
+              <span className="last-updated" aria-live="polite">
                 Last updated: {lastUpdated.toLocaleTimeString()}
               </span>
             )}
@@ -58,22 +58,28 @@ function Dashboard() {
               className="refresh-btn"
               onClick={refresh}
               disabled={autoRefresh.isRefreshing}
+              aria-label="Refresh health data"
+              aria-busy={autoRefresh.isRefreshing}
             >
               {autoRefresh.isRefreshing ? 'Refreshing...' : 'Refresh'}
             </button>
           </div>
         </div>
         <div className="auto-refresh-toggle">
-          <label className="toggle-label">
+          <label className="toggle-label" htmlFor="auto-refresh-checkbox">
             <input
+              id="auto-refresh-checkbox"
               type="checkbox"
               checked={autoRefresh.isEnabled}
               onChange={autoRefresh.toggle}
+              aria-describedby="auto-refresh-desc"
             />
             <span>Auto-refresh</span>
           </label>
           {autoRefresh.isEnabled && (
-            <span className="countdown">Next: {autoRefresh.countdown}s</span>
+            <span className="countdown" id="auto-refresh-desc" aria-live="polite">
+              Next: {autoRefresh.countdown}s
+            </span>
           )}
         </div>
       </div>

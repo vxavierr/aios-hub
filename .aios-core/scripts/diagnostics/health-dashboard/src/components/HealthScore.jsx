@@ -32,12 +32,20 @@ function HealthScore({ score, size = 'lg', showLabel = true, animate = true }) {
   const center = config.width / 2;
 
   return (
-    <div className={`health-score health-score--${size}`}>
+    <div
+      className={`health-score health-score--${size}`}
+      role="progressbar"
+      aria-valuenow={score}
+      aria-valuemin={0}
+      aria-valuemax={100}
+      aria-label={`Health score: ${score} out of 100, ${label}`}
+    >
       <svg
         className="health-score-svg"
         width={config.width}
         height={config.width}
         viewBox={`0 0 ${config.width} ${config.width}`}
+        aria-hidden="true"
       >
         {/* Background circle */}
         <circle
@@ -65,11 +73,12 @@ function HealthScore({ score, size = 'lg', showLabel = true, animate = true }) {
         <span
           className="health-score-value"
           style={{ fontSize: config.fontSize, color }}
+          aria-hidden="true"
         >
           {score}
         </span>
         {showLabel && (
-          <span className={`health-score-label health-score-label--${status}`}>
+          <span className={`health-score-label health-score-label--${status}`} aria-hidden="true">
             {label}
           </span>
         )}

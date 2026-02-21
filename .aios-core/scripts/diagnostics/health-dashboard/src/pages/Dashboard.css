@@ -16,9 +16,9 @@
 }
 
 .loading-spinner {
-  width: 48px;
-  height: 48px;
-  border: 4px solid var(--color-bg-card);
+  width: var(--size-spinner);
+  height: var(--size-spinner);
+  border: var(--border-width-thick) solid var(--color-bg-card);
   border-top-color: var(--color-info);
   border-radius: 50%;
   animation: spin 1s linear infinite;
@@ -58,8 +58,8 @@
 }
 
 .dashboard-title h1 {
-  font-size: 1.75rem;
-  font-weight: 700;
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-bold);
 }
 
 .dashboard-meta {
@@ -69,7 +69,7 @@
 }
 
 .last-updated {
-  font-size: 0.875rem;
+  font-size: var(--font-size-sm);
   color: var(--color-text-muted);
 }
 
@@ -80,8 +80,8 @@
   border: none;
   border-radius: var(--radius-sm);
   cursor: pointer;
-  font-size: 0.875rem;
-  transition: background-color 0.2s;
+  font-size: var(--font-size-sm);
+  transition: background-color var(--transition-normal);
 }
 
 .refresh-btn:hover:not(:disabled) {
@@ -104,18 +104,18 @@
   align-items: center;
   gap: var(--spacing-sm);
   cursor: pointer;
-  font-size: 0.875rem;
+  font-size: var(--font-size-sm);
   color: var(--color-text-secondary);
 }
 
 .toggle-label input {
-  width: 16px;
-  height: 16px;
+  width: var(--size-icon-sm);
+  height: var(--size-icon-sm);
   accent-color: var(--color-info);
 }
 
 .countdown {
-  font-size: 0.75rem;
+  font-size: var(--font-size-xs);
   color: var(--color-text-muted);
   padding: var(--spacing-xs) var(--spacing-sm);
   background-color: var(--color-bg-card);
@@ -161,16 +161,16 @@
 }
 
 .stat-value {
-  font-size: 1.5rem;
-  font-weight: 700;
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-bold);
   color: var(--color-text-primary);
 }
 
 .stat-label {
-  font-size: 0.75rem;
+  font-size: var(--font-size-xs);
   color: var(--color-text-muted);
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: var(--letter-spacing-wide);
 }
 
 .stat--success .stat-value {
@@ -187,8 +187,8 @@
 }
 
 .section-title {
-  font-size: 1.25rem;
-  font-weight: 600;
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
   margin-bottom: var(--spacing-md);
   color: var(--color-text-primary);
 }
@@ -228,11 +228,11 @@
 .dashboard-footer {
   margin-top: var(--spacing-xl);
   padding-top: var(--spacing-lg);
-  border-top: 1px solid var(--color-bg-card);
+  border-top: var(--border-width-thin) solid var(--color-bg-card);
   text-align: center;
 }
 
 .dashboard-footer p {
-  font-size: 0.75rem;
+  font-size: var(--font-size-xs);
   color: var(--color-text-muted);
 }

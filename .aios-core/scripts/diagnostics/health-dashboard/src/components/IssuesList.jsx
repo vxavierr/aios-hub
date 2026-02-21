@@ -40,31 +40,35 @@ function IssuesList({ issues = {}, onAction, maxItems = 10 }) {
   };
 
   return (
-    <div className="issues-list">
+    <div className="issues-list" role="region" aria-label="Issues list">
       <div className="issues-header">
-        <h3 className="issues-title">Issues ({allIssues.length})</h3>
-        <div className="issues-filters">
+        <h3 className="issues-title" id="issues-heading">Issues ({allIssues.length})</h3>
+        <div className="issues-filters" role="group" aria-label="Filter issues by severity">
           <button
             className={`filter-btn ${filter === 'all' ? 'active' : ''}`}
             onClick={() => setFilter('all')}
+            aria-pressed={filter === 'all'}
           >
             All
           </button>
           <button
             className={`filter-btn filter-btn--critical ${filter === 'critical' ? 'active' : ''}`}
             onClick={() => setFilter('critical')}
+            aria-pressed={filter === 'critical'}
           >
             Critical
           </button>
           <button
             className={`filter-btn filter-btn--high ${filter === 'high' ? 'active' : ''}`}
             onClick={() => setFilter('high')}
+            aria-pressed={filter === 'high'}
           >
             High
           </button>
           <button
             className={`filter-btn filter-btn--medium ${filter === 'medium' ? 'active' : ''}`}
             onClick={() => setFilter('medium')}
+            aria-pressed={filter === 'medium'}
           >
             Medium
           </button>
@@ -72,12 +76,12 @@ function IssuesList({ issues = {}, onAction, maxItems = 10 }) {
       </div>
 
       {displayedIssues.length === 0 ? (
-        <div className="issues-empty">
-          <span className="empty-icon">\u2713</span>
+        <div className="issues-empty" role="status">
+          <span className="empty-icon" aria-hidden="true">{'\u2713'}</span>
           <p>No issues found</p>
         </div>
       ) : (
-        <ul className="issues-items">
+        <ul className="issues-items" aria-labelledby="issues-heading">
           {displayedIssues.map((issue, index) => (
             <li key={issue.checkId || index} className="issue-item">
               <div className="issue-main">
@@ -106,6 +110,7 @@ function IssuesList({ issues = {}, onAction, maxItems = 10 }) {
                     <button
                       className="action-btn action-btn--fix"
                       onClick={() => handleAction(issue, 'autofix')}
+                      aria-label={`Auto-fix issue: ${issue.name || issue.checkId}`}
                     >
                       Auto-Fix
                     </button>
@@ -114,6 +119,7 @@ function IssuesList({ issues = {}, onAction, maxItems = 10 }) {
                     <button
                       className="action-btn action-btn--confirm"
                       onClick={() => handleAction(issue, 'confirm')}
+                      aria-label={`Review and fix issue: ${issue.name || issue.checkId}`}
                     >
                       Review & Fix
                     </button>
@@ -122,6 +128,7 @@ function IssuesList({ issues = {}, onAction, maxItems = 10 }) {
                     <button
                       className="action-btn action-btn--guide"
                       onClick={() => handleAction(issue, 'guide')}
+                      aria-label={`View guide for issue: ${issue.name || issue.checkId}`}
                     >
                       View Guide
                     </button>

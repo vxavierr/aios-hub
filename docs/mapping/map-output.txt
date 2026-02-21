@@ -1,0 +1,18 @@
+🔌 Conectando ao Comet...
+
+node:internal/process/promises:394
+    triggerUncaughtException(err, true /* fromPromise */);
+    ^
+
+browserType.connectOverCDP: Timeout 60000ms exceeded.
+Call log:
+[2m  - <ws preparing> retrieving websocket url from http://localhost:9222[22m
+[2m  - <ws connecting> ws://localhost:9222/devtools/browser/fbe0bb08-0081-49f1-b620-9b07a3633301[22m
+[2m  - <ws connected> ws://localhost:9222/devtools/browser/fbe0bb08-0081-49f1-b620-9b07a3633301[22m
+
+    at D:\workspace\map-comet.js:6:34
+    at Object.<anonymous> (D:\workspace\map-comet.js:115:3) {
+  name: 'TimeoutError'
+}
+
+Node.js v22.17.0

@@ -1,0 +1,459 @@
+[
+  {
+    "name": "ASM_Campanhas",
+    "url": "https://www.notion.so/uhuru-comunicacao/3d8168c8215947bd98eb2147c3710b2e",
+    "title": "Página inicial | Notion",
+    "found": false,
+    "properties": [],
+    "relations": [],
+    "rollups": [],
+    "formulas": [],
+    "views": [],
+    "linkedDatabases": []
+  },
+  {
+    "name": "ASM_Otimizações",
+    "url": "https://www.notion.so/",
+    "title": "Notion",
+    "found": false,
+    "properties": [],
+    "relations": [],
+    "rollups": [],
+    "formulas": [],
+    "views": [],
+    "linkedDatabases": []
+  },
+  {
+    "name": "ASM_Parametrização de URLs",
+    "url": "https://www.notion.so/",
+    "title": "Notion",
+    "found": false,
+    "properties": [],
+    "relations": [],
+    "rollups": [],
+    "formulas": [],
+    "views": [],
+    "linkedDatabases": []
+  },
+  {
+    "name": "ASM_Controle de Orçamento",
+    "url": "https://www.notion.so/uhuru-comunicacao/ASM_Controle-de-Or-amento-bac0e90c7b4c4bf9a86779767403ed07",
+    "title": "ASM_Controle de Orçamento | Notion",
+    "found": true,
+    "properties": [
+      {
+        "name": "Campanha mãe",
+        "type": "text"
+      },
+      {
+        "name": "Campanha por canal",
+        "type": "text"
+      },
+      {
+        "name": "Mês",
+        "type": "text"
+      },
+      {
+        "name": "Canal",
+        "type": "text"
+      },
+      {
+        "name": "Objetivo",
+        "type": "text"
+      },
+      {
+        "name": "Início",
+        "type": "text"
+      },
+      {
+        "name": "Término",
+        "type": "text"
+      },
+      {
+        "name": "Investimento",
+        "type": "text"
+      },
+      {
+        "name": "Valor Gasto",
+        "type": "text"
+      },
+      {
+        "name": "Saldo",
+        "type": "text"
+      },
+      {
+        "name": "Orçamento Diário",
+        "type": "text"
+      },
+      {
+        "name": "%",
+        "type": "text"
+      },
+      {
+        "name": "Proj. de Verba",
+        "type": "text"
+      }
+    ],
+    "relations": [],
+    "rollups": [],
+    "formulas": [],
+    "views": [],
+    "linkedDatabases": [],
+    "bodySample": "Pular para o conteúdo\nUhuru Comunicação\nBuscar\nPágina inicial\nReuniões\nIA do Notion\nCaixa de entrada\nBiblioteca\nRecentes\nFavoritos\nOcupacional\nAssisteMed\nC.A.S.A.\nCompartilhado\nOCP | Estratégia NR1 (start) @3 de fevereiro de 2026 16:30\nEspaços de equipe\nMídia\nHome da Mídia\nAdicionar nova\nParticular\nNova página\nNova página\n@20 de janeiro de 2026 19:36\n@20 de janeiro de 2026 19:34\n@20 de janeiro de 2026 19:31\nMais\nAdicionar comentário\nASM_Controle de Orçamento\nAssisteMed \nLinks Externos:\nads.google.com​\nadsmanager.facebook.com​\nRelatórios:\nASM - Acompanhamento performance\nLooker StudioOCP :: Campanha Comercial​\nDia a Dia:\nASM_Campanhas\nASM_Otimizações\nASM_Parametrização de URLs\nASM_Controle de Orçamento\nSistema:\nASM_Background\nFevereiro\n1\nCampanha mãe\nCampanha por canal\nMês\nCanal\nObjetivo\nInício\nTérmino\nInvestimento\nValor Gasto\nSaldo\nOrçamento Diário\n%\nProj. de Verba\nCampanha Comercial\nInstitucional\nFevereiro\nLinkedIn\nAwareness\n01/02/2026\n28/02/2026\nR$ 1.000,00\nR$ 251,92\nNova página\nSOMA\nR$ 1.000,00\nSOMA\nR$ 251,92\nSOMA\nR$ 748,08\nNovo grupo\nLinkedIn"
+  },
+  {
+    "name": "ASM_Background",
+    "url": "https://www.notion.so/",
+    "title": "Notion",
+    "found": false,
+    "properties": [],
+    "relations": [],
+    "rollups": [],
+    "formulas": [],
+    "views": [],
+    "linkedDatabases": []
+  },
+  {
+    "name": "OCP_Campanhas",
+    "url": "https://www.notion.so/uhuru-comunicacao/3d8168c8215947bd98eb2147c3710b2e",
+    "title": "Página inicial | Notion",
+    "found": false,
+    "properties": [],
+    "relations": [],
+    "rollups": [],
+    "formulas": [],
+    "views": [],
+    "linkedDatabases": []
+  },
+  {
+    "name": "OCP_Otimizações",
+    "url": "https://www.notion.so/uhuru-comunicacao/3d8168c8215947bd98eb2147c3710b2e",
+    "title": "Página inicial | Notion",
+    "found": false,
+    "properties": [],
+    "relations": [],
+    "rollups": [],
+    "formulas": [],
+    "views": [],
+    "linkedDatabases": []
+  },
+  {
+    "name": "OCP_Parametrização de URLs",
+    "url": "https://www.notion.so/3d8168c8215947bd98eb2147c3710b2e?pvs=66",
+    "title": "Página inicial | Notion",
+    "found": true,
+    "properties": [],
+    "relations": [],
+    "rollups": [],
+    "formulas": [],
+    "views": [],
+    "linkedDatabases": [],
+    "bodySample": "Skip to content\nUhuru Comunicação\nSearch\nHome\nMeetings\nNotion AI\nInbox\nLibrary\nRecents\nFavorites\nOcupacional\nAssisteMed\nC.A.S.A.\nShared\nOCP | Estratégia NR1 (start) @February 3, 2026 4:30 PM\nTeamspaces\nGeral\nCompany Home\nAdd new\nMídia\nHome da Mídia\nAdd new\nMore\nPrivate\nNew page\nNew page\n@January 20, 2026 7:36 PM\n@January 20, 2026 7:34 PM\n@January 20, 2026 7:31 PM\nMore\nGood afternoon\nWelcome home\nRecently visited\nUpcoming events\nToday\nFeb 20\nDaily Mídia\n2:15 – 2:30 PM ⸱ Google Meet Code rox-vijf-kie\nJoin meeting\nDesligar notificação Discord\n6 – 6:15 PM ⸱ Google Meet Code xtg-ppjc-mxv\nDiário\n10:30 – 11 PM\nSat\nFeb 21\nTerapia\n7 – 8 AM\nTerapia\n7 – 8 AM\nMocidade CEO\n3:30 – 6 PM\nCulto do Evangelho\n6 – 7 PM\nEu + Naná\n7 – 10 PM\nDiário\n10:30 – 11 PM\nSun\nFeb 22\nEu + Naná\n6 – 10 PM\nDiário\n10:30 – 11 PM\nHome views\nSuggested for you\nTrending\nLearn"
+  },
+  {
+    "name": "OCP_Controle de Orçamento",
+    "url": "https://www.notion.so/uhuru-comunicacao/OCP_Controle-de-Or-amento-1f6dc0a840ac42ecae54e19cc3d6da7b",
+    "title": "OCP_Controle de Orçamento | Notion",
+    "found": true,
+    "properties": [
+      {
+        "name": "Campanha mãe",
+        "type": "text"
+      },
+      {
+        "name": "Campanha por canal",
+        "type": "text"
+      },
+      {
+        "name": "Objetivo",
+        "type": "text"
+      },
+      {
+        "name": "Início",
+        "type": "text"
+      },
+      {
+        "name": "Término",
+        "type": "text"
+      },
+      {
+        "name": "Invest. Líquido",
+        "type": "text"
+      },
+      {
+        "name": "Valor Gasto",
+        "type": "text"
+      },
+      {
+        "name": "Saldo",
+        "type": "text"
+      },
+      {
+        "name": "Orçamento Diário",
+        "type": "text"
+      },
+      {
+        "name": "%",
+        "type": "text"
+      },
+      {
+        "name": "Proj. de Verba",
+        "type": "text"
+      },
+      {
+        "name": "Campanha por canal",
+        "type": "text"
+      },
+      {
+        "name": "Objetivo",
+        "type": "text"
+      },
+      {
+        "name": "Início",
+        "type": "text"
+      },
+      {
+        "name": "Término",
+        "type": "text"
+      },
+      {
+        "name": "Invest. Líquido",
+        "type": "text"
+      },
+      {
+        "name": "Valor Gasto",
+        "type": "text"
+      },
+      {
+        "name": "Saldo",
+        "type": "text"
+      },
+      {
+        "name": "Orçamento Diário",
+        "type": "text"
+      },
+      {
+        "name": "%",
+        "type": "text"
+      },
+      {
+        "name": "Proj. de Verba",
+        "type": "text"
+      },
+      {
+        "name": "PI Operand",
+        "type": "text"
+      },
+      {
+        "name": "Campanha por canal",
+        "type": "text"
+      },
+      {
+        "name": "Objetivo",
+        "type": "text"
+      },
+      {
+        "name": "Início",
+        "type": "text"
+      },
+      {
+        "name": "Término",
+        "type": "text"
+      },
+      {
+        "name": "Invest. Líquido",
+        "type": "text"
+      },
+      {
+        "name": "Valor Gasto",
+        "type": "text"
+      },
+      {
+        "name": "Saldo",
+        "type": "text"
+      },
+      {
+        "name": "Orçamento Diário",
+        "type": "text"
+      },
+      {
+        "name": "%",
+        "type": "text"
+      },
+      {
+        "name": "Proj. de Verba",
+        "type": "text"
+      },
+      {
+        "name": "PI Operand",
+        "type": "text"
+      },
+      {
+        "name": "Campanha por canal",
+        "type": "text"
+      },
+      {
+        "name": "Objetivo",
+        "type": "text"
+      },
+      {
+        "name": "Início",
+        "type": "text"
+      },
+      {
+        "name": "Término",
+        "type": "text"
+      },
+      {
+        "name": "Invest. Líquido",
+        "type": "text"
+      },
+      {
+        "name": "Valor Gasto",
+        "type": "text"
+      },
+      {
+        "name": "Saldo",
+        "type": "text"
+      },
+      {
+        "name": "Orçamento Diário",
+        "type": "text"
+      },
+      {
+        "name": "%",
+        "type": "text"
+      },
+      {
+        "name": "Proj. de Verba",
+        "type": "text"
+      },
+      {
+        "name": "PI Operand",
+        "type": "text"
+      },
+      {
+        "name": "Campanha por canal",
+        "type": "text"
+      },
+      {
+        "name": "Objetivo",
+        "type": "text"
+      },
+      {
+        "name": "Início",
+        "type": "text"
+      },
+      {
+        "name": "Término",
+        "type": "text"
+      },
+      {
+        "name": "Invest. Líquido",
+        "type": "text"
+      },
+      {
+        "name": "Valor Gasto",
+        "type": "text"
+      },
+      {
+        "name": "Saldo",
+        "type": "text"
+      },
+      {
+        "name": "Orçamento Diário",
+        "type": "text"
+      },
+      {
+        "name": "%",
+        "type": "text"
+      },
+      {
+        "name": "Proj. de Verba",
+        "type": "text"
+      },
+      {
+        "name": "PI Operand",
+        "type": "text"
+      }
+    ],
+    "relations": [],
+    "rollups": [],
+    "formulas": [],
+    "views": [],
+    "linkedDatabases": [],
+    "bodySample": "Skip to content\nAdd comment\nOCP_Controle de Orçamento\nOcupacional \nLinks Externos:\nads.google.com​\nadsmanager.facebook.com​\nLinkedIn Campaign Manager​\nRelatórios:\nOCP - Acompanhamento performance\nDia a Dia:\nOCP_Campanhas\nOCP_Otimizações\nOCP_Parametrização de URLs\nOCP_Controle de Orçamento\nSistema:\nOCP_Background\nCampanha mãe\nCampanha por canal\nObjetivo\nInício\nTérmino\nInvest. Líquido\nValor Gasto\nSaldo\nOrçamento Diário\n%\nProj. de Verba\nImpulsionamentos\nVisitas ao perfil\nTráfego\n01/02/2026\n28/02/2026\nR$219.63\nR$66.62\nImpulsionamentos\nEngajamento\nEngajamento\n01/02/2026\n28/02/2026\nR$307.48\nR$92.64\nNew page\nSUM\nR$527.11\nSUM\nR$0.00\nFinanceiro\nComercial Pmax\n1\nCampanha por canal\nObjetivo\nInício\nTérmino\nInvest. Líquido\nValor Gasto\nSaldo\nOrçamento Diário\n%\nProj. de Verba\nPI Operand\nComercial Pmax\nGeração de Leads\n01/01/2026\n31/01/2026\nR$900.00\nR$586.40\nNew page\nSUM\nR$900.00\nSUM\nR$313.60\nComercial Search\n1\nCampanha por canal\nObjetivo\nInício\nTérmino\nInvest. Líquido\nValor Gasto\nSaldo\nOrçamento Diário\n%\nProj. de Verba\nPI Operand\nComercial Search\nGeração de Leads\n01/01/2026\n31/01/2026\nR$1,600.00\nR$1,080.92\nNew page\nSUM\nR$1,600.00\nSUM\nR$519.08\nEngajamento\n1\nCampanha por canal\nObjetivo\nInício\nTérmino\nInvest. Líquido\nValor Gasto\nSaldo\nOrçamento Diário\n%\nProj. de Verba\nPI Operand\nEngajamento\nEngajamento\n01/01/2026\n31/01/2026\nR$307.48\nR$243.49\nNew page\nSUM\nR$307.48\nSUM\nR$63.99\nVisitas ao perfil\n1\nCampanha por canal\nObjetivo\nInício\nTérmino\nInvest. Líquido\nValor Gasto\nSaldo\nOrçamento Diário\n%\nProj"
+  },
+  {
+    "name": "OCP_Background",
+    "url": "https://www.notion.so/",
+    "title": "Notion",
+    "found": false,
+    "properties": [],
+    "relations": [],
+    "rollups": [],
+    "formulas": [],
+    "views": [],
+    "linkedDatabases": []
+  },
+  {
+    "name": "CASA_Campanhas",
+    "url": "https://www.notion.so/",
+    "title": "Notion",
+    "found": false,
+    "properties": [],
+    "relations": [],
+    "rollups": [],
+    "formulas": [],
+    "views": [],
+    "linkedDatabases": []
+  },
+  {
+    "name": "CASA_Otimizações",
+    "url": "https://www.notion.so/",
+    "title": "Notion",
+    "found": false,
+    "properties": [],
+    "relations": [],
+    "rollups": [],
+    "formulas": [],
+    "views": [],
+    "linkedDatabases": []
+  },
+  {
+    "name": "CASA_Parametrização de URLs",
+    "url": "https://www.notion.so/",
+    "title": "Notion",
+    "found": false,
+    "properties": [],
+    "relations": [],
+    "rollups": [],
+    "formulas": [],
+    "views": [],
+    "linkedDatabases": []
+  },
+  {
+    "name": "CASA_Controle de Orçamento",
+    "url": "https://www.notion.so/uhuru-comunicacao/3d8168c8215947bd98eb2147c3710b2e",
+    "title": "Página inicial | Notion",
+    "found": false,
+    "properties": [],
+    "relations": [],
+    "rollups": [],
+    "formulas": [],
+    "views": [],
+    "linkedDatabases": []
+  },
+  {
+    "name": "CASA_Background",
+    "url": "https://www.notion.so/",
+    "title": "Notion",
+    "found": false,
+    "properties": [],
+    "relations": [],
+    "rollups": [],
+    "formulas": [],
+    "views": [],
+    "linkedDatabases": []
+  }
+]

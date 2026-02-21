@@ -1,0 +1,197 @@
+[
+  {
+    "pageName": "AssisteMed",
+    "url": "https://www.notion.so/uhuru-comunicacao/AssisteMed-7f240474e6d048109947206900b0312b",
+    "databases": [],
+    "relations": [],
+    "rollups": [],
+    "sections": [
+      {
+        "type": "heading",
+        "text": "Recentes"
+      },
+      {
+        "type": "heading",
+        "text": "FavoritosOcupacionalAssisteMedC.A.S.A."
+      },
+      {
+        "type": "heading",
+        "text": "Favoritos"
+      },
+      {
+        "type": "heading",
+        "text": "CompartilhadoOCP | Estratégia NR1 (start) @3 de fevereiro de 2026 16:30"
+      },
+      {
+        "type": "heading",
+        "text": "Compartilhado"
+      },
+      {
+        "type": "heading",
+        "text": "Espaços de equipeGeralAdicionar novaMídiaHome da MídiaAdicionar novaMais"
+      },
+      {
+        "type": "heading",
+        "text": "Espaços de equipe"
+      },
+      {
+        "type": "heading",
+        "text": "Particular"
+      },
+      {
+        "type": "heading",
+        "text": "AssisteMed"
+      },
+      {
+        "type": "heading",
+        "text": "Resumo do Mês:"
+      },
+      {
+        "type": "heading",
+        "text": "Resumo do Ano:"
+      },
+      {
+        "type": "heading",
+        "text": "Controle de Orçamento:"
+      },
+      {
+        "type": "heading",
+        "text": "Experimentos:"
+      },
+      {
+        "type": "heading",
+        "text": "Campanhas:"
+      }
+    ],
+    "links": []
+  },
+  {
+    "pageName": "CASA",
+    "url": "https://www.notion.so/uhuru-comunicacao/C-A-S-A-1d6dbafb030280c682a2ff8c758db28b",
+    "databases": [
+      {
+        "title": "",
+        "type": "database",
+        "properties": [
+          {
+            "name": "Nome",
+            "type": "text"
+          },
+          {
+            "name": "Descrição",
+            "type": "text"
+          },
+          {
+            "name": "Responsável",
+            "type": "text"
+          },
+          {
+            "name": "Cliente",
+            "type": "text"
+          },
+          {
+            "name": "Campanha",
+            "type": "text"
+          },
+          {
+            "name": "Prazo",
+            "type": "text"
+          },
+          {
+            "name": "Status",
+            "type": "text"
+          }
+        ]
+      }
+    ],
+    "relations": [],
+    "rollups": [],
+    "sections": [
+      {
+        "type": "heading",
+        "text": "Recentes"
+      },
+      {
+        "type": "heading",
+        "text": "FavoritosOcupacionalAssisteMedC.A.S.A."
+      },
+      {
+        "type": "heading",
+        "text": "Favoritos"
+      },
+      {
+        "type": "heading",
+        "text": "CompartilhadoOCP | Estratégia NR1 (start) @3 de fevereiro de 2026 16:30"
+      },
+      {
+        "type": "heading",
+        "text": "Compartilhado"
+      },
+      {
+        "type": "heading",
+        "text": "Espaços de equipeGeralCompany HomeAdicionar novaMídiaHome da MídiaAdicionar novaMais"
+      },
+      {
+        "type": "heading",
+        "text": "Espaços de equipe"
+      },
+      {
+        "type": "heading",
+        "text": "Particular"
+      },
+      {
+        "type": "heading",
+        "text": "C.A.S.A."
+      },
+      {
+        "type": "heading",
+        "text": "Registros e atualizações:"
+      },
+      {
+        "type": "heading",
+        "text": "Tarefas:"
+      },
+      {
+        "type": "heading",
+        "text": "NomeDescriçãoResponsávelClienteCampanhaPrazoStatus"
+      },
+      {
+        "type": "heading",
+        "text": "Nome"
+      },
+      {
+        "type": "heading",
+        "text": "Descrição"
+      },
+      {
+        "type": "heading",
+        "text": "Responsável"
+      },
+      {
+        "type": "heading",
+        "text": "Cliente"
+      },
+      {
+        "type": "heading",
+        "text": "Campanha"
+      },
+      {
+        "type": "heading",
+        "text": "Prazo"
+      },
+      {
+        "type": "heading",
+        "text": "Status"
+      },
+      {
+        "type": "heading",
+        "text": "Experimentos:"
+      },
+      {
+        "type": "heading",
+        "text": "Campanhas:"
+      }
+    ],
+    "links": []
+  }
+]
