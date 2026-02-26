@@ -1,0 +1,59 @@
+name: uhuru-squad
+display_name: "Uhuru Squad"
+description: "Squad de tráfego pago e performance para agência de marketing digital"
+icon: "🎯"
+domain: marketing
+version: "1.0.0"
+created_at: "2026-02-26"
+
+agents:
+  - id: flux
+    file: agents/flux.md
+    name: Flux
+    icon: "⚡"
+    role: "Estratégia & Planejamento"
+  - id: nova
+    file: agents/nova.md
+    name: Nova
+    icon: "📊"
+    role: "Análise de Performance"
+  - id: sage
+    file: agents/sage.md
+    name: Sage
+    icon: "📋"
+    role: "Relatórios & Insights"
+  - id: finn
+    file: agents/finn.md
+    name: Finn
+    icon: "💰"
+    role: "Budget & Alocação"
+
+workflows:
+  - id: new-client
+    file: workflows/new-client.yaml
+    command: "*new-client"
+  - id: ciclo-mensal
+    file: workflows/ciclo-mensal.yaml
+    command: "*ciclo-mensal"
+
+clients:
+  - name: "Ocupacional"
+    prefix: "OCP_"
+    channels: [Meta, Google, LinkedIn]
+  - name: "AssisteMed"
+    prefix: "ASM_"
+    channels: [Meta, Google]
+  - name: "Grupo BDG"
+    prefix: "BDG_"
+    channels: [Meta, Google, LinkedIn]
+  - name: "PRO DOMO"
+    prefix: "PRODOM_"
+    channels: [Meta]
+
+tools:
+  - Notion
+  - Meta Ads Manager
+  - Google Ads
+  - LinkedIn Campaign Manager
+  - Google Sheets
+  - Operant

@@ -1,0 +1,93 @@
+id: new-client
+name: "Onboarding de Cliente"
+command: "*new-client"
+icon: "🆕"
+description: "Guia estruturado para incorporar novo cliente à squad"
+squad: uhuru-squad
+
+inputs:
+  - name: cliente_nome
+    description: "Nome completo do cliente"
+    required: true
+  - name: cliente_prefix
+    description: "Prefixo do cliente para identificação (ex: OCP_, ASM_)"
+    required: true
+  - name: canais
+    description: "Canais de mídia ativos (meta, google, linkedin)"
+    required: true
+  - name: budget_mensal
+    description: "Budget mensal aprovado em R$"
+    required: true
+
+steps:
+  - id: identificacao
+    name: "Identificação & Briefing"
+    agent: flux
+    description: "Mapear objetivos de negócio, público-alvo, oferta, concorrência"
+    checklist:
+      - "[ ] Nome, CNPJ e dados do cliente coletados"
+      - "[ ] Objetivos de negócio mapeados"
+      - "[ ] Público-alvo definido"
+      - "[ ] Oferta/produto principal identificado"
+      - "[ ] Concorrentes mapeados"
+      - "[ ] Budget aprovado por canal"
+      - "[ ] Prazo de início confirmado"
+
+  - id: operacional
+    name: "Setup Operacional"
+    agent: finn
+    depends_on: [identificacao]
+    description: "Configurar infraestrutura financeira e de controle"
+    checklist:
+      - "[ ] Pasta criada no Google Drive: /Clientes/{cliente_nome}/"
+      - "[ ] Aba criada na planilha de controle de budget"
+      - "[ ] Acesso às plataformas de ads solicitado/confirmado"
+      - "[ ] Conta de ads compartilhada com a Uhuru"
+
+  - id: estrategia
+    name: "Estratégia Inicial"
+    agent: flux
+    depends_on: [operacional]
+    description: "Criar primeiro plano de mídia e estratégia por canal"
+    command: "*planejar {cliente_prefix} {mes_inicio}"
+    checklist:
+      - "[ ] Plano de mídia do primeiro mês criado"
+      - "[ ] Budget alocado por canal"
+      - "[ ] Campanhas iniciais estruturadas"
+      - "[ ] Briefing de criativos enviado ao time criativo"
+
+  - id: relacionamento
+    name: "Templates de Comunicação"
+    agent: sage
+    depends_on: [estrategia]
+    description: "Criar templates de relatório personalizados para o cliente"
+    checklist:
+      - "[ ] Página do cliente criada no Notion"
+      - "[ ] Template de relatório mensal criado"
+      - "[ ] Template de apresentação criado"
+      - "[ ] Cadência de reuniões definida"
+
+  - id: tracking
+    name: "Setup de Tracking"
+    agent: nova
+    depends_on: [operacional]
+    description: "Configurar rastreamento e extração de dados"
+    checklist:
+      - "[ ] Pixel do Meta instalado e verificado"
+      - "[ ] Tag do Google configurada"
+      - "[ ] Conversões configuradas nas plataformas"
+      - "[ ] Planilha de leads configurada"
+      - "[ ] Primeiro *extrair executado com sucesso"
+
+  - id: validacao
+    name: "Validação & Go-Live"
+    agent: flux
+    depends_on: [estrategia, relacionamento, tracking]
+    description: "Confirmar que tudo está no lugar antes de lançar"
+    checklist:
+      - "[ ] Criativos aprovados pelo cliente"
+      - "[ ] Campanhas configuradas e em revisão"
+      - "[ ] Tracking validado com *extrair"
+      - "[ ] Cliente onboardado no processo (como funciona a squad)"
+      - "[ ] Data de lançamento confirmada"
+      - "[ ] Todos os agentes briefados"
