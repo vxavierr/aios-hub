@@ -1,0 +1,99 @@
+id: ciclo-mensal
+name: "Ciclo Mensal Completo"
+command: "*ciclo-mensal"
+icon: "🔄"
+description: "Pipeline de performance do mês: análise → insights → relatório → próximo ciclo"
+squad: uhuru-squad
+
+inputs:
+  - name: cliente
+    description: "Código do cliente (ou 'all' para todos)"
+    required: true
+  - name: mes
+    description: "Mês de referência (ex: jan/2026)"
+    required: true
+
+steps:
+  - id: extracao
+    name: "Extração de dados"
+    agent: nova
+    task: tasks/nova/extrair.md
+    command: "*extrair {cliente} all"
+    description: "Puxar dados completos do mês de todas as plataformas"
+    output: "dados_extraidos"
+
+  - id: analise
+    name: "Big Numbers & Análise de Campanhas"
+    agent: nova
+    task: tasks/nova/analisar.md
+    command: "*analisar {cliente} {mes}"
+    depends_on: [extracao]
+    description: "Big Numbers completo + análise profunda de campanhas"
+    output: "big_numbers"
+
+  - id: leads
+    name: "Análise de Leads"
+    agent: nova
+    task: tasks/nova/leads.md
+    command: "*leads {cliente}"
+    depends_on: [extracao]
+    description: "Análise de qualidade e volume de leads do mês"
+    output: "analise_leads"
+
+  - id: insights
+    name: "Compilar Insights"
+    agent: sage
+    task: tasks/sage/insights.md
+    command: "*insights {cliente} {mes}"
+    depends_on: [analise, leads]
+    description: "Transformar dados em aprendizados e recomendações"
+    output: "insights"
+
+  - id: forecast
+    name: "Forecast & Fechamento"
+    agent: finn
+    task: tasks/finn/forecast.md
+    command: "*forecast {cliente} {mes}"
+    depends_on: [analise]
+    description: "Fechar budget do mês e projetar o próximo"
+    output: "forecast"
+
+  - id: planejamento
+    name: "Plano de Mídia"
+    agent: flux
+    task: tasks/flux/planejar.md
+    command: "*planejar {cliente} {proximo_mes}"
+    depends_on: [insights, forecast]
+    description: "Definir plano de mídia do próximo mês com base nos insights"
+    output: "plano_midia"
+
+  - id: relatorio
+    name: "Relatório de Resultados"
+    agent: sage
+    task: tasks/sage/relatorio.md
+    command: "*relatorio {cliente} {mes}"
+    depends_on: [insights, planejamento]
+    description: "Gerar relatório completo do mês"
+    output: "relatorio"
+
+  - id: apresentacao
+    name: "Apresentação ao Cliente"
+    agent: sage
+    task: tasks/sage/apresentar.md
+    command: "*apresentar {cliente}"
+    depends_on: [relatorio]
+    description: "Preparar e realizar apresentação mensal ao cliente"
+    output: "apresentacao"
+
+flow_diagram: |
+  @nova *extrair
+       ↓
+  @nova *analisar + *leads (paralelo)
+       ↓
+  @sage *insights + @finn *forecast (paralelo)
+       ↓
+  @flux *planejar
+       ↓
+  @sage *relatorio
+       ↓
+  @sage *apresentar

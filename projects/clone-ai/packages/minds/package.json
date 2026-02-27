@@ -1,0 +1,28 @@
+{
+  "name": "@clone-lab/minds",
+  "version": "1.0.0",
+  "description": "8 Analytical Minds for personality analysis",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc",
+    "lint": "eslint src",
+    "typecheck": "tsc --noEmit",
+    "clean": "rm -rf dist"
+  },
+  "dependencies": {
+    "@clone-lab/core": "^1.0.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.0.0",
+    "typescript": "^5.6.0",
+    "typescript-eslint": "^8.0.0"
+  }
+}

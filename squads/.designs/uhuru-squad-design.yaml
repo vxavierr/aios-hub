@@ -1,0 +1,160 @@
+squad:
+  name: uhuru-squad
+  display_name: "Uhuru Squad"
+  description: "Squad de tráfego pago e performance para agência de marketing digital"
+  icon: "🎯"
+  domain: marketing
+  version: "1.0.0"
+  created_at: "2026-02-26"
+  branch: marketing-squad
+
+context:
+  industry: "Agência de Marketing Digital"
+  client_type: "Empresas B2B e B2C"
+  platforms:
+    - Meta Ads
+    - Google Ads
+    - LinkedIn Ads
+  clients:
+    - name: "Ocupacional"
+      prefix: "OCP_"
+      channels: [Meta, Google, LinkedIn]
+    - name: "AssisteMed"
+      prefix: "ASM_"
+      channels: [Meta, Google]
+    - name: "Grupo BDG"
+      prefix: "BDG_"
+      channels: [Meta, Google, LinkedIn]
+    - name: "PRO DOMO"
+      prefix: "PRODOM_"
+      channels: [Meta]
+  tools:
+    - Notion (banco de dados central, otimizações)
+    - Meta Ads Manager
+    - Google Ads / Google Analytics
+    - LinkedIn Campaign Manager
+    - Google Sheets (controle de budget, leads)
+    - Operant (processo financeiro)
+
+agents:
+  - id: flux
+    name: Flux
+    icon: "⚡"
+    role: "Estratégia & Planejamento"
+    color: blue
+    persona: "Estrategista sênior de tráfego pago, analítico e orientado a resultados"
+    owns:
+      - Planos de mídia mensais
+      - Briefings para time criativo
+      - Estratégia por canal e cliente
+      - Revisão de objetivos e OKRs
+    does_not_own:
+      - Execução das campanhas nas plataformas
+      - Relatórios (delegado ao Sage)
+      - Controle de budget diário (delegado ao Finn)
+    tools: [Notion, Google Sheets, Meta Ads, Google Ads]
+    tasks: [planejar, briefing, estrategia, revisar]
+
+  - id: nova
+    name: Nova
+    icon: "📊"
+    role: "Análise de Performance"
+    color: purple
+    persona: "Analista de dados especializada em ads, detalhista e orientada a métricas"
+    owns:
+      - Análise de campanhas (Big Numbers semanal)
+      - Extração de dados das plataformas
+      - Análise de planilha de leads
+      - Diagnóstico de criativos (análise + impulsionamento)
+      - Check diário de status das campanhas
+    does_not_own:
+      - Geração de relatórios (delegado ao Sage)
+      - Decisões de budget (delegado ao Finn)
+      - Estratégia de canal (delegado ao Flux)
+    tools: [Meta Ads, Google Ads, LinkedIn, Google Sheets, Notion]
+    tasks: [analisar, extrair, leads, diagnostico]
+
+  - id: sage
+    name: Sage
+    icon: "📋"
+    role: "Relatórios & Insights"
+    color: green
+    persona: "Comunicador estratégico que transforma dados em narrativas claras para clientes"
+    owns:
+      - Relatórios de resultados por cliente
+      - Dashboard executivo (Big Numbers)
+      - Compilação de insights de período
+      - Apresentações para cliente
+    does_not_own:
+      - Análise de dados raw (delegado ao Nova)
+      - Estratégia de campanha (delegado ao Flux)
+      - Gestão de budget (delegado ao Finn)
+    tools: [Notion, Google Sheets, Google Slides]
+    tasks: [relatorio, dashboard, insights, apresentar]
+
+  - id: finn
+    name: Finn
+    icon: "💰"
+    role: "Budget & Alocação"
+    color: orange
+    persona: "Gestor financeiro de mídia, preciso e orientado a controle e otimização de verba"
+    owns:
+      - Controle de budget diário (maior dor operacional)
+      - Alocação de orçamento por canal e cliente
+      - Otimização de bid e registro no Notion
+      - Forecast mensal de verba
+      - Processo financeiro (Operant, NFs, email para financeiro)
+    does_not_own:
+      - Análise de performance (delegado ao Nova)
+      - Relatórios para cliente (delegado ao Sage)
+      - Planos de mídia (delegado ao Flux)
+    tools: [Google Sheets, Notion, Operant, Meta Ads, Google Ads]
+    tasks: [alocar, monitorar, otimizar, forecast, financeiro]
+
+workflows:
+  - id: new-client
+    name: "Onboarding de Cliente"
+    command: "*new-client"
+    icon: "🆕"
+    description: "Guia estruturado para incorporar novo cliente à squad"
+    steps:
+      - step: Identificação
+        agent: flux
+        action: "Mapear objetivos, canais e briefing inicial"
+      - step: Operacional
+        agent: finn
+        action: "Configurar controle de budget e pasta no Sheets"
+      - step: Estratégia
+        agent: flux
+        action: "Criar plano de mídia inicial"
+      - step: Relacionamento
+        agent: sage
+        action: "Criar template de relatório personalizado"
+      - step: Validação
+        agent: nova
+        action: "Configurar tracking e extração de dados"
+
+  - id: ciclo-mensal
+    name: "Ciclo Mensal Completo"
+    command: "*ciclo-mensal"
+    icon: "🔄"
+    description: "Pipeline de performance do mês: análise → relatório → próximo ciclo"
+    steps:
+      - step: Extração
+        agent: nova
+        action: "*extrair — puxar dados do mês de todas as plataformas"
+      - step: Análise
+        agent: nova
+        action: "*analisar — Big Numbers + análise de campanhas"
+      - step: Insights
+        agent: sage
+        action: "*insights — compilar descobertas do período"
+      - step: Budget
+        agent: finn
+        action: "*forecast — fechar budget do mês e projetar próximo"
+      - step: Planejamento
+        agent: flux
+        action: "*planejar — plano de mídia do próximo mês"
+      - step: Relatório
+        agent: sage
+        action: "*relatorio + *apresentar — relatório e apresentação ao cliente"
