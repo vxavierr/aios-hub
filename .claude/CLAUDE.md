@@ -1,10 +1,7 @@
-# CLAUDE.md
+# CLAUDE.md — Synkra AIOS HUB
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
-
----
-
-# Synkra AIOS Development Rules for Claude Code
+This file extends the global config at `~/.claude/CLAUDE.md` (identity, partner profile, workflow principles).
+It provides HUB-specific rules for working inside `D:/workspace/` and its projects.
 
 You are working with Synkra AIOS, an AI-Orchestrated System for Full Stack Development.
 
@@ -40,7 +37,7 @@ Synkra AIOS is a meta-framework that orchestrates AI agents to handle complex de
 The framework operates under a constitution defined in `.aios-core/constitution.md`:
 
 1. **CLI First** - All functionality MUST work via CLI before any UI. Hierarchy: CLI > Observability > UI
-2. **Agent Authority** - Each agent has exclusive authorities (e.g., only @devops can `git push`)
+2. **Agent Authority** - Each agent has exclusive authorities (e.g., only @devops can `git push`). See `agent-authority.md` for the full matrix and `handoff-protocol.md` for mandatory Pre-Execution Check, delegation, rejection and self-correction protocols.
 3. **Story-Driven Development** - No code without an associated story in `docs/stories/`
 4. **No Invention** - Specs derive from requirements only; no invented features
 5. **Quality First** - All code passes lint, typecheck, tests, and build gates
@@ -175,13 +172,13 @@ Draft → Ready → InProgress → InReview → Done
 | Change Log | Any agent (append only) |
 <!-- AIOS-MANAGED-END: story-lifecycle -->
 
-## Development Methodology
+## Development Standards
 
 ### Story-Driven Development
-1. **Work from stories** - All development starts with a story in `docs/stories/`
-2. **Update progress** - Mark checkboxes as tasks complete: `[ ]` → `[x]`
-3. **Track changes** - Maintain the File List section in the story
-4. **Follow criteria** - Implement exactly what the acceptance criteria specify
+1. **Work from stories** — All development starts with a story in `docs/stories/`
+2. **Update progress** — Mark checkboxes as tasks complete: `[ ]` → `[x]`
+3. **Track changes** — Maintain the File List section in the story
+4. **Follow criteria** — Implement exactly what the acceptance criteria specify
 
 ### Code Standards
 - Write clean, self-documenting code
@@ -194,19 +191,18 @@ Draft → Ready → InProgress → InReview → Done
 - Run all tests before marking tasks complete
 - Ensure linting passes: `npm run lint`
 - Verify type checking: `npm run typecheck`
-- Add tests for new features
-- Test edge cases and error scenarios
+- Add tests for new features and edge cases
 
 ## Git & GitHub Integration
 
 ### Commit Conventions
 - Use conventional commits: `feat:`, `fix:`, `docs:`, `chore:`, etc.
-- Reference story ID: `feat: implement IDE detection [Story 2.1]`
+- Reference story ID: `feat: implement login flow [Story 2.1]`
 - Keep commits atomic and focused
 
 ### Git Delegation
 - @dev can: `git add`, `git commit`, `git branch`, `git checkout`, `git stash`, `git diff`
-- @devops MUST: `git push`, `gh pr create/merge`
+- @devops MUST handle: `git push`, `gh pr create/merge`
 
 <!-- AIOS-MANAGED-START: common-commands -->
 ## Common Commands
@@ -219,6 +215,7 @@ Draft → Ready → InProgress → InReview → Done
 *develop                     # Implement story (@dev)
 *qa-gate                     # QA review (@qa)
 *push                        # Push to remote (@devops)
+*browser                     # Browser automation agêntico (qualquer agente)
 ```
 
 ### Development Commands
@@ -297,9 +294,9 @@ await story.save();
 - npm/yarn/pnpm
 
 ### Configuration Files
-- `.aios-core/core-config.yaml` - Framework configuration
-- `.aios-core/constitution.md` - Non-negotiable principles
-- `.env` - Environment variables
+- `.aios-core/core-config.yaml` — Framework configuration
+- `.aios-core/constitution.md` — Non-negotiable principles
+- `.env` — Environment variables
 
 ## Debugging
 
@@ -313,46 +310,111 @@ export AIOS_DEBUG=true
 tail -f .aios/logs/agent.log
 ```
 
-## Claude Code Specific Configuration
+---
+
+## Workflow Principles (HUB Context)
+
+### Core Principles
+- **Simplicity First** — Make every change as simple as possible. Minimal code impact.
+- **No Laziness** — Find root causes. No temporary fixes. Senior developer standards.
+- **Minimal Impact** — Changes should only touch what's necessary. Avoid introducing bugs.
+
+### Plan Mode
+- Enter plan mode for any non-trivial task (3+ steps or architectural decisions)
+- If something goes sideways, STOP and re-plan — don't keep pushing
+- Use plan mode for verification steps, not just building
+- Write detailed specs upfront to reduce ambiguity
+
+### Subagent Strategy
+- Use subagents to keep the main context window clean
+- Offload research, exploration, and parallel analysis to subagents
+- One task per subagent for focused execution
+
+### Self-Improvement Loop
+- After any correction: update `docs/lessons/lessons.md` with the pattern
+- Review `docs/lessons/lessons.md` at session start if it exists
+- After every correction, end with: **"Updating CLAUDE.md so this doesn't happen again"**
+
+### Verification Before Done
+- Never mark a task complete without proving it works
+- Diff behavior between main and your changes when relevant
+- Run tests, check logs, demonstrate correctness
+- Ask: "Would a staff engineer approve this?"
+
+---
+
+## Standard of Done (HUB)
+
+**Production-ready in this workspace means:**
+- Story acceptance criteria fully met
+- All quality gates pass: `lint`, `typecheck`, `test`, `build`
+- No CRITICAL CodeRabbit issues
+- Story checkboxes updated, File List current
+- Commit made with story reference
+
+**Does NOT mean:** perfect abstraction, zero tech debt, full documentation. Ship when it solves the problem.
+
+---
+
+## Escalation Triggers (HUB-Specific)
+
+Stop and describe the risk **before** acting:
+
+- **Constitution violation** (code without a story, `git push` outside @devops) → BLOCK, name the violation
+- **Story scope creep** (implementing beyond AC) → flag before writing the extra code
+- **Data loss risk** (DELETE, DROP, overwrite) → show exactly what will be lost, require explicit confirmation
+- **Breaking existing service** (working Docker containers, production DB) → warn before any change
+- **Agent authority bypass** (any agent doing what only another agent should) → stop and delegate correctly
+
+---
+
+## Task Management
+
+### Process
+1. **Plan first** — Write plan with checkable items before implementing
+2. **Track progress** — Mark items complete as you go
+3. **Document results** — Add review section after completion
+4. **Capture lessons** — Update `docs/lessons/lessons.md` after corrections
 
 ### NEVER
-- Implement without showing options first (always 1, 2, 3 format)
-- Delete/remove content without asking first
+- Implement without showing options first (1, 2, 3 format)
+- Delete or remove content without asking
 - Delete anything created in the last 7 days without explicit approval
-- Change something that was already working
-- Pretend work is done when it isn't
-- Process batch without validating one first
+- Change something that was already working without clear reason
+- Mark a task complete without running tests and proving it works
+- Process a batch without validating one item first
 - Add features that weren't requested
-- Use mock data when real data exists in database
-- Explain/justify when receiving criticism (just fix)
-- Trust AI/subagent output without verification
-- Create from scratch when similar exists in squads/
+- Use mock data when real data exists in the database
+- Explain or justify when receiving criticism — just fix
+- Trust subagent output without verification
+- Create from scratch when similar exists in `squads/`
 
 ### ALWAYS
-- Present options as "1. X, 2. Y, 3. Z" format
-- Use AskUserQuestion tool for clarifications
-- Check squads/ and existing components before creating new
-- Read COMPLETE schema before proposing database changes
-- Investigate root cause when error persists
-- Commit before moving to next task
+- Present options as "1. X, 2. Y, 3. Z"
+- Check `squads/` and existing components before creating new
+- Read the complete schema before proposing database changes
+- Investigate root cause when an error persists
+- Commit before moving to the next task
 - Create handoff in `docs/sessions/YYYY-MM/` at end of session
+- After a correction: fix → update `docs/lessons/lessons.md` → evaluate if CLAUDE.md needs a new rule
 
-### Performance Optimization
-- Prefer batched tool calls when possible for better performance
+---
+
+## Performance & Tools
+
+- Prefer batched tool calls for better performance
 - Use parallel execution for independent operations
-- Cache frequently accessed data in memory during sessions
-
-### Tool Usage Guidelines
-- Always use the Grep tool for searching, never `grep` or `rg` in bash
-- Use the Task tool for complex multi-step operations
+- Always use `Grep` tool for searching — never `grep`/`rg` in bash
+- Use `Task` tool for complex multi-step operations
 - Batch file reads/writes when processing multiple files
 - Prefer editing existing files over creating new ones
 
-### Session Management
+## Session Management
+
 - Track story progress throughout the session
 - Update checkboxes immediately after completing tasks
 - Maintain context of the current story being worked on
 - Save important state before long-running operations
 
 ---
-*Synkra AIOS Claude Code Configuration v2.1*
+*Synkra AIOS Claude Code Configuration v2.2*

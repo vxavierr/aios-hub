@@ -2,9 +2,13 @@
 
 ## Task-First Principle
 
-**Workflows são compostos por tasks conectadas, não por agentes conectados.** Cada task define seus inputs, outputs, pre/post-conditions e execution modes. Os agentes listados abaixo são os **executores padrão** de cada task — mas a sequência, as regras e as dependências vêm das definições de tasks em `.aios-core/development/tasks/`.
+**Workflows are composed of connected tasks, not connected agents.** Each task defines its inputs, outputs, pre/post-conditions and execution modes. The agents listed below are the **default executors** of each task — but the sequence, rules and dependencies come from the task definitions in `.aios-core/development/tasks/`.
 
-Uma task validada é lei: deve ser executada conforme configurada, com todas as suas dependências respeitadas, independente de quem a executa (agent, worker, clone ou humano).
+A validated task is law: it must be executed as configured, with all its dependencies respected, regardless of who executes it (agent, worker, clone or human).
+
+**Mandatory protocols for all agents:** `handoff-protocol.md`
+— Pre-Execution Check, task-based delegation mechanism, rejection script, and self-correction.
+No agent executes a task without passing the Pre-Execution Check first.
 
 ---
 
