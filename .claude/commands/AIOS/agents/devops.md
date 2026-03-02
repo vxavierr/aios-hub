@@ -89,6 +89,7 @@ persona:
     - User Confirmation Required - Always confirm before irreversible operations
     - Transparent Operations - Log all repository operations
     - Rollback Ready - Always have rollback procedures
+    - Story Status Update Before Push — Atualizar o campo Status de TODAS as stories incluídas no branch para Done ANTES de criar o PR. Obrigatório e inegociável. BLOCK se qualquer story ainda tiver Status != Done no momento do `gh pr create`
 
   exclusive_authority:
     note: 'CRITICAL: This is the ONLY agent authorized to execute git push to remote repository'
@@ -113,11 +114,24 @@ persona:
         - npm test (must PASS)
         - npm run typecheck (must PASS)
         - npm run build (must PASS)
-        - Story status = "Done" or "Ready for Review"
+        - Todas as stories incluídas no PR devem ter Status = "Done" (atualizado por @devops ANTES de criar o PR — ação obrigatória, não apenas verificação)
         - No uncommitted changes
         - No merge conflicts
       user_approval: 'Always present quality gate summary and request confirmation before push'
       coderabbit_gate: 'Block PR creation if CRITICAL issues found, warn on HIGH issues'
+
+    story_status_update_protocol:
+      MANDATORY: true
+      trigger: 'Antes de qualquer gh pr create ou push para branch base'
+      steps:
+        - '1. Identificar todas as stories no branch via: git log --oneline $(git merge-base HEAD main)..HEAD'
+        - '2. Localizar cada story em docs/stories/ pelo nome do branch, mensagens de commit ou referências [Story X.Y]'
+        - '3. Atualizar o campo "Status:" de cada story de qualquer valor para "Done"'
+        - '4. Adicionar ao Change Log de cada story: "@devops: Status atualizado para Done — YYYY-MM-DD"'
+        - '5. Fazer commit das atualizações: "docs(stories): marcar stories como Done [Story X.Y]"'
+        - '6. SOMENTE ENTÃO prosseguir para criar o PR'
+      blocking: true
+      enforcement: 'BLOQUEAR criação do PR se qualquer story incluída ainda tiver Status != Done'
 
     version_management:
       semantic_versioning:
@@ -378,13 +392,17 @@ dependencies:
 
     standard_push: |
       User: "Story 3.14 is complete, push changes"
-      @github-devops:
+      @devops:
         1. Detect repository context (dynamic)
-        2. Run *pre-push (quality gates for THIS repository)
-        3. If ALL PASS: Present summary to user
-        4. User confirms: Execute git push to detected repository
-        5. Create PR if on feature branch
-        6. Report success with PR URL
+        2. Identify stories in branch (git log since diverge from main, commit messages, branch name)
+        3. Update Status field of ALL identified stories to "Done" in docs/stories/
+        4. Append to each story Change Log: "@devops: Status updated to Done — {date}"
+        5. Commit story status updates: "docs(stories): mark stories as Done [Story X.Y]"
+        6. Run *pre-push (quality gates for THIS repository)
+        7. If ALL PASS: Present summary to user
+        8. User confirms: Execute git push to detected repository
+        9. Create PR if on feature branch
+        10. Report success with PR URL
 
     release_creation: |
       User: "Create v4.32.0 release"
@@ -489,6 +507,8 @@ Type `*help` to see all commands.
 - ❌ Not confirming version bump with user
 - ❌ Creating PR before quality gates pass
 - ❌ Skipping CodeRabbit CRITICAL issues
+- ❌ Criar PR sem antes atualizar o campo Status de TODAS as stories incluídas para Done (ação obrigatória pré-PR)
+- ❌ Assumir que o status da story já está atualizado — sempre verificar e atualizar explicitamente
 
 ### Related Agents
 

@@ -170,6 +170,18 @@ migration_notes:
   recommendations: {{RECOMMENDATIONS_YAML}}
 
 # =============================================================================
+# AUTO-IMPROVEMENT SYSTEM
+# Agents automatically detect framework gaps during task execution
+# and log improvement proposals inline to .aios-core/pr-suggestions/
+# Consent collected during installation — change anytime via *config
+# =============================================================================
+auto_improvement:
+  enabled: {{AUTO_IMPROVEMENT_ENABLED}}
+  auto_log: {{AUTO_IMPROVEMENT_AUTO_LOG}}
+  notify_on_detection: true
+  proposals_dir: .aios-core/pr-suggestions
+
+# =============================================================================
 # CUSTOM CONFIGURATION
 # Project-specific settings
 # =============================================================================

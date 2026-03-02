@@ -86,6 +86,16 @@ projectStatus:
   statusFile: .aios/project-status.yaml
   maxModifiedFiles: 5
   maxRecentCommits: 2
+auto_improvement:
+  enabled: true
+  auto_log: true
+  notify_on_detection: true
+  proposals_dir: .aios-core/pr-suggestions
+  description: >
+    When enabled, agents automatically detect framework gaps during task execution
+    and log improvement proposals inline — without requiring user commands or session exit.
+    Consent collected during installation or via *config.
+
 agentIdentity:
   greeting:
     contextDetection: true

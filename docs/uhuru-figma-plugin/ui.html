@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+  body { font-family: Inter, sans-serif; margin: 0; padding: 20px; background: #0D0D1A; color: #F1F5F9; }
+  h2 { font-size: 16px; margin-bottom: 8px; }
+  p { font-size: 12px; color: #64748B; margin-bottom: 20px; }
+  button {
+    width: 100%; padding: 12px;
+    background: linear-gradient(135deg, #4F46E5, #7C3AED);
+    color: white; border: none; border-radius: 8px;
+    font-size: 14px; font-weight: 600; cursor: pointer;
+  }
+  button:hover { opacity: 0.9; }
+  #status { margin-top: 12px; font-size: 12px; color: #818CF8; text-align: center; }
+</style>
+</head>
+<body>
+  <h2>Uhuru Squad Organograma</h2>
+  <p>Cria o organograma completo da squad com todos os agentes, tasks e workflows.</p>
+  <button id="btn">Criar Organograma</button>
+  <div id="status"></div>
+  <script>
+    document.getElementById('btn').onclick = () => {
+      document.getElementById('status').textContent = 'Criando...';
+      document.getElementById('btn').disabled = true;
+      parent.postMessage({ pluginMessage: { type: 'create' } }, '*');
+    };
+    window.onmessage = (event) => {
+      const msg = event.data.pluginMessage;
+      if (msg && msg.type === 'done') {
+        document.getElementById('status').textContent = 'Organograma criado!';
+      }
+    };
+  </script>
+</body>
+</html>

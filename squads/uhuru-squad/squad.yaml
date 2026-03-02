@@ -32,6 +32,9 @@ workflows:
   - id: new-client
     file: workflows/new-client.yaml
     command: "*new-client"
+  - id: ciclo-semanal
+    file: workflows/ciclo-semanal.yaml
+    command: "*ciclo-semanal"
   - id: ciclo-mensal
     file: workflows/ciclo-mensal.yaml
     command: "*ciclo-mensal"

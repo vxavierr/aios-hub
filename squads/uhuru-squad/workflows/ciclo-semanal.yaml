@@ -1,0 +1,122 @@
+id: ciclo-semanal
+name: "Ciclo Semanal de Performance"
+command: "*ciclo-semanal"
+icon: "📅"
+description: "Pipeline semanal: normalização de dados → análise de campanhas + otimizações → análise de leads (quando aplicável)"
+squad: uhuru-squad
+
+inputs:
+  - name: cliente
+    description: "Código do cliente (OCP_, ASM_, BDG_, PRODOM_)"
+    required: true
+  - name: periodo
+    description: "Período de referência (ex: semana 1 - fev/2026)"
+    required: true
+  - name: arquivos_campanhas
+    description: "CSVs exportados das plataformas ativas do cliente (Meta, Google, LinkedIn)"
+    required: true
+  - name: arquivo_leads
+    description: "CSV de leads do período (apenas OCP_ por enquanto)"
+    required: false
+
+leads_status:
+  OCP_: ativo
+  ASM_: sem geração de leads ainda
+  BDG_: em configuração
+  PRODOM_: em configuração
+
+steps:
+
+  # ─────────────────────────────────────────
+  # BLOCO 1 — CAMPANHAS
+  # ─────────────────────────────────────────
+
+  - id: normalizar
+    name: "Normalizar dados de campanhas"
+    agent: nova
+    task: tasks/nova/normalizar.md
+    command: "*normalizar {cliente} [arquivos_campanhas]"
+    description: >
+      Recebe os CSVs brutos exportados das plataformas ativas do cliente.
+      Padroniza colunas, remove linhas inválidas, unifica nomenclaturas e
+      prepara um dataset limpo para análise.
+    output: "dados_normalizados"
+
+  - id: analisar
+    name: "Análise de campanhas + Otimizações"
+    agent: nova
+    task: tasks/nova/analisar.md
+    command: "*analisar {cliente} {periodo}"
+    depends_on: [normalizar]
+    description: >
+      Analisa os dados normalizados do período. Se identificar lacunas ou
+      ambiguidades nos dados, pergunta antes de continuar.
+      Entrega dois blocos distintos:
+        1. Análise completa de campanhas (Big Numbers + diagnóstico)
+        2. Otimizações propostas (separado da análise)
+    behavior:
+      - Se dados insuficientes ou ambíguos → PERGUNTAR antes de analisar
+      - Nunca inventar métricas ausentes
+      - Otimizações ficam em bloco separado — nunca misturado na análise
+    output: "analise_campanhas + otimizacoes"
+
+  # ─────────────────────────────────────────
+  # BLOCO 2 — LEADS (condicional)
+  # ─────────────────────────────────────────
+
+  - id: normalizar_leads
+    name: "Normalizar dados de leads"
+    agent: nova
+    task: tasks/nova/normalizar-leads.md
+    command: "*normalizar-leads {cliente} [arquivo_leads]"
+    depends_on: [normalizar]
+    condition: "leads_status[cliente] == 'ativo'"
+    description: >
+      Recebe o CSV de leads exportado. Padroniza colunas, identifica campos
+      relevantes (nome, telefone, CNPJ, empresa, cargo, canal de origem)
+      e prepara os dados para qualificação.
+    skip_if: "arquivo_leads não fornecido ou cliente sem leads ativos"
+    output: "leads_normalizados"
+
+  - id: analisar_leads
+    name: "Qualificação e análise de leads"
+    agent: nova
+    task: tasks/nova/leads.md
+    command: "*leads {cliente}"
+    depends_on: [normalizar_leads]
+    condition: "leads_status[cliente] == 'ativo'"
+    description: >
+      Qualifica cada lead do período. Pesquisa CNPJ quando disponível,
+      avalia fit com o negócio do cliente, classifica como qualificado
+      ou não qualificado. Entrega análise completa com veredicto por lead
+      e resumo do período.
+    behavior:
+      - Validar CNPJ via pesquisa quando disponível
+      - Classificar fit com o negócio do cliente
+      - Veredicto explícito por lead: ✅ Qualificado / ❌ Não qualificado / ⚠️ Inconclusivo
+      - Resumo ao final: total qualificados, taxa de qualificação, padrões identificados
+    skip_if: "leads_status[cliente] != 'ativo'"
+    output: "analise_leads"
+
+flow_diagram: |
+  BLOCO 1 — CAMPANHAS
+  ────────────────────────────────────
+  @nova *normalizar {cliente} [csvs]
+       ↓
+  @nova *analisar {cliente} {periodo}
+       → se dados incompletos: PERGUNTA PRIMEIRO
+       → output: Análise + Otimizações (blocos separados)
+
+  BLOCO 2 — LEADS (apenas OCP_ ativo)
+  ────────────────────────────────────
+  @nova *normalizar-leads {cliente} [csv]
+       ↓
+  @nova *leads {cliente}
+       → pesquisa CNPJ + qualificação por fit
+       → output: leads qualificados / não qualificados + análise
+
+notes:
+  - "Leads ativos apenas para OCP_ (Ocupacional). ASM_ sem leads. BDG_ e PRODOM_ em configuração."
+  - "Agente DEVE perguntar se dados de campanhas estiverem incompletos ou ambíguos — nunca inventar."
+  - "Otimizações propostas ficam sempre em bloco separado da análise."
+  - "Todos os outputs são markdown formatado — sem integração com Notion ou APIs externas."
