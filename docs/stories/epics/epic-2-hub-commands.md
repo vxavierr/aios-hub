@@ -1,6 +1,6 @@
 # Epic 2: Hub Commands
 
-**Status:** In Progress
+**Status:** Done
 **PRD Reference:** docs/prd/hub-multi-projeto.md
 **Architecture Reference:** docs/architecture/hub-multi-projeto-architecture.md
 
@@ -16,10 +16,10 @@ Implementar comandos no AIOS Master para listar, criar, e trocar contexto entre 
 
 | Story | Title | Status | Description |
 |-------|-------|--------|-------------|
-| 2.1 | *list-projects | Draft | Listar todos os projetos com seus status |
-| 2.2 | *create-project | Draft | Criar novos projetos com AIOS isolado |
-| 2.3 | *switch-project | Draft | Mudar contexto para um projeto específico |
-| 2.4 | *project-status | Draft | Ver status detalhado de um projeto |
+| 2.1 | *list-projects | Done | Listar todos os projetos com seus status |
+| 2.2 | *create-project | Done | Criar novos projetos com AIOS isolado |
+| 2.3 | *switch-project | Done | Mudar contexto para um projeto específico |
+| 2.4 | *project-status | Done | Ver status detalhado de um projeto |
 
 ---
 
@@ -34,11 +34,11 @@ Implementar comandos no AIOS Master para listar, criar, e trocar contexto entre 
 
 ## Definition of Done
 
-- [ ] Todos os 4 comandos implementados
-- [ ] Comandos documentados no AIOS Master
-- [ ] Tasks handlers criados em .aios-core/development/tasks/
-- [ ] Testes manuais de cada comando
-- [ ] QA review completo
+- [x] Todos os 4 comandos implementados
+- [x] Comandos documentados no AIOS Master
+- [x] Tasks handlers criados em .aios-core/development/tasks/
+- [x] Testes manuais de cada comando
+- [x] QA review completo
 
 ---
 
@@ -47,3 +47,4 @@ Implementar comandos no AIOS Master para listar, criar, e trocar contexto entre 
 | Date | Version | Description | Author |
 |------|---------|-------------|--------|
 | 2026-02-19 | 1.0 | Epic created | River (@sm) |
+| 2026-03-04 | 1.1 | Epic closed — all 4 stories Done, DoD complete | Pax (@po) |
