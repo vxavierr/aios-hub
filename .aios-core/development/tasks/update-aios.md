@@ -1,6 +1,6 @@
 # Task: Update AIOS Framework
 
-> **Version:** 4.0.0
+> **Version:** 5.0.0
 > **Created:** 2026-01-29
 > **Updated:** 2026-01-31
 > **Type:** SYNC (git-native framework synchronization)
@@ -29,20 +29,25 @@ git checkout -- .aios-core/                                         # Cancel cha
 
 ## How It Works
 
-The script uses sparse clone + file comparison:
+The script uses sparse clone + file comparison + three-way merge:
 
 1. **Clone upstream** - Sparse shallow clone of SynkraAI/aios-core (only `.aios-core/`)
 2. **Compare files** - Uses `comm` for O(n) file list comparison
-3. **Backup local-only** - Files that exist only locally are backed up
-4. **Sync** - Copy upstream files, restore local-only files
-5. **Report** - Shows created/updated/deleted/preserved counts
-6. **User decides** - Commit to apply or checkout to cancel
+3. **Three-way merge** - Protected files (e.g. `core-config.yaml`) are merged: base + upstream + local
+4. **Backup local-only** - Files that exist only locally are backed up
+5. **Sync** - Copy upstream files (excluding protected), restore local-only files
+6. **Report** - Shows created/updated/deleted/preserved/merged counts
+7. **User decides** - Commit to apply or checkout to cancel
 
 **Why this approach:**
 - Sparse clone is fast (~5 seconds)
 - O(n) comparison vs O(n²) nested loops
 - Local-only files always preserved
+- Protected files: customizations survive upstream changes
 - Clear report before committing
+
+**Base storage (`.aios-core/.update-base/`):**
+After each update, the upstream version of protected files is saved as the base for the next three-way merge. This directory is gitignored.
 
 ---
 
@@ -50,9 +55,11 @@ The script uses sparse clone + file comparison:
 
 These paths are automatically preserved (local-only files are backed up and restored):
 
-| Path | Reason |
-|------|--------|
-| `.aios-core/squads/` | Custom copywriters, data, ralph |
+| Path | Strategy | Reason |
+|------|----------|--------|
+| `.aios-core/core-config.yaml` | **Three-way merge** | Project-specific config — customizations must survive updates |
+| `.aios-core/pr-suggestions/` | **Never touch** | Agent-generated improvement proposals, purely local |
+| `.aios-core/squads/` | Local-only preserve | Custom copywriters, data, ralph |
 | `.aios-core/marketing/` | Marketing-specific agents/tasks |
 | `source/` | Business context YAML |
 | `Knowledge/` | Knowledge bases |
@@ -145,6 +152,7 @@ git checkout -- .aios-core/
 
 | Version | Date | Changes |
 |---------|------|---------|
+| 5.0.0 | 2026-03-02 | **THREE-WAY MERGE:** `core-config.yaml` and `pr-suggestions/` never overwritten |
 | 4.0.0 | 2026-01-31 | **SIMPLIFIED:** Git-native approach, 15-line bash script replaces 847-line JS |
 | 3.1.0 | 2026-01-30 | Dynamic protection for squad commands |
 | 3.0.0 | 2026-01-29 | YOLO mode with rsync |

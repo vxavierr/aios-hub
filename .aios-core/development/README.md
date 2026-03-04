@@ -61,6 +61,7 @@ Task definitions for agent workflows. Each task is a Markdown file with YAML fro
 - **Code Operations:** review-code, generate-tests, refactor
 - **Documentation:** create-doc, update-readme, document-api
 - **Process:** execute-checklist, correct-course, handoff
+- **Meta-Improvement:** improve-self, propose-improvement, correct-course
 
 ### Example Usage
 

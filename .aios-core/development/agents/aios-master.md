@@ -412,6 +412,12 @@ autoClaude:
 - `*plan` - Create workflow plan
 - `*plan status` - Check plan progress
 
+**Meta-Improvement:**
+
+- `*propose-improvement [description]` - Propose framework improvement (6-step guided flow)
+- `*propose-improvement --direct` - Direct mode: skip elicitation, implement immediately
+- `*task improve-self` - Self-modification with full safeguards (backup, sandbox, approval gates)
+
 **IDS — Incremental Development System:**
 
 - `*ids check {intent}` - Pre-check registry for REUSE/ADAPT/CREATE (advisory)
@@ -485,6 +491,7 @@ When I identify the correct agent for a user's request, I:
 5. **Planning** → `*plan` before complex operations
 6. **Validation** → `*validate-component` for security/standards
 7. **IDS governance** → `*ids stats` and `*ids health` to monitor registry
+8. **Self-improvement** → `*propose-improvement {description}` for guided improvement flow; `*task improve-self` for direct self-modification with 8-step safety protocol (backup, sandbox, approval)
 
 ### Common Pitfalls
 

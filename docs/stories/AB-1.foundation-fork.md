@@ -2,7 +2,7 @@
 
 > **Story ID:** AB-1
 > **Epic:** BRIDGE-EPIC-1 (AIOS Bridge)
-> **Status:** Ready for Review
+> **Status:** Done
 > **Priority:** P0 — Bloqueador de todas as outras stories
 > **Estimate:** 4–6 horas
 > **Assignee:** @dev
@@ -226,18 +226,18 @@ aios-bridge/
 
 | Layer | Technology | Versão | Origem |
 |-------|-----------|--------|--------|
-| Frontend | React | 18 | Migrado do Myrlin |
-| Frontend | TypeScript | 5.x | Migrado |
-| Frontend | Vite | 5.x | Novo bundler |
+| Frontend | React | 19.2.x | Migrado do Myrlin |
+| Frontend | TypeScript | 5.9.x | Migrado |
+| Frontend | Vite | 7.x | Novo bundler |
 | UI | shadcn/ui | latest | Novo |
-| UI | Tailwind CSS | 3.x | Novo |
-| Terminal | xterm.js | 5.x | Myrlin (mantido) |
-| Backend | Node.js | 20+ | Myrlin (mantido) |
+| UI | Tailwind CSS | 3.4.x | Novo |
+| Terminal | xterm.js | 6.x | Myrlin (mantido) |
+| Backend | Node.js | 22 | Myrlin (mantido) |
 | Backend | Express | 4.x | Myrlin (mantido) |
-| Backend | TypeScript | 5.x | Adicionado |
+| Backend | TypeScript | 5.7.x | Adicionado |
 | WebSocket | ws | 8.x | Myrlin (mantido) |
-| PTY | node-pty | 1.x | Myrlin (mantido) |
-| Dev | concurrently | latest | Novo |
+| PTY | @homebridge/node-pty-prebuilt-multiarch | 0.13.x | Substituído — prebuilts Node 22 |
+| Dev | concurrently | 9.x | Novo |
 
 ### Risco Crítico: node-pty no Windows — RESOLVIDO
 
@@ -386,7 +386,7 @@ export default defineConfig({
 - [x] `npm run dev` inicia backend e frontend simultaneamente
 - [x] PTY básico funcional: smoke test via WebSocket confirmado (echo AIOS-BRIDGE-OK ✅)
 - [x] README.md criado com contexto, decisões e setup
-- [ ] @architect review: `architecture_review` | `dependency_audit` | `fork_strategy`
+- [x] @architect review: `architecture_review` ✅ | `dependency_audit` ✅ | `fork_strategy` ✅
 
 ---
 
@@ -402,6 +402,9 @@ export default defineConfig({
 | 2026-03-03 | @dev Dex | Licença Myrlin é AGPL-3.0 (story dizia MIT incorretamente) → documentado no README, sem impacto para uso local |
 | 2026-03-03 | @dev Dex | PTY smoke test confirmado: echo via cmd.exe → WebSocket → saída correta ✅ |
 | 2026-03-03 | @dev Dex | Status: Ready → InProgress → Ready for Review |
+| 2026-03-03 | @architect Aria | Review: PASS COM CONCERNS — tech stack atualizado para versões reais (React 19, Vite 7, xterm 6) |
+| 2026-03-03 | @architect Aria | Gap documentado: terminal resize não propaga ao backend PTY — resolver em AB-2 (protocolo WS resize + PtyManager.resize()) |
+| 2026-03-03 | @architect Aria | DoD @architect review: ✅ architecture_review | ✅ dependency_audit | ✅ fork_strategy |
 
 ---
 

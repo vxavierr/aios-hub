@@ -1,11 +1,15 @@
 #!/bin/bash
-# AIOS Framework Update - v5.2 (Optimized)
+# AIOS Framework Update - v6.0 (Three-Way Merge)
 #
 # LOGIC:
 #   - LOCAL only (not in upstream)     → KEEP
-#   - LOCAL + UPSTREAM                 → OVERWRITE (upstream wins)
+#   - LOCAL + UPSTREAM (normal)        → OVERWRITE (upstream wins)
+#   - LOCAL + UPSTREAM (protected)     → THREE-WAY MERGE (base + upstream + local)
 #   - UPSTREAM only (not in local)     → CREATE
 #   - WAS in both, UPSTREAM removed    → DELETE
+#
+# Protected files: core-config.yaml (three-way merge)
+# Protected dirs:  pr-suggestions/   (never touch)
 #
 # Usage: bash .aios-core/scripts/update-aios.sh
 
@@ -38,7 +42,15 @@ REPORT_CREATED="$TEMP_DIR/report-created.txt"
 REPORT_UPDATED="$TEMP_DIR/report-updated.txt"
 REPORT_DELETED="$TEMP_DIR/report-deleted.txt"
 REPORT_PRESERVED="$TEMP_DIR/report-preserved.txt"
-touch "$REPORT_CREATED" "$REPORT_UPDATED" "$REPORT_DELETED" "$REPORT_PRESERVED"
+REPORT_MERGED="$TEMP_DIR/report-merged.txt"
+touch "$REPORT_CREATED" "$REPORT_UPDATED" "$REPORT_DELETED" "$REPORT_PRESERVED" "$REPORT_MERGED"
+
+# Protected files — three-way merge instead of overwrite
+PROTECTED_FILES=("core-config.yaml")
+# Protected dirs — never touch (local-generated content)
+PROTECTED_DIRS=("pr-suggestions")
+# Base dir — stores last upstream version for three-way merge
+BASE_DIR=".aios-core/.update-base"
 
 # Clone upstream (shallow)
 echo "📥 Cloning upstream..."
@@ -88,6 +100,41 @@ while IFS= read -r rel_path; do
   fi
 done < "$TEMP_DIR/in-both.txt"
 
+# Three-way merge for protected files (base + upstream + local)
+echo "🔀 Processing protected files..."
+for rel_path in "${PROTECTED_FILES[@]}"; do
+  local_file=".aios-core/$rel_path"
+  upstream_file="$TEMP_DIR/upstream/.aios-core/$rel_path"
+  base_file="$BASE_DIR/$rel_path"
+
+  [ -f "$upstream_file" ] || continue
+  [ -f "$local_file" ]    || continue
+
+  if [ -f "$base_file" ]; then
+    tmp_local=$(mktemp)
+    cp "$local_file" "$tmp_local"
+    git merge-file "$tmp_local" "$base_file" "$upstream_file" 2>/dev/null
+    merge_status=$?
+    cp "$tmp_local" "$local_file"
+    rm -f "$tmp_local"
+    if [ $merge_status -ne 0 ]; then
+      echo "$rel_path (CONFLICT — resolve manually)" >> "$REPORT_MERGED"
+    else
+      echo "$rel_path" >> "$REPORT_MERGED"
+    fi
+  else
+    echo "$rel_path (first update — local kept, base saved)" >> "$REPORT_MERGED"
+  fi
+
+  # Save upstream as base for next update
+  mkdir -p "$BASE_DIR/$(dirname "$rel_path")"
+  cp "$upstream_file" "$BASE_DIR/$rel_path"
+
+  # Remove from REPORT_UPDATED (handled here, not by rsync)
+  grep -v "^${rel_path}$" "$REPORT_UPDATED" > "$TEMP_DIR/updated-tmp.txt" \
+    && mv "$TEMP_DIR/updated-tmp.txt" "$REPORT_UPDATED" || true
+done
+
 # Backup local-only files
 echo "🔐 Backing up local-only files..."
 mkdir -p "$TEMP_DIR/local-only"
@@ -108,7 +155,12 @@ if [ -s "$REPORT_DELETED" ]; then
 fi
 
 # Copy all upstream files (creates new + overwrites existing)
-rsync -a "$TEMP_DIR/upstream/.aios-core/" ".aios-core/"
+# Exclude protected files (handled by three-way merge) and protected dirs
+RSYNC_EXCLUDES=""
+for _f in "${PROTECTED_FILES[@]}"; do RSYNC_EXCLUDES="$RSYNC_EXCLUDES --exclude=$_f"; done
+for _d in "${PROTECTED_DIRS[@]}"; do RSYNC_EXCLUDES="$RSYNC_EXCLUDES --exclude=$_d/"; done
+# shellcheck disable=SC2086
+rsync -a $RSYNC_EXCLUDES "$TEMP_DIR/upstream/.aios-core/" ".aios-core/"
 
 # Restore local-only files
 if [ -d "$TEMP_DIR/local-only" ] && [ "$(ls -A "$TEMP_DIR/local-only" 2>/dev/null)" ]; then
@@ -163,6 +215,13 @@ if [ "$PRESERVED_COUNT" -gt 0 ] && [ "$PRESERVED_COUNT" -le 10 ]; then
 elif [ "$PRESERVED_COUNT" -gt 10 ]; then
   head -5 "$REPORT_PRESERVED" | sed 's/^/       /'
   echo "       ... and $((PRESERVED_COUNT - 5)) more"
+fi
+
+MERGED_COUNT=$(wc -l < "$REPORT_MERGED" | tr -d ' ')
+echo ""
+echo "  🔀 MERGED:    $MERGED_COUNT protected files (three-way merge)"
+if [ "$MERGED_COUNT" -gt 0 ]; then
+  sed 's/^/       /' "$REPORT_MERGED"
 fi
 
 echo ""

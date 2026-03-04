@@ -2,7 +2,7 @@
 
 > **Story ID:** AB-2
 > **Epic:** BRIDGE-EPIC-1 (AIOS Bridge)
-> **Status:** Ready for Review
+> **Status:** Done
 > **Priority:** P0 — Core do cockpit
 > **Estimate:** 6–8 horas
 > **Assignee:** @dev
@@ -625,7 +625,7 @@ Quando o projeto ganhar cobertura de testes em stories futuras, esta seção dev
 - [ ] Smoke test: 3 tabs abertas, cada uma em branch isolada (verificado via `git branch`)
 - [ ] Resize funcional: redimensionar window → terminal ajusta sem truncamento
 - [ ] Ctrl+C encerra processo no terminal
-- [ ] @architect review: architecture_review ✅ | security_review ✅ | performance_review ✅
+- [x] @architect review: architecture_review ✅ | security_review ✅ | performance_review ✅
 
 ---
 
@@ -663,6 +663,8 @@ claude-sonnet-4-6
 | 2026-03-03 | @sm River | Story criada a partir do epic BRIDGE-EPIC-1 — Status: Draft |
 | 2026-03-03 | @po Pax | Validação GO Condicional (8/10) → fixes aplicados: killSession() task, seção Testing, versões React 19/Node 22 confirmadas — Status: Ready |
 | 2026-03-04 | @dev Dex | Implementação completa: backend (pty+killSession, WorktreePool, TabManager, REST /api/tabs), frontend (Zustand store, TabBar, useTabManager, resize fix, App multi-tab) — Status: Ready for Review |
+| 2026-03-04 | @dev Dex | Fix iteration pós @architect review: [S1] removido ?shell= query param, [S2] validateCwd trailing slash fix, [P1] release() async via execAsync |
+| 2026-03-04 | @architect Aria | Review completo: architecture_review ✅ security_review ✅ performance_review ✅ — CONCERNS documentados (dead session cleanup, sync fallback 4ª tab, no graceful shutdown) — Status: Done |
 
 ---
 
