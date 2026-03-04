@@ -12,9 +12,13 @@ inputs:
   - name: periodo
     description: "Período de referência (ex: semana 1 - fev/2026)"
     required: true
+  - name: modo_extracao
+    description: "api (automático via *extrair) ou csv (manual via *normalizar). Default: api"
+    required: false
+    default: "api"
   - name: arquivos_campanhas
-    description: "CSVs exportados das plataformas ativas do cliente (Meta, Google, LinkedIn)"
-    required: true
+    description: "CSVs exportados das plataformas (obrigatório se modo_extracao=csv, ignorado se api)"
+    required: false
   - name: arquivo_leads
     description: "CSV de leads do período (apenas OCP_ por enquanto)"
     required: false
@@ -28,18 +32,37 @@ leads_status:
 steps:
 
   # ─────────────────────────────────────────
+  # BLOCO 0 — EXTRAÇÃO AUTOMÁTICA (opcional)
+  # ─────────────────────────────────────────
+
+  - id: extrair
+    name: "Extrair dados via API (automático)"
+    agent: nova
+    task: tasks/nova/extrair.md
+    command: "*extrair {cliente} all {periodo}"
+    description: >
+      Extrai dados direto das APIs do Google Ads e Meta Ads.
+      Produz dataset no schema padrão, pronto para *analisar.
+      Se a API falhar, token expirar, ou for LinkedIn:
+      usar *normalizar com CSV manual como fallback.
+    output: "dados_extraidos"
+    optional: true
+    skip_if: "modo_extracao == 'csv' OU cliente sem IDs cadastrados OU plataforma == linkedin"
+
+  # ─────────────────────────────────────────
   # BLOCO 1 — CAMPANHAS
   # ─────────────────────────────────────────
 
   - id: normalizar
-    name: "Normalizar dados de campanhas"
+    name: "Normalizar dados de campanhas (fallback CSV manual)"
     agent: nova
-    task: tasks/nova/normalizar.md
+    task: tasks/nova/normalizar-campanhas.md
     command: "*normalizar {cliente} [arquivos_campanhas]"
+    condition: "extrair falhou OU modo_extracao == 'csv' OU plataforma == linkedin OU CSVs fornecidos"
     description: >
-      Recebe os CSVs brutos exportados das plataformas ativas do cliente.
-      Padroniza colunas, remove linhas inválidas, unifica nomenclaturas e
-      prepara um dataset limpo para análise.
+      Fallback para quando *extrair não está disponível.
+      Recebe CSVs brutos exportados das plataformas, padroniza colunas,
+      remove linhas inválidas e prepara dataset limpo para análise.
     output: "dados_normalizados"
 
   - id: analisar
@@ -47,9 +70,9 @@ steps:
     agent: nova
     task: tasks/nova/analisar.md
     command: "*analisar {cliente} {periodo}"
-    depends_on: [normalizar]
+    depends_on: [extrair, normalizar]
     description: >
-      Analisa os dados normalizados do período. Se identificar lacunas ou
+      Analisa os dados do período (vindos de *extrair ou *normalizar). Se identificar lacunas ou
       ambiguidades nos dados, pergunta antes de continuar.
       Entrega dois blocos distintos:
         1. Análise completa de campanhas (Big Numbers + diagnóstico)
@@ -59,6 +82,18 @@ steps:
       - Nunca inventar métricas ausentes
       - Otimizações ficam em bloco separado — nunca misturado na análise
     output: "analise_campanhas + otimizacoes"
+
+  - id: diagnostico
+    name: "Diagnóstico de criativos"
+    agent: nova
+    task: tasks/nova/diagnostico.md
+    command: "*diagnostico {cliente}"
+    depends_on: [analisar]
+    description: >
+      Analisa criativos ativos em todas as plataformas do cliente.
+      Classifica como campeão (manter), fadiga (renovar) ou fraco (pausar).
+      Recomenda posts para impulsionar e briefings de novos criativos.
+    output: "diagnostico_criativos"
 
   # ─────────────────────────────────────────
   # BLOCO 2 — LEADS (condicional)
@@ -99,13 +134,21 @@ steps:
     output: "analise_leads"
 
 flow_diagram: |
+  BLOCO 0 — EXTRAÇÃO (automático, opcional)
+  ────────────────────────────────────
+  @nova *extrair {cliente} all {periodo}
+       ↓ (se falhar ou LinkedIn → CSV manual)
+
   BLOCO 1 — CAMPANHAS
   ────────────────────────────────────
-  @nova *normalizar {cliente} [csvs]
+  @nova *normalizar {cliente} [csvs]  (fallback se *extrair indisponível)
        ↓
   @nova *analisar {cliente} {periodo}
        → se dados incompletos: PERGUNTA PRIMEIRO
        → output: Análise + Otimizações (blocos separados)
+       ↓
+  @nova *diagnostico {cliente}
+       → output: Criativos classificados (campeão/fadiga/fraco) + ações
 
   BLOCO 2 — LEADS (apenas OCP_ ativo)
   ────────────────────────────────────

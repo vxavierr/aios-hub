@@ -45,6 +45,35 @@ The framework operates under a constitution defined in `.aios-core/constitution.
 
 ## Git & GitHub Integration
 
+### Feature Branch Workflow (OBRIGATÓRIO)
+
+**Toda mudança vai em branch própria — NUNCA commit direto em `main`/`master`.**
+
+| Regra | Detalhe |
+|-------|---------|
+| Branch por mudança | Qualquer alteração (1 arquivo ou mais) = branch separada |
+| Exceção | Hotfix crítico de 1 linha com aprovação explícita do usuário |
+| Merge | Apenas via PR revisado — @devops `*create-pr` |
+| Push direto em main | **BLOQUEADO** pelo pre-push gate |
+
+**Convenção de nomes:**
+```
+feat/nome-da-feature
+fix/o-que-foi-corrigido
+chore/tarefa-de-manutencao
+docs/o-que-foi-documentado
+```
+
+**Fluxo padrão:**
+```
+git checkout -b feat/minha-feature   ← @dev cria a branch
+[implementa + commita]               ← @dev
+@devops *push                        ← push da branch
+@devops *create-pr                   ← cria PR
+[revisão + aprovação]
+@devops *merge                       ← merge para master
+```
+
 ### Commit Conventions
 - Use conventional commits: `feat:`, `fix:`, `docs:`, `chore:`, etc.
 - Reference story ID: `feat: implement login flow [Story 2.1]`

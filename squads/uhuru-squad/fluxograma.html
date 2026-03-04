@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Uhuru Squad — Fluxo de Processos</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{background:#070e1a;color:#e2e8f0;font-family:-apple-system,'Segoe UI',sans-serif;overflow:hidden;height:100vh}
+
+/* TOOLBAR */
+#toolbar{position:fixed;top:0;left:0;right:0;height:50px;z-index:1000;background:rgba(7,14,26,.97);backdrop-filter:blur(16px);border-bottom:1px solid #152240;display:flex;align-items:center;padding:0 16px;gap:6px}
+#logo{font-size:13px;font-weight:700;color:#4a6080;margin-right:4px;letter-spacing:.05em}
+.tab{padding:5px 12px;border-radius:8px;cursor:pointer;font-size:12px;font-weight:500;color:#4a6080;border:1px solid transparent;transition:all .15s;white-space:nowrap;display:flex;align-items:center;gap:5px}
+.tab:hover{background:#152240;color:#94a3b8}.tab.active{background:#152240;border-color:#2a4070;color:#e2e8f0}
+.dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.tsep{width:1px;height:20px;background:#152240;margin:0 2px}
+.tbtn{padding:5px 10px;border-radius:7px;cursor:pointer;font-size:11px;color:#4a6080;border:1px solid transparent;background:transparent;transition:all .15s}
+.tbtn:hover{background:#152240;color:#cbd5e1;border-color:#2a4070}
+.tbtn.ok{background:#052e1c;border-color:#10b981;color:#34d399;pointer-events:none}
+
+/* CANVAS */
+#canvas{position:fixed;inset:50px 0 0;overflow:hidden;background:#070e1a;background-image:radial-gradient(circle,#152240 1px,transparent 1px);background-size:28px 28px}
+#canvas.panning{cursor:grabbing}
+#world{position:absolute;top:0;left:0;transform-origin:0 0;will-change:transform}
+#svg{position:absolute;top:0;left:0;width:5000px;height:5000px;overflow:visible;pointer-events:none}
+
+/* NODES */
+.nd{position:absolute;user-select:none;cursor:grab;transition:box-shadow .15s}
+.nd:hover{filter:brightness(1.08)}
+.nd.dragging{cursor:grabbing;z-index:999!important;filter:brightness(1.15) drop-shadow(0 12px 28px rgba(0,0,0,.8))}
+
+/* Terminal (start/end) */
+.nd-terminal{min-height:50px;border-radius:25px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-weight:700;letter-spacing:.02em;border:2px solid;padding:10px 24px;text-align:center;gap:3px}
+.nd-terminal.start{background:#031a0d;border-color:#10b981;color:#34d399}
+.nd-terminal .t-main{font-size:13px;font-weight:700}
+.nd-terminal .t-sub{font-size:10px;font-weight:400;opacity:.65}
+.nd-terminal.end{background:#0d1525;border-color:#334e7a;color:#7090c0}
+
+/* Step */
+.nd-step{border-radius:10px;border:1px solid #1a2e50;background:#0d1828;box-shadow:0 4px 20px rgba(0,0,0,.5);overflow:hidden}
+.step-bar{display:flex;align-items:center;justify-content:space-between;padding:8px 12px;gap:8px;border-bottom:1px solid #1a2e50}
+.agent-name{font-size:11px;font-weight:700;display:flex;align-items:center;gap:4px}
+.cmd{font-family:'JetBrains Mono','Courier New',monospace;font-size:10px;color:#7090a8;background:#070e1a;padding:2px 7px;border-radius:4px;border:1px solid #1a2e50}
+.step-body{padding:10px 13px 12px}
+.step-title{font-size:13px;font-weight:700;color:#d0e8ff;margin-bottom:5px;line-height:1.3}
+.step-desc{font-size:11px;color:#7890a8;line-height:1.6}
+
+/* Decision — full SVG inside */
+.nd-decision{line-height:1}
+
+/* EDGES */
+.edge-hit{fill:none;stroke:transparent;stroke-width:16;pointer-events:stroke;cursor:default}
+.edge-path{fill:none;stroke-width:2;pointer-events:none;opacity:.6;transition:opacity .15s,stroke-width .15s}
+.edge-path.lit{opacity:1;stroke-width:2.5}
+.edge-label-bg{fill:#070e1a}
+.edge-label-text{font-size:10px;text-anchor:middle;dominant-baseline:middle;font-family:-apple-system,'Segoe UI',sans-serif;pointer-events:none}
+#temp{fill:none;stroke:#2a4070;stroke-width:1.5;stroke-dasharray:7 4;pointer-events:none;opacity:0}
+
+/* LEGEND */
+#legend{position:fixed;bottom:18px;right:18px;z-index:200;background:rgba(7,14,26,.95);backdrop-filter:blur(10px);border:1px solid #152240;border-radius:10px;padding:9px 14px;display:flex;gap:14px;align-items:center}
+.leg-item{display:flex;align-items:center;gap:5px;font-size:11px;color:#5a7090}
+.leg-dot{width:8px;height:8px;border-radius:2px}
+
+/* ZOOM */
+#zoom{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);z-index:200;background:rgba(7,14,26,.9);border:1px solid #152240;border-radius:7px;padding:4px 10px;font-size:11px;color:#4a6080}
+
+/* MODAL */
+#modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:3000;display:none;align-items:center;justify-content:center;backdrop-filter:blur(4px)}
+#modal-bg.open{display:flex}
+.modal{background:#060f1d;border:1px solid #0c1e38;border-radius:14px;padding:22px;width:380px;box-shadow:0 16px 60px rgba(0,0,0,.8)}
+.modal h3{font-size:13px;font-weight:600;color:#c8d8f0;margin-bottom:12px}
+.modal label{font-size:11px;color:#5a7890;display:block;margin-bottom:5px}
+.modal input,.modal textarea{width:100%;background:#050d1c;border:1px solid #0c1e38;border-radius:7px;padding:8px 10px;color:#e2e8f0;font-size:12px;font-family:inherit;outline:none;resize:vertical;margin-bottom:10px;transition:border-color .15s}
+.modal textarea{height:65px}
+.modal input:focus,.modal textarea:focus{border-color:#1a4aaf}
+.modal-btns{display:flex;gap:8px;justify-content:flex-end}
+.mbtn{padding:6px 12px;border-radius:7px;cursor:pointer;font-size:12px;border:1px solid #0c1e38;color:#2d4568;background:transparent;transition:all .15s}
+.mbtn:hover{background:#0c1e38;color:#e2e8f0}
+.mbtn.ok{background:#0c2a6a;border-color:#1a4aaf;color:#93c5fd}
+.mbtn.ok:hover{background:#1a3a8a}
+
+/* CONTEXT MENU */
+#ctx{position:fixed;z-index:2000;background:#060f1d;border:1px solid #0c1e38;border-radius:9px;padding:4px;min-width:170px;display:none;box-shadow:0 8px 32px rgba(0,0,0,.7)}
+.ctx-item{padding:7px 11px;border-radius:6px;cursor:pointer;font-size:12px;color:#7090b0;display:flex;gap:8px;align-items:center}
+.ctx-item:hover{background:#0c1e38;color:#e2e8f0}
+.ctx-item.red{color:#f87171}.ctx-item.red:hover{background:#1a0808}
+.ctx-sep{height:1px;background:#0c1e38;margin:3px 0}
+</style>
+</head>
+<body>
+
+<div id="toolbar">
+  <span id="logo">🎯 UHURU</span>
+  <div class="tsep"></div>
+  <div class="tab active" data-flow="semanal"><span class="dot" style="background:#8b5cf6"></span>Ciclo Semanal</div>
+  <div class="tab" data-flow="mensal"><span class="dot" style="background:#3b82f6"></span>Ciclo Mensal</div>
+  <div class="tab" data-flow="onboarding"><span class="dot" style="background:#10b981"></span>Novo Cliente</div>
+  <div class="tsep"></div>
+  <button class="tbtn" id="btn-layout">⊞ Reset Layout</button>
+  <button class="tbtn" id="btn-fit">⊙ Fit</button>
+  <button class="tbtn" id="btn-save">💾 Salvar</button>
+</div>
+
+<div id="canvas">
+  <div id="world">
+    <svg id="svg"><defs></defs><path id="temp"/></svg>
+  </div>
+</div>
+
+<div id="legend">
+  <span style="font-size:11px;color:#0c1e38;font-weight:700;margin-right:2px">Agentes</span>
+  <div class="leg-item"><div class="leg-dot" style="background:#3b82f6"></div>⚡ Flux</div>
+  <div class="leg-item"><div class="leg-dot" style="background:#8b5cf6"></div>📊 Nova</div>
+  <div class="leg-item"><div class="leg-dot" style="background:#f59e0b"></div>💰 Finn</div>
+  <div class="leg-item"><div class="leg-dot" style="background:#10b981"></div>📋 Sage</div>
+</div>
+<div id="zoom">100%</div>
+
+<div id="ctx">
+  <div class="ctx-item" id="ctx-edit">✏️ Editar conteúdo</div>
+  <div class="ctx-sep"></div>
+  <div class="ctx-item red" id="ctx-del">🗑 Remover nó</div>
+</div>
+
+<div id="modal-bg">
+  <div class="modal">
+    <h3 id="m-title">Editar</h3>
+    <label id="m-lbl1">Título</label>
+    <input id="m-inp1" type="text"/>
+    <label id="m-lbl2">Descrição</label>
+    <textarea id="m-inp2"></textarea>
+    <div class="modal-btns">
+      <button class="mbtn" id="m-cancel">Cancelar</button>
+      <button class="mbtn ok" id="m-ok">Salvar</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ════════════════════════════════════════════════
+// AGENTS
+// ════════════════════════════════════════════════
+const AG = {
+  flux: { name:'Flux', icon:'⚡', color:'#3b82f6' },
+  nova: { name:'Nova', icon:'📊', color:'#8b5cf6' },
+  finn: { name:'Finn', icon:'💰', color:'#f59e0b' },
+  sage: { name:'Sage', icon:'📋', color:'#10b981' },
+};
+
+// ════════════════════════════════════════════════
+// FLOW DEFINITIONS
+// ════════════════════════════════════════════════
+const DEFS = {
+  semanal: {
+    name:'Ciclo Semanal', color:'#8b5cf6',
+    nodes:[
+      { id:'s0', type:'start', label:'📅 Início — Ciclo Semanal', sub:'Toda semana, ao receber os CSVs das plataformas', w:270 },
+      { id:'n1', type:'step', agent:'nova', cmd:'*normalizar', title:'Normalizar Dados de Campanhas',
+        desc:'Recebe os CSVs brutos exportados do Meta Ads, Google Ads ou LinkedIn. Padroniza colunas, remove linhas inválidas e entrega um dataset limpo e consistente.', w:310 },
+      { id:'n2', type:'step', agent:'nova', cmd:'*analisar', title:'Analisar Campanhas + Propor Otimizações',
+        desc:'Processa o dataset normalizado. Calcula Big Numbers do período (impressões, cliques, CTR, CPC, conversões, CPA) e diagnostica cada campanha. Otimizações ficam em bloco separado — nunca misturadas.', w:310 },
+      { id:'d1', type:'decision', label:'Cliente tem leads ativos?', sub:'OCP_: ativo · ASM_, BDG_, PRODOM_: não', w:300, h:100 },
+      { id:'n3', type:'step', agent:'nova', cmd:'*normalizar-leads', title:'Normalizar Leads',
+        desc:'Recebe o CSV exportado do RD Station. Padroniza campos (nome, telefone, CNPJ, empresa, canal de origem) e entrega dataset limpo para qualificação.', w:290 },
+      { id:'n4', type:'step', agent:'nova', cmd:'*leads OCP_', title:'Qualificar e Analisar Leads',
+        desc:'Qualifica cada lead individualmente: pesquisa CNPJ quando disponível, avalia fit com o negócio do cliente. Veredicto: ✅ Qualificado / ❌ Não qualificado / ⚠️ Inconclusivo. Entrega resumo com taxa de qualificação e padrões identificados.', w:290 },
+      { id:'e0', type:'end', label:'✓ Ciclo Semanal Concluído', sub:'Análise + Otimizações + (Leads se aplicável)', w:270 },
+    ],
+    edges:[
+      { id:'e1', from:'s0', to:'n1' },
+      { id:'e2', from:'n1', to:'n2' },
+      { id:'e3', from:'n2', to:'d1' },
+      { id:'e4', from:'d1', to:'n3', label:'SIM (OCP_)', color:'#8b5cf6' },
+      { id:'e5', from:'d1', to:'e0', label:'NÃO → fim', color:'#334155' },
+      { id:'e6', from:'n3', to:'n4' },
+      { id:'e7', from:'n4', to:'e0' },
+    ],
+    layout:{
+      s0:{x:165,y:20},
+      n1:{x:145,y:115},
+      n2:{x:145,y:295},
+      d1:{x:155,y:480},
+      n3:{x:470,y:580},
+      n4:{x:470,y:755},
+      e0:{x:165,y:940},
+    }
+  },
+
+  mensal: {
+    name:'Ciclo Mensal', color:'#3b82f6',
+    nodes:[
+      { id:'s0', type:'start', label:'🔄 Início — Ciclo Mensal', sub:'Final/início de mês, com dados completos', w:260 },
+      { id:'n1', type:'step', agent:'nova', cmd:'*extrair all', title:'Extrair Dados Completos do Mês',
+        desc:'Acessa Meta Ads, Google Ads e LinkedIn. Extrai dados de performance de todas as campanhas do mês inteiro para o cliente.', w:310 },
+      { id:'n2', type:'step', agent:'nova', cmd:'*analisar', title:'Big Numbers + Análise do Mês',
+        desc:'Análise profunda de todos os dados do mês. Diagnóstico completo por campanha, comparativo com mês anterior. Otimizações em bloco separado.', w:280 },
+      { id:'n3', type:'step', agent:'nova', cmd:'*leads', title:'Análise de Leads do Mês',
+        desc:'Qualificação e análise do volume de leads gerados no mês inteiro (OCP_). Taxa de qualificação, padrões do período e evolução vs. mês anterior.', w:270 },
+      { id:'n4', type:'step', agent:'sage', cmd:'*insights', title:'Compilar Insights Estratégicos',
+        desc:'Transforma os dados de análise e leads em aprendizados acionáveis: o que funcionou, o que não funcionou, o que recomendar para o próximo ciclo.', w:280 },
+      { id:'n5', type:'step', agent:'finn', cmd:'*forecast', title:'Forecast & Fechamento de Budget',
+        desc:'Fecha o investimento real do mês atual nas plataformas. Projeta o budget do próximo ciclo com base no histórico e no que o cliente aprovou.', w:270 },
+      { id:'n6', type:'step', agent:'flux', cmd:'*planejar', title:'Plano de Mídia do Próximo Mês',
+        desc:'Define o plano do próximo mês com base nos insights (Sage) e no forecast aprovado (Finn): budget por canal, estrutura de campanhas, metas de KPIs.', w:310 },
+      { id:'n7', type:'step', agent:'sage', cmd:'*relatorio', title:'Relatório de Resultados',
+        desc:'Narrativa clara e estruturada dos resultados do mês para o cliente. Usa Big Numbers + análise de leads + insights estratégicos do período.', w:310 },
+      { id:'n8', type:'step', agent:'sage', cmd:'*apresentar', title:'Apresentação ao Cliente',
+        desc:'Prepara o deck para a reunião mensal: resultados do período, principais aprendizados, próximo plano de mídia e perguntas estratégicas.', w:310 },
+      { id:'e0', type:'end', label:'✓ Ciclo Mensal Concluído', sub:'Próximo mês planejado e pronto para execução', w:260 },
+    ],
+    edges:[
+      { id:'e1', from:'s0', to:'n1' },
+      { id:'e2', from:'n1', to:'n2', label:'paralelo ↓', color:'#8b5cf6' },
+      { id:'e3', from:'n1', to:'n3', label:'paralelo ↓', color:'#8b5cf6' },
+      { id:'e4', from:'n2', to:'n4' },
+      { id:'e5', from:'n3', to:'n4' },
+      { id:'e6', from:'n2', to:'n5' },
+      { id:'e7', from:'n4', to:'n6' },
+      { id:'e8', from:'n5', to:'n6' },
+      { id:'e9', from:'n4', to:'n7', label:'insights →', color:'#10b981' },
+      { id:'e10', from:'n6', to:'n7' },
+      { id:'e11', from:'n7', to:'n8' },
+      { id:'e12', from:'n8', to:'e0' },
+    ],
+    layout:{
+      s0:{x:195,y:20},
+      n1:{x:170,y:115},
+      n2:{x:10, y:290},
+      n3:{x:325,y:290},
+      n4:{x:10, y:470},
+      n5:{x:325,y:470},
+      n6:{x:170,y:650},
+      n7:{x:170,y:825},
+      n8:{x:170,y:1000},
+      e0:{x:195,y:1170},
+    }
+  },
+
+  onboarding: {
+    name:'Novo Cliente', color:'#10b981',
+    nodes:[
+      { id:'s0', type:'start', label:'🆕 Onboarding de Novo Cliente', sub:'Cliente assinou contrato — iniciar processo', w:280 },
+      { id:'n1', type:'step', agent:'flux', cmd:'*revisar', title:'Identificação & Briefing',
+        desc:'Mapeia objetivos de negócio, público-alvo, produto/serviço principal, concorrentes e budget aprovado por canal. Primeiro contato estruturado com o cliente.', w:330 },
+      { id:'n2', type:'step', agent:'finn', cmd:'*alocar', title:'Setup Operacional',
+        desc:'Cria pasta no Google Drive (/Clientes/), aba na planilha de controle de budget, solicita e confirma acesso às contas de ads nas plataformas ativas.', w:330 },
+      { id:'n3', type:'step', agent:'flux', cmd:'*planejar', title:'Estratégia Inicial + Briefing Criativo',
+        desc:'Cria o plano de mídia do primeiro mês: budget por canal, estrutura de campanhas, segmentações e objetivos. Produz briefing para o time criativo.', w:295 },
+      { id:'n4', type:'step', agent:'nova', cmd:'*extrair', title:'Setup de Tracking',
+        desc:'Instala e valida pixel do Meta, tag do Google, configura conversões nas plataformas. Configura planilha de leads. Executa primeiro *extrair para validar que dados chegam.', w:295 },
+      { id:'n5', type:'step', agent:'sage', cmd:'*relatorio', title:'Templates de Comunicação',
+        desc:'Cria a página do cliente no Notion, template de relatório mensal personalizado, template de apresentação e define a cadência de reuniões.', w:330 },
+      { id:'n6', type:'step', agent:'flux', cmd:'*revisar', title:'Validação & Go-Live',
+        desc:'Checklist final: criativos aprovados pelo cliente, campanhas configuradas e em revisão nas plataformas, tracking validado, cliente onboardado no processo da squad.', w:330 },
+      { id:'e0', type:'end', label:'✅ Cliente Ativo na Squad', sub:'Campanhas no ar, tracking validado, processo rodando', w:280 },
+    ],
+    edges:[
+      { id:'e1', from:'s0', to:'n1' },
+      { id:'e2', from:'n1', to:'n2' },
+      { id:'e3', from:'n2', to:'n3', label:'paralelo ↓', color:'#3b82f6' },
+      { id:'e4', from:'n2', to:'n4', label:'paralelo ↓', color:'#8b5cf6' },
+      { id:'e5', from:'n3', to:'n5' },
+      { id:'e6', from:'n4', to:'n5' },
+      { id:'e7', from:'n5', to:'n6' },
+      { id:'e8', from:'n6', to:'e0' },
+    ],
+    layout:{
+      s0:{x:190,y:20},
+      n1:{x:165,y:115},
+      n2:{x:165,y:295},
+      n3:{x:10, y:480},
+      n4:{x:325,y:480},
+      n5:{x:165,y:665},
+      n6:{x:165,y:850},
+      e0:{x:190,y:1030},
+    }
+  }
+};
+
+// ════════════════════════════════════════════════
+// STATE
+// ════════════════════════════════════════════════
+let cur = 'semanal';
+let saved = {};    // flowId → {nodeId: {x,y}}
+let vp = { x:0, y:0, scale:1 };
+let drag = null, pan = null;
+let spaceDown = false, litEdge = null;
+let ctxTarget = null, modalCb = null;
+
+function loadSaved() {
+  try { saved = JSON.parse(localStorage.getItem('uhuru-fp')) || {}; } catch(e){ saved={}; }
+}
+function persistSaved() {
+  localStorage.setItem('uhuru-fp', JSON.stringify(saved));
+}
+
+// ════════════════════════════════════════════════
+// HELPERS
+// ════════════════════════════════════════════════
+const canvasEl = document.getElementById('canvas');
+const worldEl  = document.getElementById('world');
+const svgEl    = document.getElementById('svg');
+const tempEl   = document.getElementById('temp');
+const zoomEl   = document.getElementById('zoom');
+
+function $svg(tag){ return document.createElementNS('http://www.w3.org/2000/svg', tag); }
+function ndEl(id){ return document.querySelector(`.nd[data-id="${id}"]`); }
+
+function ndPos(id){
+  const el = ndEl(id);
+  return el ? { x: parseFloat(el.style.left)||0, y: parseFloat(el.style.top)||0 } : {x:0,y:0};
+}
+function ndSize(id){
+  const el = ndEl(id);
+  return el ? { w: el.offsetWidth, h: el.offsetHeight } : { w:280, h:100 };
+}
+function ndCenter(id){
+  const p = ndPos(id), s = ndSize(id);
+  return { x: p.x + s.w/2, y: p.y + s.h/2 };
+}
+
+function rectEdge(cx,cy,w,h,tx,ty){
+  const dx=tx-cx, dy=ty-cy;
+  if(!dx&&!dy) return {x:cx,y:cy};
+  const hw=w/2, hh=h/2;
+  const t = Math.abs(dy)*hw > Math.abs(dx)*hh ? hh/Math.abs(dy) : hw/Math.abs(dx);
+  return { x:cx+dx*t, y:cy+dy*t };
+}
+
+function bezier(p1,p2,bend=0){
+  const dx=p2.x-p1.x, dy=p2.y-p1.y;
+  const len=Math.sqrt(dx*dx+dy*dy)||1;
+  const px=-dy/len*bend, py=dx/len*bend;
+  const c1={x:p1.x+dx*0.3+px, y:p1.y+dy*0.3+py};
+  const c2={x:p2.x-dx*0.3+px, y:p2.y-dy*0.3+py};
+  return {
+    d:`M${p1.x},${p1.y} C${c1.x},${c1.y} ${c2.x},${c2.y} ${p2.x},${p2.y}`,
+    mid:{ x:(p1.x+3*c1.x+3*c2.x+p2.x)/8, y:(p1.y+3*c1.y+3*c2.y+p2.y)/8 }
+  };
+}
+
+// ════════════════════════════════════════════════
+// BUILD NODES
+// ════════════════════════════════════════════════
+function getPos(flowId, nodeId){
+  return (saved[flowId]||{})[nodeId] || DEFS[flowId].layout[nodeId] || {x:100,y:100};
+}
+
+function buildNodes(flowId){
+  document.querySelectorAll('.nd').forEach(el=>el.remove());
+  DEFS[flowId].nodes.forEach(n => {
+    const pos = getPos(flowId, n.id);
+    const el = document.createElement('div');
+    el.className = 'nd';
+    el.dataset.id = n.id;
+    el.style.left = pos.x+'px';
+    el.style.top  = pos.y+'px';
+
+    if(n.type==='start'||n.type==='end'){
+      el.classList.add('nd-terminal', n.type);
+      el.style.width = n.w+'px';
+      el.innerHTML = `<span class="t-main">${n.label}</span>${n.sub?`<span class="t-sub">${n.sub}</span>`:''}`;
+
+    } else if(n.type==='step'){
+      const ag = AG[n.agent];
+      el.classList.add('nd-step');
+      el.style.width = n.w+'px';
+      el.innerHTML = `
+        <div class="step-bar" style="background:${ag.color}14;border-bottom-color:${ag.color}30">
+          <span class="agent-name" style="color:${ag.color}">${ag.icon} ${ag.name}</span>
+          <code class="cmd">${n.cmd}</code>
+        </div>
+        <div class="step-body">
+          <div class="step-title">${n.title}</div>
+          <div class="step-desc">${n.desc}</div>
+        </div>`;
+
+    } else if(n.type==='decision'){
+      el.classList.add('nd-decision');
+      el.style.width = n.w+'px';
+      const hw=n.w, hh=n.h||100;
+      const pts=`${hw/2},4 ${hw-4},${hh/2} ${hw/2},${hh-4} 4,${hh/2}`;
+      el.innerHTML = `<svg width="${hw}" height="${hh}" style="display:block;overflow:visible">
+        <polygon points="${pts}" fill="#0d1828" stroke="#2a4070" stroke-width="1.5"/>
+        <text x="${hw/2}" y="${hh/2-9}" text-anchor="middle" dominant-baseline="middle" fill="#90b0d8" font-size="11.5" font-weight="700" font-family="-apple-system,Segoe UI,sans-serif">${n.label}</text>
+        ${n.sub?`<text x="${hw/2}" y="${hh/2+10}" text-anchor="middle" dominant-baseline="middle" fill="#4a6080" font-size="9.5" font-family="-apple-system,Segoe UI,sans-serif">${n.sub}</text>`:''}
+      </svg>`;
+    }
+
+    el.addEventListener('mousedown', e=>onNdDown(e,n.id));
+    el.addEventListener('contextmenu', e=>{ e.preventDefault(); e.stopPropagation(); showCtx(e,n.id); });
+    worldEl.appendChild(el);
+  });
+}
+
+// ════════════════════════════════════════════════
+// RENDER EDGES
+// ════════════════════════════════════════════════
+function renderEdges(flowId){
+  svgEl.querySelectorAll('.eg').forEach(el=>el.remove());
+  svgEl.querySelectorAll('defs marker').forEach(m=>m.remove());
+  const def = DEFS[flowId];
+
+  // bend offset for parallel edges between same pair
+  const pc={}, pi={};
+  def.edges.forEach(e=>{
+    const k=[e.from,e.to].sort().join('|');
+    pc[k]=(pc[k]||0)+1;
+  });
+
+  def.edges.forEach(edge=>{
+    const fc = ndCenter(edge.from), tc = ndCenter(edge.to);
+    const fs = ndSize(edge.from), ts = ndSize(edge.to);
+    const p1 = rectEdge(fc.x,fc.y,fs.w,fs.h,tc.x,tc.y);
+    const p2 = rectEdge(tc.x,tc.y,ts.w,ts.h,fc.x,fc.y);
+
+    const k=[edge.from,edge.to].sort().join('|');
+    if(pi[k]===undefined) pi[k]=0;
+    const idx=pi[k]++;
+    const total=pc[k];
+    const bend=(idx-(total-1)/2)*35;
+
+    const {d,mid} = bezier(p1,p2,bend);
+    const col = edge.color||'#1a3060';
+    const lit = litEdge===edge.id;
+
+    // Marker
+    const mkId='mk-'+edge.id;
+    const defs=svgEl.querySelector('defs');
+    const mk=$svg('marker');
+    mk.setAttribute('id',mkId);
+    mk.setAttribute('markerWidth','7');mk.setAttribute('markerHeight','7');
+    mk.setAttribute('refX','6');mk.setAttribute('refY','2.5');mk.setAttribute('orient','auto');
+    const mp=$svg('path');
+    mp.setAttribute('d','M0,0 L0,5 L7,2.5 z');
+    mp.setAttribute('fill',col);mp.setAttribute('opacity','0.65');
+    mk.appendChild(mp);defs.appendChild(mk);
+
+    const g=$svg('g');g.classList.add('eg');g.dataset.id=edge.id;
+
+    // Hit area
+    const hit=$svg('path');
+    hit.setAttribute('d',d);hit.setAttribute('class','edge-hit');
+    hit.addEventListener('mouseenter',()=>{litEdge=edge.id;renderEdges(cur);});
+    hit.addEventListener('mouseleave',()=>{litEdge=null;renderEdges(cur);});
+    g.appendChild(hit);
+
+    // Visible
+    const vp2=$svg('path');
+    vp2.setAttribute('d',d);
+    vp2.setAttribute('class','edge-path'+(lit?' lit':''));
+    vp2.setAttribute('stroke',col);
+    vp2.setAttribute('marker-end',`url(#${mkId})`);
+    g.appendChild(vp2);
+
+    // Label
+    if(edge.label){
+      const bw=edge.label.length*5.4+12, bh=15;
+      const bg=$svg('rect');
+      bg.setAttribute('x',mid.x-bw/2);bg.setAttribute('y',mid.y-bh/2);
+      bg.setAttribute('width',bw);bg.setAttribute('height',bh);
+      bg.setAttribute('rx','3');bg.setAttribute('class','edge-label-bg');
+      bg.setAttribute('stroke','#0c1e38');bg.setAttribute('stroke-width','1');
+      g.appendChild(bg);
+      const lt=$svg('text');
+      lt.setAttribute('x',mid.x);lt.setAttribute('y',mid.y);
+      lt.setAttribute('class','edge-label-text');
+      lt.setAttribute('fill',lit?'#a0c0e0':'#5a7890');
+      lt.textContent=edge.label;
+      g.appendChild(lt);
+    }
+
+    svgEl.appendChild(g);
+  });
+}
+
+function render(){
+  worldEl.style.transform=`translate(${vp.x}px,${vp.y}px) scale(${vp.scale})`;
+  zoomEl.textContent=Math.round(vp.scale*100)+'%';
+  renderEdges(cur);
+}
+
+// ════════════════════════════════════════════════
+// FLOW SWITCH
+// ════════════════════════════════════════════════
+function savePositions(){
+  const pos={};
+  document.querySelectorAll('.nd').forEach(el=>{
+    if(el.dataset.id) pos[el.dataset.id]={x:parseFloat(el.style.left)||0,y:parseFloat(el.style.top)||0};
+  });
+  saved[cur]=pos;
+  persistSaved();
+}
+
+function switchFlow(flowId){
+  savePositions();
+  cur=flowId;
+  document.querySelectorAll('.tab').forEach(t=>t.classList.toggle('active',t.dataset.flow===flowId));
+  buildNodes(flowId);
+  requestAnimationFrame(()=>requestAnimationFrame(()=>{fitView();render();}));
+}
+
+// ════════════════════════════════════════════════
+// FIT / LAYOUT
+// ════════════════════════════════════════════════
+function fitView(){
+  const els=document.querySelectorAll('.nd');
+  if(!els.length) return;
+  let mnX=Infinity,mnY=Infinity,mxX=-Infinity,mxY=-Infinity;
+  els.forEach(el=>{
+    const x=parseFloat(el.style.left)||0, y=parseFloat(el.style.top)||0;
+    const w=el.offsetWidth, h=el.offsetHeight;
+    mnX=Math.min(mnX,x);mnY=Math.min(mnY,y);
+    mxX=Math.max(mxX,x+w);mxY=Math.max(mxY,y+h);
+  });
+  const pad=70, cw=canvasEl.offsetWidth, ch=canvasEl.offsetHeight;
+  const fw=mxX-mnX||1, fh=mxY-mnY||1;
+  vp.scale=Math.min((cw-pad*2)/fw,(ch-pad*2)/fh,1.5);
+  vp.x=(cw-fw*vp.scale)/2-mnX*vp.scale;
+  vp.y=(ch-fh*vp.scale)/2-mnY*vp.scale;
+  render();
+}
+
+function resetLayout(){
+  delete saved[cur];
+  persistSaved();
+  buildNodes(cur);
+  requestAnimationFrame(()=>requestAnimationFrame(()=>{fitView();render();}));
+}
+
+// ════════════════════════════════════════════════
+// DRAG / PAN / ZOOM
+// ════════════════════════════════════════════════
+function onNdDown(e, id){
+  e.stopPropagation();
+  if(e.button!==0) return;
+  const el=ndEl(id);
+  el?.classList.add('dragging');
+  drag={id, smx:e.clientX, smy:e.clientY, sx:parseFloat(el.style.left)||0, sy:parseFloat(el.style.top)||0};
+}
+
+canvasEl.addEventListener('mousedown', e=>{
+  if(e.button===1||(e.button===0&&spaceDown)){
+    pan={smx:e.clientX,smy:e.clientY,svx:vp.x,svy:vp.y};
+    canvasEl.classList.add('panning');
+    e.preventDefault();
+  }
+});
+
+canvasEl.addEventListener('mousemove', e=>{
+  if(drag){
+    const dx=(e.clientX-drag.smx)/vp.scale;
+    const dy=(e.clientY-drag.smy)/vp.scale;
+    const el=ndEl(drag.id);
+    if(el){el.style.left=(drag.sx+dx)+'px';el.style.top=(drag.sy+dy)+'px';}
+    renderEdges(cur);
+  }
+  if(pan){
+    vp.x=pan.svx+(e.clientX-pan.smx);
+    vp.y=pan.svy+(e.clientY-pan.smy);
+    render();
+  }
+});
+
+canvasEl.addEventListener('mouseup', e=>{
+  if(drag){ndEl(drag.id)?.classList.remove('dragging');drag=null;savePositions();}
+  if(pan){pan=null;canvasEl.classList.remove('panning');}
+});
+
+canvasEl.addEventListener('wheel', e=>{
+  e.preventDefault();
+  const f=e.deltaY<0?1.12:0.89;
+  const r=canvasEl.getBoundingClientRect();
+  const mx=e.clientX-r.left, my=e.clientY-r.top;
+  const prev=vp.scale;
+  vp.scale=Math.max(0.15,Math.min(4,vp.scale*f));
+  const ratio=vp.scale/prev;
+  vp.x=mx-(mx-vp.x)*ratio;
+  vp.y=my-(my-vp.y)*ratio;
+  render();
+},{passive:false});
+
+// ════════════════════════════════════════════════
+// CONTEXT MENU + EDIT MODAL
+// ════════════════════════════════════════════════
+function showCtx(e, nodeId){
+  ctxTarget=nodeId;
+  const m=document.getElementById('ctx');
+  m.style.display='block';
+  m.style.left=Math.min(e.clientX,window.innerWidth-190)+'px';
+  m.style.top=Math.min(e.clientY,window.innerHeight-100)+'px';
+}
+function closeCtx(){ document.getElementById('ctx').style.display='none'; ctxTarget=null; }
+
+document.getElementById('ctx-edit').addEventListener('click',()=>{
+  if(!ctxTarget){ closeCtx(); return; }
+  const def=DEFS[cur];
+  const n=def.nodes.find(x=>x.id===ctxTarget);
+  if(!n){ closeCtx(); return; }
+  if(n.type==='step'){
+    openModal('Editar Etapa','Título','Descrição',n.title||'',n.desc||'',(t,d)=>{
+      n.title=t; n.desc=d;
+      const el=ndEl(n.id);
+      if(el){
+        const titleEl=el.querySelector('.step-title');
+        const descEl=el.querySelector('.step-desc');
+        if(titleEl) titleEl.textContent=t;
+        if(descEl) descEl.textContent=d;
+      }
+      savePositions();
+    });
+  } else {
+    openModal('Editar','Label','Sub-label',n.label||'',n.sub||'',(t,d)=>{
+      n.label=t; n.sub=d;
+      buildNodes(cur); render();
+    });
+  }
+  closeCtx();
+});
+
+document.getElementById('ctx-del').addEventListener('click',()=>{
+  if(!ctxTarget){ closeCtx(); return; }
+  if(confirm('Remover este nó? (os flows padrão são restaurados com Reset Layout)')){
+    DEFS[cur].nodes=DEFS[cur].nodes.filter(n=>n.id!==ctxTarget);
+    DEFS[cur].edges=DEFS[cur].edges.filter(e=>e.from!==ctxTarget&&e.to!==ctxTarget);
+    buildNodes(cur); render();
+  }
+  closeCtx();
+});
+
+document.addEventListener('click', e=>{ if(!e.target.closest('#ctx')) closeCtx(); });
+
+function openModal(title, l1, l2, v1, v2, cb){
+  document.getElementById('m-title').textContent=title;
+  document.getElementById('m-lbl1').textContent=l1;
+  document.getElementById('m-lbl2').textContent=l2;
+  document.getElementById('m-inp1').value=v1;
+  document.getElementById('m-inp2').value=v2;
+  modalCb=cb;
+  document.getElementById('modal-bg').classList.add('open');
+  setTimeout(()=>document.getElementById('m-inp1').focus(),60);
+}
+function closeModal(){ document.getElementById('modal-bg').classList.remove('open'); modalCb=null; }
+
+document.getElementById('m-cancel').addEventListener('click',closeModal);
+document.getElementById('m-ok').addEventListener('click',()=>{
+  if(modalCb) modalCb(document.getElementById('m-inp1').value, document.getElementById('m-inp2').value);
+  closeModal();
+});
+document.getElementById('modal-bg').addEventListener('click',e=>{ if(e.target.id==='modal-bg') closeModal(); });
+document.getElementById('m-inp1').addEventListener('keydown',e=>{ if(e.key==='Enter'){ document.getElementById('m-inp2').focus(); e.preventDefault(); }});
+document.getElementById('m-inp2').addEventListener('keydown',e=>{ if(e.key==='Enter'&&!e.shiftKey){ document.getElementById('m-ok').click(); e.preventDefault(); }});
+
+// ════════════════════════════════════════════════
+// KEYBOARD
+// ════════════════════════════════════════════════
+document.addEventListener('keydown', e=>{
+  if(e.code==='Space'&&!e.target.matches('input,textarea')){
+    e.preventDefault(); spaceDown=true; canvasEl.style.cursor='grab';
+  }
+  if((e.ctrlKey||e.metaKey)&&e.key==='s'){ e.preventDefault(); savePositions(); flashSaved(); }
+  if((e.ctrlKey||e.metaKey)&&e.key==='0'){ e.preventDefault(); fitView(); }
+  if(e.code==='Escape'){ closeCtx(); closeModal(); }
+});
+document.addEventListener('keyup', e=>{
+  if(e.code==='Space'){ spaceDown=false; canvasEl.style.cursor='default'; }
+});
+
+// ════════════════════════════════════════════════
+// TOOLBAR BUTTONS
+// ════════════════════════════════════════════════
+document.querySelectorAll('.tab').forEach(t=>t.addEventListener('click',()=>switchFlow(t.dataset.flow)));
+document.getElementById('btn-fit').addEventListener('click',fitView);
+document.getElementById('btn-layout').addEventListener('click',resetLayout);
+document.getElementById('btn-save').addEventListener('click',()=>{ savePositions(); flashSaved(); });
+
+function flashSaved(){
+  const btn=document.getElementById('btn-save');
+  btn.classList.add('ok'); btn.textContent='✓ Salvo';
+  setTimeout(()=>{ btn.classList.remove('ok'); btn.textContent='💾 Salvar'; },1600);
+}
+
+// ════════════════════════════════════════════════
+// BOOT
+// ════════════════════════════════════════════════
+loadSaved();
+buildNodes(cur);
+requestAnimationFrame(()=>requestAnimationFrame(()=>{ fitView(); render(); }));
+</script>
+</body>
+</html>

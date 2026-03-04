@@ -1,34 +1,48 @@
-# Task: Normalizar Leads — OCP_ (Ocupacional)
+# Task: Normalizar Leads
 
 **Agente:** @nova
 **Comando:** `*normalizar-leads {cliente} [arquivo.csv]`
 **Frequência:** Semanal, antes de *leads
-**Aplicável:** OCP_ (outros clientes sem leads ativos por enquanto)
 
 ---
 
 ## Objetivo
 
-Receber o CSV de leads exportado do RD Marketing / RD Station da Ocupacional, descartar colunas irrelevantes, limpar os dados e produzir um dataset limpo e pronto para qualificação pela task *leads.
+Receber o CSV de leads exportado do CRM/plataforma de captura do cliente, descartar colunas irrelevantes, limpar os dados e produzir um dataset limpo e pronto para qualificação pela task *leads.
 
 ---
 
-## Sobre o CSV de Leads da Ocupacional
+## Clientes com leads ativos
 
-O arquivo vem do **RD Station (RD Marketing)** com o nome padrão:
-`OCP__ Leads LP Comercial - RD MARKETING.csv`
+| Cliente | Status | CRM/Fonte | Observação |
+|---------|--------|-----------|-----------|
+| OCP_ | ativo | RD Station (RD Marketing) | Configurado e detalhado abaixo |
+| ASM_ | inativo | — | Sem geração de leads ainda |
+| BDG_ | em config | — | Adicionar mapeamento de colunas quando ativar |
+| PRODOM_ | em config | — | Adicionar mapeamento de colunas quando ativar |
 
-Contém **21 colunas**. A maioria é ruído ou já está decodificada em outras colunas.
+**Quando um novo cliente ativar leads:** duplicar a seção de mapeamento de colunas do OCP_ abaixo, adaptar os nomes das colunas conforme o CSV do novo CRM, e atualizar a tabela acima.
 
 ---
 
 ## Inputs
 
-- `{cliente}` — deve ser OCP_ para esta task
-- `[arquivo.csv]` — CSV exportado do RD Station (fornecido pelo usuário)
+- `{cliente}` — código do cliente (ver tabela acima)
+- `[arquivo.csv]` — CSV exportado do CRM do cliente (fornecido pelo usuário)
 
 **Se o arquivo não for fornecido → PERGUNTAR antes de continuar.**
-**Se cliente não for OCP_ → informar que leads ainda não estão ativos para este cliente.**
+**Se cliente não tiver leads ativos → informar e orientar a configurar o mapeamento.**
+
+---
+
+## Mapeamento de colunas por cliente
+
+### OCP_ (Ocupacional) — RD Station
+
+O arquivo vem do **RD Station (RD Marketing)** com o nome padrão:
+`OCP__ Leads LP Comercial - RD MARKETING.csv`
+
+Contém **21 colunas**. A maioria é ruído ou já está decodificada em outras colunas.
 
 ---
 
@@ -143,3 +157,42 @@ Por tamanho do time:
 - [ ] Resumo estatístico incluído
 - [ ] Empresas suspeitas flagadas
 - [ ] Pronto para *leads
+
+---
+
+## Schema padrão de saída (todos os clientes)
+
+Independente do CRM de origem, o dataset normalizado DEVE ter estas colunas:
+
+| Campo | Tipo | Obrigatório |
+|-------|------|-------------|
+| data_conversao | DD/MM/YYYY HH:MM | sim |
+| nome | texto | sim |
+| email | texto (minúsculas) | sim |
+| dominio_email | corporativo / pessoal | sim |
+| empresa | texto | sim |
+| empresa_flag | [OK] / [SUSPEITO] | sim |
+| cnpj | 14 dígitos ou vazio | não |
+| cargo | texto ou vazio | não |
+| tamanho_time | 1-10/11-50/51-100/101-300/300+/não informado | não |
+| origem | facebook/google/linkedin/organico | sim |
+| midia | feed/search/pmax/cpc/etc | sim |
+| campanha | label limpo (sem prefixo) | sim |
+| conteudo | texto ou vazio | não |
+| evento | texto ou vazio | não |
+| estagio | Lead/Pré Qualificação/etc | não |
+
+---
+
+## Como adicionar um novo cliente
+
+1. Exportar um CSV de amostra do CRM do novo cliente
+2. Mapear as colunas do CSV para o schema padrão acima
+3. Duplicar a seção "OCP_ (Ocupacional) — RD Station" acima e adaptar:
+   - Nome do cliente e CRM
+   - Tabela de colunas a manter com os nomes corretos do CSV
+   - Tabela de colunas a descartar
+   - Regras de limpeza específicas (ex: prefixo de campanha diferente)
+4. Atualizar a tabela "Clientes com leads ativos" no topo para `ativo`
+5. Criar task `leads-{CLIENTE}.md` com critérios de qualificação do negócio do novo cliente
+6. Atualizar `ciclo-semanal.yaml` → `leads_status` para o novo cliente

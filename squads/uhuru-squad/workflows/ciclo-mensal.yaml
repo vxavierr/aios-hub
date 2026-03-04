@@ -28,16 +28,37 @@ steps:
     task: tasks/nova/analisar.md
     command: "*analisar {cliente} {mes}"
     depends_on: [extracao]
-    description: "Big Numbers completo + análise profunda de campanhas"
-    output: "big_numbers"
+    description: "Big Numbers completo + análise profunda de campanhas + otimizações propostas (bloco separado)"
+    output: "big_numbers + otimizacoes"
+
+  - id: diagnostico
+    name: "Diagnóstico de Criativos"
+    agent: nova
+    task: tasks/nova/diagnostico.md
+    command: "*diagnostico {cliente}"
+    depends_on: [analise]
+    description: "Classificar criativos (campeão/fadiga/fraco) + assets Google + termos de busca"
+    output: "diagnostico_criativos"
+
+  - id: normalizar_leads
+    name: "Normalizar dados de leads"
+    agent: nova
+    task: tasks/nova/normalizar-leads.md
+    command: "*normalizar-leads {cliente} [arquivo_leads]"
+    depends_on: [extracao]
+    condition: "leads_status[cliente] == 'ativo'"
+    description: "Normalizar CSV de leads do CRM antes da qualificação"
+    output: "leads_normalizados"
+    optional: true
 
   - id: leads
-    name: "Análise de Leads"
+    name: "Qualificação e Análise de Leads"
     agent: nova
     task: tasks/nova/leads.md
     command: "*leads {cliente}"
-    depends_on: [extracao]
-    description: "Análise de qualidade e volume de leads do mês"
+    depends_on: [normalizar_leads]
+    condition: "leads_status[cliente] == 'ativo'"
+    description: "Qualificar leads por fit de negócio e análise de CNPJ"
     output: "analise_leads"
 
   - id: insights
@@ -45,8 +66,8 @@ steps:
     agent: sage
     task: tasks/sage/insights.md
     command: "*insights {cliente} {mes}"
-    depends_on: [analise, leads]
-    description: "Transformar dados em aprendizados e recomendações"
+    depends_on: [analise, diagnostico, leads]
+    description: "Transformar dados em aprendizados e recomendações acionáveis"
     output: "insights"
 
   - id: forecast
@@ -76,6 +97,15 @@ steps:
     description: "Gerar relatório completo do mês"
     output: "relatorio"
 
+  - id: revisao
+    name: "Revisão de Objetivos"
+    agent: flux
+    task: tasks/flux/revisar.md
+    command: "*revisar {cliente}"
+    depends_on: [analise]
+    description: "Comparar metas vs. realizado e definir objetivos do próximo ciclo"
+    output: "revisao_objetivos"
+
   - id: apresentacao
     name: "Apresentação ao Cliente"
     agent: sage
@@ -85,15 +115,43 @@ steps:
     description: "Preparar e realizar apresentação mensal ao cliente"
     output: "apresentacao"
 
+  - id: financeiro
+    name: "Fechamento Financeiro"
+    agent: finn
+    task: tasks/finn/financeiro.md
+    command: "*financeiro {mes}"
+    depends_on: [forecast]
+    description: "Consolidar investimentos, NFs e enviar fechamento ao financeiro"
+    output: "fechamento_financeiro"
+
+  - id: alocacao
+    name: "Alocar Budget do Próximo Mês"
+    agent: finn
+    task: tasks/finn/alocar.md
+    command: "*alocar {cliente}"
+    depends_on: [planejamento]
+    description: "Configurar budget nas plataformas conforme plano de mídia aprovado"
+    output: "budget_configurado"
+
+leads_status:
+  OCP_: ativo
+  ASM_: sem geração de leads ainda
+  BDG_: em configuração
+  PRODOM_: em configuração
+
 flow_diagram: |
   @nova *extrair
        ↓
-  @nova *analisar + *leads (paralelo)
-       ↓
-  @sage *insights + @finn *forecast (paralelo)
+  @nova *analisar ──────────────── @nova *normalizar-leads (se ativo)
+       ↓                                    ↓
+  @nova *diagnostico                 @nova *leads
+       ↓                                    ↓
+  @sage *insights ◄──────────────────────────┘
+  @finn *forecast
+  @flux *revisar
        ↓
   @flux *planejar
        ↓
-  @sage *relatorio
+  @sage *relatorio ──── @finn *financeiro
        ↓
-  @sage *apresentar
+  @sage *apresentar ─── @finn *alocar

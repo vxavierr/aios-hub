@@ -1,0 +1,70 @@
+schema: 1
+story: 'AB-5'
+story_title: 'Stories Kanban + AIOS Lifecycle'
+gate: PASS
+status_reason: 'All 3 HIGH findings from previous review (CONCERNS) are fixed. All MEDIUM findings addressed. Implementation complete, all 10 AC scenarios covered. 1 new MEDIUM (latent regex bug) and 1 new LOW (double-load) identified as non-blocking.'
+reviewer: 'Quinn (Test Architect)'
+updated: '2026-03-04T20:00:00Z'
+
+quality_score: 85
+expires: '2026-03-18T20:00:00Z'
+
+top_issues:
+  - id: 'PARSE-001'
+    severity: medium
+    finding: 'story-parser.ts:46 regex uses \Z (Perl/Ruby anchor) — not valid JS, treated as literal Z. If ## Tasks is last section, no ACs are extracted. Latent — current stories always have sections after Tasks.'
+    suggested_action: 'Replace \Z with $ or restructure regex to handle Tasks as last section.'
+    suggested_owner: dev
+  - id: 'DATA-002'
+    severity: low
+    finding: 'Double-load on mount — initial fetch + SSE stream replay both send all stories. No functional bug but unnecessary double-processing.'
+    suggested_action: 'Either remove initial fetch (rely on SSE replay) or skip SSE replay of existing stories.'
+    suggested_owner: dev
+  - id: 'REQ-001'
+    severity: low
+    finding: 'Priority filter listed in Scope but not in AC — not implemented. Scope vs AC mismatch.'
+    suggested_action: 'Document as tech debt for future sprint.'
+    suggested_owner: dev
+  - id: 'REQ-002'
+    severity: low
+    finding: 'Health Score does not consider age of InProgress stories as specified in AC Scenario 8.'
+    suggested_action: 'Minor AC deviation — schedule for improvement.'
+    suggested_owner: dev
+  - id: 'MNT-003'
+    severity: low
+    finding: 'eslint-disable-line without explanatory comment in useStories.ts and App.tsx.'
+    suggested_action: 'Add comment explaining Zustand store actions are stable refs.'
+    suggested_owner: dev
+
+waiver: { active: false }
+
+evidence:
+  tests_reviewed: 0
+  risks_identified: 6
+  trace:
+    ac_covered: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    ac_gaps: []
+
+nfr_validation:
+  security:
+    status: CONCERNS
+    notes: 'PTY write endpoint accepts arbitrary input — documented as accepted risk for local-only tool. Add validation if ever exposed to network.'
+  performance:
+    status: PASS
+    notes: 'Chokidar debounce 500ms + awaitWriteFinish 300ms. SSE streaming efficient. Minor double-load on mount.'
+  reliability:
+    status: PASS
+    notes: 'SSE auto-reconnect via EventSource. Graceful file removal handling. Optimistic updates with fallback.'
+  maintainability:
+    status: PASS
+    notes: 'Clean separation: parser, watcher, store, components. Type duplication documented. Route order documented.'
+
+recommendations:
+  immediate: []
+  future:
+    - action: 'Fix \Z regex in story-parser.ts:46 — replace with $ or restructure'
+      refs: ['backend/src/story-parser.ts']
+    - action: 'Remove double-load: either skip initial fetch or skip SSE replay'
+      refs: ['frontend/src/features/kanban/useStories.ts', 'backend/src/server.ts']
+    - action: 'Add InProgress age factor to Health Score'
+      refs: ['frontend/src/features/kanban/HealthScore.tsx']

@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Uhuru Squad — Plano de Acao</title>
+    <style>
+        :root {
+            --bg: #0f1117;
+            --surface: #1a1d27;
+            --surface-2: #232733;
+            --border: #2d3245;
+            --text: #e4e6ed;
+            --text-muted: #8b90a0;
+            --accent: #6c7aff;
+            --red: #ff5c5c;
+            --red-bg: rgba(255, 92, 92, 0.1);
+            --orange: #ffaa3b;
+            --orange-bg: rgba(255, 170, 59, 0.1);
+            --green: #3ddc84;
+            --green-bg: rgba(61, 220, 132, 0.1);
+            --blue: #4fc3f7;
+            --purple: #b388ff;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            line-height: 1.6;
+            padding: 2rem;
+        }
+        .container { max-width: 1100px; margin: 0 auto; }
+
+        .header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+            padding: 2rem;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            position: relative;
+        }
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent), var(--purple), var(--blue));
+        }
+        .header h1 { font-size: 1.8rem; font-weight: 700; margin-bottom: 0.3rem; }
+        .header .sub { color: var(--text-muted); font-size: 0.9rem; }
+
+        /* Action Card */
+        .action {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            margin-bottom: 1.5rem;
+            overflow: hidden;
+        }
+        .action.p-alta { border-left: 3px solid var(--red); }
+        .action.p-media { border-left: 3px solid var(--orange); }
+        .action.p-baixa { border-left: 3px solid var(--green); }
+
+        .action-head {
+            padding: 1.1rem 1.4rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            user-select: none;
+        }
+        .action-head:hover { background: var(--surface-2); }
+        .action-left { display: flex; align-items: center; gap: 0.7rem; }
+        .action-num {
+            width: 30px; height: 30px;
+            border-radius: 8px;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 700; font-size: 0.85rem;
+        }
+        .p-alta .action-num { background: var(--red-bg); color: var(--red); }
+        .p-media .action-num { background: var(--orange-bg); color: var(--orange); }
+        .p-baixa .action-num { background: var(--green-bg); color: var(--green); }
+        .action-name { font-weight: 600; font-size: 1rem; }
+        .action-right { display: flex; align-items: center; gap: 0.8rem; }
+        .tag {
+            font-size: 0.68rem; padding: 0.15rem 0.5rem; border-radius: 12px;
+            font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em;
+        }
+        .tag-alta { background: var(--red-bg); color: var(--red); }
+        .tag-media { background: var(--orange-bg); color: var(--orange); }
+        .tag-baixa { background: var(--green-bg); color: var(--green); }
+        .chev { color: var(--text-muted); transition: transform 0.2s; font-size: 0.8rem; }
+        .action.open .chev { transform: rotate(180deg); }
+
+        .action-body {
+            display: none;
+            padding: 0 1.4rem 1.4rem;
+            border-top: 1px solid var(--border);
+        }
+        .action.open .action-body { display: block; padding-top: 1.2rem; }
+
+        .label {
+            font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.08em;
+            color: var(--text-muted); margin-bottom: 0.4rem; font-weight: 600;
+        }
+        .block { margin-bottom: 1.2rem; }
+        .block:last-child { margin-bottom: 0; }
+        .desc { font-size: 0.9rem; color: var(--text); }
+        .desc ul { padding-left: 1.2rem; }
+        .desc li { margin-bottom: 0.3rem; }
+
+        /* Code block with copy */
+        .code-wrap { position: relative; margin-bottom: 0.5rem; }
+        .code {
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem 1rem 1rem 1rem;
+            font-family: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', monospace;
+            font-size: 0.8rem;
+            line-height: 1.7;
+            overflow-x: auto;
+            white-space: pre;
+            tab-size: 2;
+        }
+        .copy-btn {
+            position: absolute;
+            top: 8px; right: 8px;
+            background: var(--surface-2);
+            border: 1px solid var(--border);
+            color: var(--text-muted);
+            padding: 0.25rem 0.6rem;
+            border-radius: 6px;
+            font-size: 0.7rem;
+            cursor: pointer;
+            font-family: inherit;
+            transition: all 0.15s;
+        }
+        .copy-btn:hover { background: var(--accent); color: #fff; border-color: var(--accent); }
+        .copy-btn.copied { background: var(--green); color: #fff; border-color: var(--green); }
+
+        .files { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+        .file {
+            background: var(--bg); border: 1px solid var(--border);
+            padding: 0.15rem 0.5rem; border-radius: 6px;
+            font-family: monospace; font-size: 0.72rem; color: var(--blue);
+        }
+
+        .sep { border: none; border-top: 1px solid var(--border); margin: 2rem 0 1.5rem; }
+        .section-label {
+            font-size: 1.1rem; font-weight: 600; margin-bottom: 1rem;
+            display: flex; align-items: center; gap: 0.5rem;
+        }
+
+        .footer {
+            text-align: center; color: var(--text-muted); font-size: 0.78rem;
+            margin-top: 2.5rem; padding-top: 1.2rem; border-top: 1px solid var(--border);
+        }
+
+        @media (max-width: 768px) { body { padding: 1rem; } }
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <div class="header">
+        <h1>🎯 Uhuru Squad — Plano de Acao</h1>
+        <p class="sub">Comandos prontos para executar cada ajuste | 04/03/2026</p>
+    </div>
+
+    <!-- ====== ACAO 1 ====== -->
+    <div class="section-label">🔴 Prioridade Alta</div>
+
+    <div class="action p-alta open" id="a1">
+        <div class="action-head" onclick="t('a1')">
+            <div class="action-left">
+                <div class="action-num">1</div>
+                <div class="action-name">Preencher IDs de conta (ASM_, BDG_, PRODOM_)</div>
+            </div>
+            <div class="action-right"><span class="tag tag-alta">manual</span><span class="chev">▼</span></div>
+        </div>
+        <div class="action-body">
+            <div class="block">
+                <div class="label">Problema</div>
+                <div class="desc"><code>extrair.md</code> tem "preencher" em 6 IDs. Extracao automatica so funciona para OCP_.</div>
+            </div>
+            <div class="block">
+                <div class="label">Arquivos</div>
+                <div class="files">
+                    <span class="file">tasks/nova/extrair.md</span>
+                    <span class="file">.google-ads/google-ads.yaml</span>
+                    <span class="file">.meta-ads/meta-ads.yaml</span>
+                </div>
+            </div>
+            <div class="block">
+                <div class="label">Comando — Abrir sessao Claude Code e colar</div>
+                <div class="code-wrap">
+                    <button class="copy-btn" onclick="cp(this)">Copiar</button>
+                    <div class="code">Preciso preencher os IDs de conta dos clientes ASM_, BDG_ e PRODOM_ na Uhuru Squad.
+
+1. Abra o arquivo D:/workspace/squads/uhuru-squad/tasks/nova/extrair.md
+2. Na tabela de Google Ads (linha ~28), substitua "preencher" pelos customer_ids:
+   - ASM_ (AssisteMed): customer_id = {COLAR_ID_AQUI}
+   - BDG_ (Grupo BDG): customer_id = {COLAR_ID_AQUI}
+   - PRODOM_ (PRO DOMO): customer_id = {COLAR_ID_AQUI}
+
+3. Na tabela de Meta Ads (linha ~38), substitua "preencher" pelos account_ids:
+   - ASM_: account_id = act_{COLAR_ID_AQUI}
+   - BDG_: account_id = act_{COLAR_ID_AQUI}
+   - PRODOM_: account_id = act_{COLAR_ID_AQUI}
+
+4. Atualize tambem os YAMLs de config:
+   - D:/workspace/.google-ads/google-ads.yaml (secao accounts)
+   - D:/workspace/.meta-ads/meta-ads.yaml (secao accounts)
+
+5. Teste com: @nova *extrair ASM_ google "semana-passada"</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ====== ACAO 2 ====== -->
+    <div class="action p-alta" id="a2">
+        <div class="action-head" onclick="t('a2')">
+            <div class="action-left">
+                <div class="action-num">2</div>
+                <div class="action-name">Enriquecer tasks do Sage (dashboard, insights, relatorio, apresentar)</div>
+            </div>
+            <div class="action-right"><span class="tag tag-alta">4 tasks</span><span class="chev">▼</span></div>
+        </div>
+        <div class="action-body">
+            <div class="block">
+                <div class="label">Problema</div>
+                <div class="desc">As 4 tasks do Sage sao genericas. Faltam: exemplo real, tom definido, regras de comportamento, secao "nunca".</div>
+            </div>
+
+            <div class="block">
+                <div class="label">Comando 2A — Enriquecer dashboard.md</div>
+                <div class="code-wrap">
+                    <button class="copy-btn" onclick="cp(this)">Copiar</button>
+                    <div class="code">Enriqueça a task do Sage em D:/workspace/squads/uhuru-squad/tasks/sage/dashboard.md
+
+Use como referencia de qualidade a task D:/workspace/squads/uhuru-squad/tasks/nova/analisar.md (que tem exemplo real, tom, padroes de escrita).
+
+Adicione as seguintes secoes APOS a secao "Outputs":
+
+1. **Secao "Tom e padroes de escrita"** com:
+   - Tom: executivo, visual, orientado a decisao. Menos texto, mais numeros.
+   - Sempre: usar indicadores visuais (setas, cores), comparar com periodo anterior em %, mostrar delta absoluto + percentual
+   - Nunca: usar linguagem tecnica de midia (CTR, CPM sem explicacao), apresentar dado sem fonte, inventar tendencia
+
+2. **Secao "Comportamento do agente"** com:
+   - Se faltar dado do periodo anterior → apresentar apenas o atual, sem inventar comparativo
+   - Se alguma plataforma nao tiver dados → registrar "Sem dados no periodo" ao inves de omitir
+   - Se todas as metricas estiverem estaveis (variacao < 5%) → dizer explicitamente "Periodo estavel"
+
+3. **Secao "Exemplo Real"** baseado no cliente OCP_ (Ocupacional), com dados verossimeis:
+
+📊 OCP_ — Big Numbers | Semana 10/02 a 16/02
+
+💰 INVESTIMENTO
+Total: R$ 1.247,35
+Meta Ads: R$ 709,22 | Google Ads: R$ 538,13
+
+🎯 RESULTADOS
+Leads totais: 22 (↑ 37,5% vs. anterior)
+CPL medio: R$ 56,70 (↓ 12,3%)
+Melhor canal: Meta Feed (CPL R$ 41,20)
+
+📈 EFICIENCIA
+CTR medio: 3,82%
+Taxa de conversao: 4,1%
+
+⭐ DESTAQUES
+- Meta Feed entregou 14 leads com CPL 27% abaixo da media
+- PMax concentrou 97% do investimento Google em Search
+
+⚠️ ALERTAS
+- CPA Google Pesquisa subiu 71% (R$ 48,45) — possivel saturacao de keywords</div>
+                </div>
+            </div>
+
+            <div class="block">
+                <div class="label">Comando 2B — Enriquecer insights.md</div>
+                <div class="code-wrap">
+                    <button class="copy-btn" onclick="cp(this)">Copiar</button>
+                    <div class="code">Enriqueça a task do Sage em D:/workspace/squads/uhuru-squad/tasks/sage/insights.md
+
+Use como referencia de qualidade a task D:/workspace/squads/uhuru-squad/tasks/nova/analisar.md
+
+Adicione as seguintes secoes:
+
+1. **Secao "Tom e padroes de escrita"**:
+   - Tom: estrategico, orientado a acao. Cada insight DEVE ter uma acao concreta vinculada.
+   - Formato: "Insight → Causa → Acao"
+   - Sempre: basear insights em dados reais do periodo (nunca inventar), nomear campanhas/criativos/keywords especificos, direcionar cada recomendacao ao agente responsavel (@flux, @nova, @finn)
+   - Nunca: usar linguagem vaga ("performance melhorou"), listar mais de 5 insights (priorizar os mais impactantes), repetir informacao que ja esta no relatorio sem agregar interpretacao nova
+
+2. **Secao "Comportamento do agente"**:
+   - Se nao tiver dados de diagnostico de criativos → informar que insights de criativos ficam limitados
+   - Se periodo tiver menos de 7 dias → alertar que tendencias podem nao ser confiaveis
+   - Se houver divergencia entre dados de plataformas diferentes → flagar e nao tentar reconciliar
+
+3. **Secao "Exemplo Real"** baseado em OCP_:
+
+💡 Insights — OCP_ | Fevereiro/2026
+
+O QUE FUNCIONOU:
+1. Meta Feed com criativos estaticos entregou CPL 41% abaixo da media geral → o publico responde melhor a imagens diretas com CTA claro → repetir formato nos proximos criativos (@flux)
+2. Termo de busca "sst betim" converteu a R$ 5,03 (CPA 10x menor que media) → termos geolocalizados tem altissima intencao → expandir para "medicina do trabalho contagem", "sst vespasiano" (@finn otimizar)
+3. PMax concentrou em Search automaticamente quando budget apertou → algoritmo priorizou conversoes sobre awareness → comportamento esperado, nao intervir (@finn)
+
+O QUE NAO FUNCIONOU:
+1. Keyword broad "medicina do trabalho" perdeu 60% do volume com CPA +71% → saturacao de leilao em termo generico → restringir para frase exata ou reduzir lance (@finn otimizar)
+
+TENDENCIAS:
+- Termos de busca geolocalizados (cidade + servico) mostram CPA consistentemente menor — padrao confirmado em 3 semanas consecutivas
+
+RECOMENDACOES:
+1. @flux — Criar briefing para 3 novos criativos estaticos no formato que performou (imagem direta + CTA)
+2. @finn — Adicionar "sst betim" como KW exata e expandir variacoes geolocalizadas
+3. @nova — Monitorar se a tendencia de concentracao da PMax em Search se mantem com budget atual</div>
+                </div>
+            </div>
+
+            <div class="block">
+                <div class="label">Comando 2C — Enriquecer relatorio.md</div>
+                <div class="code-wrap">
+                    <button class="copy-btn" onclick="cp(this)">Copiar</button>
+                    <div class="code">Enriqueça a task do Sage em D:/workspace/squads/uhuru-squad/tasks/sage/relatorio.md
+
+Use como referencia de qualidade a task D:/workspace/squads/uhuru-squad/tasks/nova/analisar.md
+
+Adicione as seguintes secoes APOS "Outputs":
+
+1. **Secao "Tom e padroes de escrita"**:
+   - Tom: profissional mas acessivel. O cliente NAO e especialista em midia — traduzir tudo para linguagem de negocio.
+   - Sempre: traduzir siglas na primeira mencao (CPL = Custo por Lead), usar comparativos em R$ e % (nunca so um), incluir contexto de mercado quando relevante, terminar cada secao com "o que isso significa para o negocio"
+   - Nunca: usar jargao sem explicacao (CPC, CPM, ROAS cru), apresentar numeros sem interpretacao, incluir mais de 2 paginas por secao (ser conciso), inventar dados comparativos se nao tiver periodo anterior
+
+2. **Secao "Comportamento do agente"**:
+   - Se @nova nao executou *analisar ou *leads para o periodo → PARAR e solicitar antes de prosseguir. Nao montar relatorio sem dados de base.
+   - Se o mes teve menos de 20 dias de campanha ativa → alertar que resultados sao parciais
+   - Se CPL do mes ficou acima da meta definida no plano de midia → dedicar paragrafo explicativo na secao de Resumo Executivo
+   - Se algum canal nao entregou resultados → incluir no relatorio com explicacao (nao omitir)
+
+3. **Secao "Exemplo Real"** com o resumo executivo de OCP_:
+
+# Relatorio de Resultados — Ocupacional | Fevereiro/2026
+
+## Resumo Executivo
+
+Em fevereiro investimos R$ 5.420,00 em midia paga (Meta Ads + Google Ads), gerando 87 leads a um custo medio de R$ 62,30 por lead.
+
+Comparado a janeiro:
+- Investimento: R$ 5.420 vs R$ 4.890 (+10,8%)
+- Leads: 87 vs 71 (+22,5%)
+- CPL: R$ 62,30 vs R$ 68,87 (-9,5% — melhor eficiencia)
+
+**Destaque:** O Meta Ads respondeu por 58% dos leads com CPL 31% menor que Google, confirmando a tendencia de dezembro/janeiro. O Google Pesquisa manteve volume mas com CPA subindo — concorrencia crescente nos termos principais.
+
+**Para o negocio:** Estamos trazendo mais leads por real investido. A tendencia e positiva mas depende de renovacao de criativos (os atuais completam 45 dias em marco).</div>
+                </div>
+            </div>
+
+            <div class="block">
+                <div class="label">Comando 2D — Enriquecer apresentar.md</div>
+                <div class="code-wrap">
+                    <button class="copy-btn" onclick="cp(this)">Copiar</button>
+                    <div class="code">Enriqueça a task do Sage em D:/workspace/squads/uhuru-squad/tasks/sage/apresentar.md
+
+Use como referencia de qualidade a task D:/workspace/squads/uhuru-squad/tasks/nova/analisar.md
+
+Adicione as seguintes secoes APOS "Outputs":
+
+1. **Secao "Tom e padroes de escrita"**:
+   - Tom: visual, direto, zero jargao. O cliente quer saber: "gastou quanto? trouxe quantos leads? ta bom ou ruim? o que vamos fazer?"
+   - Regra dos 3: maximo 3 numeros por slide, maximo 3 bullets por topico, maximo 3 proximos passos
+   - Sempre: abrir com o resultado mais impactante (bom ou ruim), usar setas visuais e cores, comparar sempre com mes anterior, fechar com proximos passos concretos
+   - Nunca: mostrar tabela com mais de 5 linhas, usar graficos complexos (barra simples ou numero grande), falar em CTR/CPM/CPC sem traduzir, apresentar problema sem solucao proposta
+
+2. **Secao "Comportamento do agente"**:
+   - Se o relatorio (@sage/*relatorio) nao esta pronto → PARAR e solicitar
+   - Se o mes teve resultado ruim → nao esconder. Apresentar com diagnostico + plano de correcao
+   - Se o cliente pediu algo especifico na reuniao anterior → incluir slide dedicado respondendo
+
+3. **Secao "Checklist pre-reuniao"**:
+   - [ ] Numeros conferidos contra o relatorio (nao pode ter divergencia)
+   - [ ] Linguagem revisada — zero siglas sem traducao
+   - [ ] Proximos passos alinhados com @flux (plano de midia do proximo mes)
+   - [ ] Apresentacao enviada ao cliente 24h antes da reuniao
+   - [ ] Tempo estimado: 20-30 minutos (nao ultrapassar)
+
+4. **Secao "Exemplo Real"** — Slide 2 (Resumo Executivo) de OCP_:
+
+📊 Resultados de Fevereiro
+
+💰 R$ 5.420 investidos
+👤 87 leads gerados (+22% vs janeiro)
+💵 R$ 62,30 por lead (-9,5% — mais eficiente)
+
+⭐ O Meta Ads trouxe 58% dos leads com custo 31% menor que o Google
+⚠️ Google Pesquisa com custo subindo — vamos ajustar as palavras-chave em marco</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ====== ACAO 3 ====== -->
+    <hr class="sep">
+    <div class="section-label">🟠 Prioridade Media</div>
+
+    <div class="action p-media" id="a3">
+        <div class="action-head" onclick="t('a3')">
+            <div class="action-left">
+                <div class="action-num">3</div>
+                <div class="action-name">Adicionar *diagnostico ao ciclo semanal</div>
+            </div>
+            <div class="action-right"><span class="tag tag-media">workflow</span><span class="chev">▼</span></div>
+        </div>
+        <div class="action-body">
+            <div class="block">
+                <div class="label">Arquivo</div>
+                <div class="files"><span class="file">workflows/ciclo-semanal.yaml</span></div>
+            </div>
+            <div class="block">
+                <div class="label">Comando — Colar no Claude Code</div>
+                <div class="code-wrap">
+                    <button class="copy-btn" onclick="cp(this)">Copiar</button>
+                    <div class="code">Edite o arquivo D:/workspace/squads/uhuru-squad/workflows/ciclo-semanal.yaml
+
+Adicione o seguinte step APOS o step "analisar" (id: analisar) e ANTES do bloco de leads:
+
+  - id: diagnostico
+    name: "Diagnostico de criativos"
+    agent: nova
+    task: tasks/nova/diagnostico.md
+    command: "*diagnostico {cliente}"
+    depends_on: [analisar]
+    description: >
+      Analisa criativos ativos em todas as plataformas do cliente.
+      Classifica como campeao, fadiga ou fraco.
+      Recomenda pausas, renovacoes e posts para impulsionar.
+    output: "diagnostico_criativos"
+
+Tambem atualize o flow_diagram no final do arquivo para incluir o novo step:
+
+flow_diagram: |
+  BLOCO 1 — CAMPANHAS
+  ────────────────────────────────────
+  @nova *normalizar {cliente} [csvs]
+       ↓
+  @nova *analisar {cliente} {periodo}
+       → se dados incompletos: PERGUNTA PRIMEIRO
+       → output: Analise + Otimizacoes (blocos separados)
+       ↓
+  @nova *diagnostico {cliente}
+       → output: Criativos classificados + acoes
+
+  BLOCO 2 — LEADS (apenas OCP_ ativo)
+  ────────────────────────────────────
+  @nova *normalizar-leads {cliente} [csv]
+       ↓
+  @nova *leads {cliente}
+       → pesquisa CNPJ + qualificacao por fit
+       → output: leads qualificados / nao qualificados + analise</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ====== ACAO 4 ====== -->
+    <div class="action p-media" id="a4">
+        <div class="action-head" onclick="t('a4')">
+            <div class="action-left">
+                <div class="action-num">4</div>
+                <div class="action-name">Adicionar caminho *extrair (API) no ciclo semanal</div>
+            </div>
+            <div class="action-right"><span class="tag tag-media">workflow</span><span class="chev">▼</span></div>
+        </div>
+        <div class="action-body">
+            <div class="block">
+                <div class="label">Arquivo</div>
+                <div class="files"><span class="file">workflows/ciclo-semanal.yaml</span></div>
+            </div>
+            <div class="block">
+                <div class="label">Comando — Colar no Claude Code</div>
+                <div class="code-wrap">
+                    <button class="copy-btn" onclick="cp(this)">Copiar</button>
+                    <div class="code">Edite o arquivo D:/workspace/squads/uhuru-squad/workflows/ciclo-semanal.yaml
+
+Adicione o seguinte step ANTES do step "normalizar" (como primeiro step do BLOCO 1):
+
+  # ─────────────────────────────────────────
+  # BLOCO 0 — EXTRACAO AUTOMATICA (opcional)
+  # ─────────────────────────────────────────
+
+  - id: extrair
+    name: "Extrair dados via API (automatico)"
+    agent: nova
+    task: tasks/nova/extrair.md
+    command: "*extrair {cliente} all {periodo}"
+    description: >
+      Extrai dados direto das APIs do Google Ads e Meta Ads.
+      Se a API falhar, token expirar, ou for LinkedIn:
+      usar *normalizar com CSV manual como fallback.
+    output: "dados_extraidos"
+    optional: true
+    skip_if: "cliente sem IDs cadastrados OU plataforma == linkedin OU usuario forneceu CSVs"
+
+Atualize o step "normalizar" existente para refletir que agora e fallback:
+
+  - id: normalizar
+    name: "Normalizar dados de campanhas (fallback manual)"
+    agent: nova
+    task: tasks/nova/normalizar.md
+    command: "*normalizar {cliente} [arquivos_campanhas]"
+    description: >
+      Recebe os CSVs brutos exportados das plataformas ativas do cliente.
+      Usar quando *extrair nao estiver disponivel (LinkedIn, token expirado,
+      ou quando o usuario fornece CSVs diretamente).
+    condition: "extrair falhou OU plataforma == linkedin OU CSVs fornecidos pelo usuario"
+    output: "dados_normalizados"
+
+Na secao inputs, adicione:
+
+  - name: modo_extracao
+    description: "api (automatico via *extrair) ou csv (manual via *normalizar). Default: api"
+    required: false
+    default: "api"</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ====== ACAO 5 ====== -->
+    <hr class="sep">
+    <div class="section-label">🟢 Prioridade Baixa</div>
+
+    <div class="action p-baixa" id="a5">
+        <div class="action-head" onclick="t('a5')">
+            <div class="action-left">
+                <div class="action-num">5</div>
+                <div class="action-name">Generalizar normalizar-leads para outros clientes</div>
+            </div>
+            <div class="action-right"><span class="tag tag-baixa">futuro</span><span class="chev">▼</span></div>
+        </div>
+        <div class="action-body">
+            <div class="block">
+                <div class="label">Arquivos</div>
+                <div class="files">
+                    <span class="file">tasks/nova/normalizar-leads.md</span>
+                    <span class="file">tasks/nova/leads.md</span>
+                </div>
+            </div>
+            <div class="block">
+                <div class="label">Comando — Quando BDG_ ou PRODOM_ ativarem leads</div>
+                <div class="code-wrap">
+                    <button class="copy-btn" onclick="cp(this)">Copiar</button>
+                    <div class="code">O cliente {BDG_ ou PRODOM_} ativou geracao de leads. Preciso adaptar a Uhuru Squad.
+
+1. Edite D:/workspace/squads/uhuru-squad/tasks/nova/normalizar-leads.md:
+   - Remova "Aplicavel: OCP_" do cabecalho
+   - Adicione uma secao "Mapeamento de colunas por cliente" (similar ao normalizar.md que faz por plataforma)
+   - Adicione a estrutura de CSV do novo cliente com as colunas corretas
+   - Mantenha a secao OCP_ existente intacta
+
+2. Crie um novo arquivo D:/workspace/squads/uhuru-squad/tasks/nova/leads-{CLIENTE}.md:
+   - Copie a estrutura de leads.md (OCP_)
+   - Substitua os criterios de qualificacao pelo negocio do novo cliente
+   - Adapte: segmentos qualificados, localizacao, CNAEs relevantes
+
+3. Edite D:/workspace/squads/uhuru-squad/workflows/ciclo-semanal.yaml:
+   - Atualize leads_status para o novo cliente: ativo
+
+4. Teste com: @nova *normalizar-leads {CLIENTE} [csv-do-cliente]</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ====== ACAO 6 ====== -->
+    <div class="action p-baixa" id="a6">
+        <div class="action-head" onclick="t('a6')">
+            <div class="action-left">
+                <div class="action-num">6</div>
+                <div class="action-name">Expandir diagnostico para Google Ads</div>
+            </div>
+            <div class="action-right"><span class="tag tag-baixa">futuro</span><span class="chev">▼</span></div>
+        </div>
+        <div class="action-body">
+            <div class="block">
+                <div class="label">Arquivo</div>
+                <div class="files"><span class="file">tasks/nova/diagnostico.md</span></div>
+            </div>
+            <div class="block">
+                <div class="label">Comando — Colar no Claude Code</div>
+                <div class="code-wrap">
+                    <button class="copy-btn" onclick="cp(this)">Copiar</button>
+                    <div class="code">Enriqueça a task em D:/workspace/squads/uhuru-squad/tasks/nova/diagnostico.md
+
+O Passo 2 atual do Google Ads e superficial (so menciona RSA asset scores).
+Expanda adicionando as seguintes sub-secoes dentro do Google Ads:
+
+### Google Ads — Diagnostico Expandido
+
+**Termos de busca (Search):**
+- Exportar relatorio de termos de busca do periodo
+- Classificar:
+  - 🟢 Termos que converteram com CPA abaixo da media → candidatos a KW exata
+  - 🔴 Termos que gastaram >R$ 50 sem converter → candidatos a negative keyword
+  - 🔵 Termos novos com impressoes mas sem cliques → avaliar relevancia do anuncio
+- Flagar termos geolocalizados (cidade + servico) com CPA baixo como oportunidade
+
+**Assets de PMax:**
+- Listar grupos de argumentos com performance do periodo
+- Classificar por grupo:
+  - 🟢 Campeao — CPA abaixo da media, volume consistente
+  - 🟡 Rotacao normal — variacao de curto prazo, historico bom
+  - 🔴 Ineficiente — CPA alto por 2+ semanas sem historico bom
+- Distribuicao de canais: % em Search, Display, YouTube, Discovery
+- Se Display/YouTube cortados pelo algoritmo → registrar como "budget limitado, comportamento esperado"
+
+**Quality Score (Search):**
+- Listar keywords com QS <= 5
+- Para cada: CTR esperado vs real, relevancia do anuncio, experiencia da landing page
+- Se QS caiu vs periodo anterior → flagar como alerta
+
+**Extensoes de anuncio:**
+- Listar extensoes ativas e status
+- Extensoes com "Aprendendo" por mais de 14 dias → considerar substituir
+- Extensoes sem impressoes → remover ou substituir
+
+Adicione tambem um template de output expandido que inclua secao Google apos a secao Meta existente.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>🏗️ Craft (Squad Creator) — Uhuru Squad v1.0.0 | 04/03/2026</p>
+        <p style="margin-top:0.3rem">Cada bloco de codigo e um comando pronto para colar no Claude Code</p>
+    </div>
+
+</div>
+
+<script>
+function t(id) { document.getElementById(id).classList.toggle('open'); }
+function cp(btn) {
+    const code = btn.parentElement.querySelector('.code');
+    navigator.clipboard.writeText(code.innerText).then(() => {
+        btn.textContent = 'Copiado!';
+        btn.classList.add('copied');
+        setTimeout(() => { btn.textContent = 'Copiar'; btn.classList.remove('copied'); }, 1500);
+    });
+}
+</script>
+</body>
+</html>
