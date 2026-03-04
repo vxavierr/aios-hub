@@ -43,6 +43,7 @@ Thumbs.db
 
 # AIOS Local (AIOS)
 .aios-core/local/
+.aios-core/.update-base/
 .claude/settings.local.json
 .aios/install-log.txt
 
@@ -57,3 +58,14 @@ Thumbs.db
 .cache/
 .pytest_cache/
 .mypy_cache/
+tmp_*
+
+# Projects (repos independentes — cada um tem seu próprio git)
+projects/aios-bridge/
+projects/merreca/
+
+# Credenciais & Integrações locais (não versionadas)
+.google-ads/
+
+# Artefatos de ferramentas locais
+.playwright-mcp/
