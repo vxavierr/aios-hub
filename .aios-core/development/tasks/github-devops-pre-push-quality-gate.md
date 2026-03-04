@@ -290,7 +290,25 @@ console.log(`Mode: ${context.mode}`);
 console.log(`Package: ${context.packageName} v${context.packageVersion}\n`);
 ```
 
-### 2. Check for Uncommitted Changes
+### 2. Check Branch — Block Push to main/master
+
+```bash
+BRANCH=$(git rev-parse --abbrev-ref HEAD)
+if [ "$BRANCH" = "main" ] || [ "$BRANCH" = "master" ]; then
+  echo "❌ BLOQUEADO: Push direto em '$BRANCH' é proibido."
+  echo ""
+  echo "   Workflow obrigatório (Feature Branch):"
+  echo "   1. git checkout -b feat/minha-mudanca"
+  echo "   2. git cherry-pick ou re-commit suas mudanças"
+  echo "   3. @devops *push  →  @devops *create-pr"
+  echo ""
+  echo "   Exceção: hotfix crítico com aprovação explícita do usuário."
+  exit 1
+fi
+echo "✓ Branch '$BRANCH' — feature branch válida"
+```
+
+### 3. Check for Uncommitted Changes
 
 ```bash
 git status --porcelain
