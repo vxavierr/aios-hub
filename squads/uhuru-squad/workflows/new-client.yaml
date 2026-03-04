@@ -23,6 +23,8 @@ steps:
   - id: identificacao
     name: "Identificação & Briefing"
     agent: flux
+    task: tasks/flux/onboarding-identificacao.md
+    command: "*onboarding-identificacao {cliente_prefix}"
     description: "Mapear objetivos de negócio, público-alvo, oferta, concorrência"
     checklist:
       - "[ ] Nome, CNPJ e dados do cliente coletados"
@@ -36,6 +38,8 @@ steps:
   - id: operacional
     name: "Setup Operacional"
     agent: finn
+    task: tasks/finn/onboarding-operacional.md
+    command: "*onboarding-operacional {cliente_prefix}"
     depends_on: [identificacao]
     description: "Configurar infraestrutura financeira e de controle"
     checklist:
@@ -70,6 +74,8 @@ steps:
   - id: tracking
     name: "Setup de Tracking"
     agent: nova
+    task: tasks/nova/onboarding-tracking.md
+    command: "*onboarding-tracking {cliente_prefix}"
     depends_on: [operacional]
     description: "Configurar rastreamento e extração de dados"
     checklist:

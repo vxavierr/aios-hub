@@ -69,3 +69,74 @@ Total: R$ {valor}
 - [ ] Budget configurado nas plataformas
 - [ ] Planilha de controle atualizada
 - [ ] Início do monitoramento diário (@finn/*monitorar)
+
+---
+
+## Tom e padrões de escrita
+
+**Tom geral:** preciso, operacional, zero ambiguidade. Alocação de budget é dinheiro real — cada número precisa ser exato.
+
+**Sempre:**
+- Confirmar valores em R$ com 2 casas decimais
+- Mostrar a soma total e verificar que bate com o budget aprovado: "R$ 3.240 + R$ 1.890 + R$ 270 = R$ 5.400 ✅"
+- Indicar tipo de budget por campanha: diário vs. vitalício (lifetime)
+- Registrar data de início do controle e responsável pelo monitoramento
+
+**Nunca:**
+- Alocar budget sem ter o plano de mídia aprovado — se @flux/*planejar não rodou, PARAR
+- Arredondar valores "por conveniência" — usar os valores exatos do plano
+- Configurar budget sem verificar que a soma das campanhas bate com o total do canal
+
+---
+
+## Comportamento do agente
+
+**Se o plano de mídia não estiver disponível:**
+→ PARAR. Alocação sem plano é arbitrária. Solicitar @flux/*planejar antes.
+
+**Se a soma dos budgets por campanha não bater com o total do canal:**
+→ Flagar discrepância antes de configurar. Nunca ajustar por conta própria.
+
+**Se uma campanha já tem budget configurado (redistribuição mid-month):**
+→ Registrar valor anterior e novo valor: "Meta Feed: R$ 80/dia → R$ 100/dia (+25%). Motivo: performance acima da meta."
+
+**Se o cliente tem budget em moeda diferente (USD no LinkedIn):**
+→ Registrar a taxa de câmbio usada e o valor em ambas as moedas.
+
+---
+
+## Exemplo Real
+
+> Alocação de budget OCP_ (Ocupacional) — Março/2026.
+
+---
+
+```
+✅ Budget alocado — OCP_ | Março/2026
+
+Plano de mídia aprovado: @flux/*planejar OCP_ março/2026 (28/02)
+Budget total aprovado: R$ 5.400,00
+
+━━━ META ADS — R$ 3.240,00 (60%) ━━━
+
+Campanha                          | Tipo    | Budget
+[uhu][ads]comercial-conversao     | CBO     | R$ 100,00/dia (≈ R$ 3.100,00/mês)
+[uhu][ads]remarketing-comercial   | Diário  | R$ 4,52/dia (≈ R$ 140,00/mês)
+                                              Total Meta: R$ 3.240,00 ✅
+
+━━━ GOOGLE ADS — R$ 1.890,00 (35%) ━━━
+
+Campanha                          | Tipo    | Budget
+comercial-search                  | Diário  | R$ 35,00/dia (≈ R$ 1.085,00/mês)
+comercial-pmax                    | Diário  | R$ 26,00/dia (≈ R$ 805,00/mês)
+                                              Total Google: R$ 1.890,00 ✅
+
+━━━ RESERVA — R$ 270,00 (5%) ━━━
+Não alocada. Disponível para redistribuição mid-month.
+
+━━━ VERIFICAÇÃO ━━━
+R$ 3.240,00 + R$ 1.890,00 + R$ 270,00 = R$ 5.400,00 ✅
+
+Planilha de controle: atualizada (aba OCP_ — Março)
+Início do monitoramento: 01/03/2026 → @finn/*monitorar
+```

@@ -1,0 +1,32 @@
+schema: 1
+story: 'AB-3'
+gate: CONCERNS
+status_reason: 'Implementation fully matches story spec with clean TypeScript build. Minor issues found: no rate limiting on Activity Stream events (listed as risk mitigation but not implemented), closeTab frontend/backend desync on error, and missing useMemo optimizations.'
+reviewer: 'Quinn'
+updated: '2026-03-04T12:00:00Z'
+top_issues:
+  - id: 'REL-001'
+    severity: medium
+    finding: 'No rate limiting on Activity Stream events — story lists "max 10 eventos/s por tab" as risk mitigation but it is not implemented. Verbose PTY output (npm install, find) could flood the stream with hundreds of events/second.'
+    suggested_action: 'Add throttle/debounce per tab in PtyManager onOutput handler or in ActivityStream.addEvent — defer to next iteration if acceptable.'
+  - id: 'REL-002'
+    severity: medium
+    finding: 'closeTab in useTabManager.ts removes tab from Zustand store even if backend DELETE fails — causes frontend/backend desync on network errors.'
+    suggested_action: 'Move removeTab(tabId) inside the try block after successful DELETE, or add rollback logic on catch.'
+  - id: 'REL-003'
+    severity: medium
+    finding: 'PTY output arrives in arbitrary chunks that do not align with line boundaries. Splitting by newline can produce partial-line events in the Activity Stream.'
+    suggested_action: 'Implement a per-session line buffer that accumulates data until a newline is received before emitting an event.'
+  - id: 'PERF-001'
+    severity: low
+    finding: 'ActivityStream.tsx filtered array is not memoized — recomputed on every render (up to 500 events per SSE message).'
+    suggested_action: 'Wrap filtered computation in useMemo([events, filterAgent, filterPattern]).'
+  - id: 'PERF-002'
+    severity: low
+    finding: 'AgentFeed.tsx formatDuration is not reactive — no interval timer to update displayed session durations.'
+    suggested_action: 'Add a 30s interval in AgentFeed to force re-render for duration updates.'
+  - id: 'REQ-001'
+    severity: low
+    finding: 'AgentFeed inferStatus does not check for prompt characters (? or $) as story spec describes for "Waiting Input" state — only uses timing thresholds.'
+    suggested_action: 'Add prompt character detection to inferStatus for more accurate "Waiting" state inference.'
+waiver: { active: false }

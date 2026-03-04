@@ -1,17 +1,55 @@
-# Task: Qualificação e Análise de Leads — OCP_ (Ocupacional)
+# Task: Qualificação e Análise de Leads
 
 **Agente:** @nova
-**Comando:** `*leads OCP_`
+**Comando:** `*leads {cliente}`
 **Frequência:** Semanal, após *normalizar-leads
-**Aplicável:** OCP_ — Ocupacional (saúde ocupacional + segurança do trabalho, Minas Gerais)
+**Aplicável:** Qualquer cliente com leads ativos (ver configuração por cliente abaixo)
+
+---
+
+## Configuração por Cliente
+
+Cada cliente tem critérios de qualificação específicos. Selecionar o perfil correto antes de iniciar.
+
+### OCP_ — Ocupacional (saúde ocupacional + segurança do trabalho)
+
+- **Serviços:** PCMSO, PGR (antigo PPRA), ASO, e-Social, CIPA, laudos de NR
+- **Região:** Minas Gerais (BH, Contagem, Betim, Vespasiano, interior)
+- **Lead ideal:** Empresa com funcionários em ambientes com risco ocupacional real
+- **Critérios de qualificação:** Ver seção "Critérios OCP_" abaixo
+
+### ASM_ — AssisteMed *(quando ativar leads)*
+
+- **Serviços:** *(a definir quando ativar)*
+- **Região:** *(a definir)*
+- **Lead ideal:** *(a definir)*
+- **Status:** Sem geração de leads ainda
+
+### BDG_ — Grupo BDG *(quando ativar leads)*
+
+- **Serviços:** *(a definir quando ativar)*
+- **Região:** *(a definir)*
+- **Lead ideal:** *(a definir)*
+- **Status:** Em configuração
+
+### PRODOM_ — PRO DOMO *(quando ativar leads)*
+
+- **Serviços:** *(a definir quando ativar)*
+- **Região:** *(a definir)*
+- **Lead ideal:** *(a definir)*
+- **Status:** Em configuração
+
+> **Para novos clientes:** Antes de rodar `*leads`, preencher a configuração acima com: serviços, região, lead ideal, e critérios de qualificação/desqualificação específicos.
 
 ---
 
 ## Contexto do Negócio
 
-A Ocupacional vende serviços de **saúde ocupacional e segurança do trabalho** para empresas em **Minas Gerais**. Os serviços incluem: PCMSO, PGR (antigo PPRA), ASO, e-Social, CIPA, laudos de NR.
+**Selecionar conforme `{cliente}`:**
 
-O lead ideal é uma empresa com funcionários que operam em ambientes com risco ocupacional real — indústrias, construção, transporte, alimentação, saúde, etc. — e que ainda não tem esses programas ou precisa renovar.
+**OCP_:** A Ocupacional vende serviços de **saúde ocupacional e segurança do trabalho** para empresas em **Minas Gerais**. Os serviços incluem: PCMSO, PGR (antigo PPRA), ASO, e-Social, CIPA, laudos de NR. O lead ideal é uma empresa com funcionários que operam em ambientes com risco ocupacional real — indústrias, construção, transporte, alimentação, saúde, etc. — e que ainda não tem esses programas ou precisa renovar.
+
+**Outros clientes:** Consultar a seção "Configuração por Cliente" acima. Se não estiver preenchida → PARAR e solicitar ao time que configure antes de qualificar.
 
 ---
 
@@ -56,7 +94,9 @@ Pesquisar a empresa usando as ferramentas disponíveis:
 
 ### Passo 3 — Aplicar critérios de qualificação
 
-#### ✅ QUALIFICADOS — empresas que precisam de saúde ocupacional
+> Os critérios abaixo são específicos para **OCP_**. Para outros clientes, usar os critérios definidos na seção "Configuração por Cliente".
+
+#### ✅ QUALIFICADOS — Critérios OCP_ (empresas que precisam de saúde ocupacional)
 
 | Categoria | Exemplos | Observação |
 |-----------|---------|-----------|
